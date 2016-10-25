@@ -1,10 +1,8 @@
-// write line obj to file with same name as "play_name"
-
 const fs = require('fs');
 const _ = require('lodash');
 
-
 const splitJSON = (a) => {
+	console.log("Getting ready to split up this JSON...");
 	const playsObj = _.groupBy(a, 'play_name');
 
 	for (title in playsObj) {
@@ -15,17 +13,8 @@ const splitJSON = (a) => {
 		console.log(`Wrote ${title}.`)
 	}
 
-	console.log("all done splitting JSON!");
+	console.log("All done splitting JSON!");
 }
-
-console.log("Getting ready to split up this JSON...");
-
-// splitJSON(
-//   JSON.parse(
-//   fs.readFileSync('./data/will_play_text.json')
-//      .toString()
-//      .replace(/\\'/g, '')
-//      .replace(/\t/g, ' ')))
  
 const playArray = require('./data/will_play_text.fixed.json');
 splitJSON(playArray);
