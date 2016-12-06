@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import plays from '../../../data/toc.json';
 
-const PlaySelector = props => (
+const PlaySelect = props => (
 	<form className="mt1" onSubmit={props.handleSubmit}>
 	<select onChange={props.handleChange}>
 		{ plays.map((play, i) => <option key={i} value={play}>{play.replace(/-/g, " ")}</option>) };
@@ -10,4 +10,4 @@ const PlaySelector = props => (
 	</form>
 );
 
-export default PlaySelector;
+export default PlaySelect;

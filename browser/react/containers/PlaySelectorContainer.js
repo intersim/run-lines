@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PlaySelector from '../components/PlaySelector';
+import PlaySelect from '../components/PlaySelect';
 
-class PlaySelectorContainer extends Component {
+class PlaySelectContainer extends Component {
 	constructor(){
 		super();
 
@@ -24,10 +24,10 @@ class PlaySelectorContainer extends Component {
 	}
 
 	render(){
-		return <PlaySelector 
+		return <PlaySelect 
 			handleChange={this.handleChange} 
 			handleSubmit={this.handleSubmit}/>
 	}
 }
 
-export default PlaySelectorContainer;
+export default PlaySelectContainer;

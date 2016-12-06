@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import play from '../../../data/A-Midsummer-nights-dream.json';
 import Line from '../components/Line';
-import PlaySelectorContainer from './PlaySelectorContainer';
+import PlaySelectContainer from './PlaySelectContainer';
 
 class App extends Component {
 	constructor(){
@@ -63,7 +63,7 @@ class App extends Component {
 		const currentPlay = this.state.currentPlay;
 		const playName = currentPlay[0].play_name;
 		return (
-			<div><PlaySelectorContainer setCurrentPlay={this.setCurrentPlay} />
+			<div><PlaySelectContainer setCurrentPlay={this.setCurrentPlay} />
 			<div>
 			<h1>{playName}</h1>
 			{currentPlay.map((line, i) => {
