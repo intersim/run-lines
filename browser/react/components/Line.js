@@ -7,7 +7,7 @@ const Line = props => {
 	return (
 		<p 
 			className={line.line_number ? null : 'italic'} 
-			onClick={startPlayingFromLine}
+			onClick={() => startPlayingFromLine(line)}
 		>
 			{line.line_number ? `${line.speaker}: ` : null}{line.text_entry}
 		</p>)
