@@ -13,7 +13,7 @@ app.all('/', function (req, res) {
 });
 
 toc.forEach(play => {
-	app.get(`/${play}`, (req, res, next) => res.json(require(`../../data/${play}.json`)));
+	app.get(`/api/${play}`, (req, res, next) => res.json(require(`../../data/${play}.json`)));
 });
 
 module.exports = app;

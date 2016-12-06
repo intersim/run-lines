@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import TwelfthNight from '../components/twelfth-night-s1';
+import play from '../../../data/A-Midsummer-nights-dream.json';
 import Line from '../components/Line';
+import PlaySelectorContainer from './PlaySelectorContainer';
 
 class App extends Component {
 	constructor(){
 		super();
 		this.state = {
-			currentPlay: TwelfthNight,
+			currentPlay: play,
 			currentLine: {}
 		}
 
 		this.setCurrentLine = this.setCurrentLine.bind(this);
 		this.sayLine = this.sayLine.bind(this);
 		this.startPlayingFromLine = this.startPlayingFromLine.bind(this);
+		this.setCurrentPlay = this.setCurrentPlay.bind(this);
 	}
 
 	setCurrentLine(currentLine) {
@@ -48,12 +50,24 @@ class App extends Component {
 		synth.speak(utterThis);
 	}
 
+	setCurrentPlay(play) {
+		fetch(`/api/${play}`)
+		.then (res => res.json())
+		.then(play => { 
+			this.setState({ currentPlay: play });
+		})
+		.catch(err => console.error(err.stack));
+	}
+
 	render() {
+		const currentPlay = this.state.currentPlay;
+		const playName = currentPlay[0].play_name;
 		return (
+			<div><PlaySelectorContainer setCurrentPlay={this.setCurrentPlay} />
 			<div>
-			<h1>{this.state.currentPlay[0].play_name}</h1>
-			{this.state.currentPlay.map((line, i) => {
-				line = Object.assign({}, line, {index: i});
+			<h1>{playName}</h1>
+			{currentPlay.map((line, i) => {
+				line.index = i;
 				return (
 					<Line 
 						key={line.line_id} 
@@ -62,7 +76,7 @@ class App extends Component {
 					/>
 				)})
 			}
-			</div>
+			</div></div>
 		)
 	}
 }
