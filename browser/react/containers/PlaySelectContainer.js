@@ -6,7 +6,7 @@ class PlaySelectContainer extends Component {
 		super();
 
 		this.state = {
-			selectedPlay: ''
+			selectedPlay: 'Henry-IV'
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -20,7 +20,7 @@ class PlaySelectContainer extends Component {
 
 	handleSubmit(e){
 		e.preventDefault();
-		this.props.setCurrentPlay(this.state.selectedPlay);
+		this.props.loadPlay(this.state.selectedPlay);
 	}
 
 	render(){
@@ -29,5 +29,17 @@ class PlaySelectContainer extends Component {
 			handleSubmit={this.handleSubmit}/>
 	}
 }
+
+// ========== REACT-REDUX ==========
+import { connect } from 'react-redux';
+import { fetchPlay } from '../actions';
+
+const mapDispatchToProps = dispatch => ({
+	loadPlay (playName) {
+		dispatch(fetchPlay(playName))
+	}
+});
+
+PlaySelectContainer = connect(null, mapDispatchToProps)(PlaySelectContainer);
 
 export default PlaySelectContainer;
