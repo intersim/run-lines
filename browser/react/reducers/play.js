@@ -1,4 +1,4 @@
-import play from '../../../data/A-Midsummer-nights-dream.json';
+import play from '../../../data/plays/Henry-IV.json';
 
 const currentPlay = (state = play, action) => {
 	switch (action.type) {
