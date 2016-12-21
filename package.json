@@ -4,7 +4,8 @@
   "description": "",
   "main": "server/start.js",
   "scripts": {
-    "start": "webpack -w & nodemon --watch server -e js,html server/start.js"
+    "build": "webpack -w",
+    "start": "nodemon --watch server -e js,html server/start.js"
   },
   "author": "",
   "license": "ISC",
