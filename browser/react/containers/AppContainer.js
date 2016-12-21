@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import Line from '../components/Line';
+import LineContainer from './LineContainer';
 import PlaySelectContainer from './PlaySelectContainer';
 import ActSelectContainer from './ActSelectContainer';
+import CharacterSelectContainer from './CharacterSelectContainer';
 
 class App extends Component {
 	render() {
@@ -10,7 +11,7 @@ class App extends Component {
 		const playName = currentPlay[0].play_name;
 
 		return (
-			<div><PlaySelectContainer /><ActSelectContainer />
+			<div><PlaySelectContainer /><ActSelectContainer /><CharacterSelectContainer />
 			<div>
 			<h1>{playName}</h1>
 			</div>
@@ -18,10 +19,9 @@ class App extends Component {
 			{currentPlay.map((line, i) => {
 				line.index = i;
 				return (
-					<Line 
-						key={line.line_id} 
-						line={line} 
-						startPlayingFromLine={this.startPlayingFromLine} 
+					<LineContainer 
+						key={line.line_id}
+						line={line}
 					/>
 				)})
 			}

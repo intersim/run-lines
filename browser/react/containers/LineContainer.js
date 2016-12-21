@@ -1,8 +1,19 @@
 import Line from '../components/Line';
 import { connect } from 'react-redux';
+import { startPlayingFromLine } from '../actions';
 
-// mapStateToProps
-// need the currentPlay and currentLine
+const mapStateToProps = ({ currentPlay, currentLine }, { line }) => {
+	return {
+		currentPlay,
+		currentLine,
+		line
+	}
+};
 
-// mapDispatchToProps
-// need: startPlayingFromLine(line, play, index)
+const mapDispatchToProps = dispatch => ({
+	startPlayingFromLine(line, play) {
+		dispatch(startPlayingFromLine(line, play));
+	}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Line);

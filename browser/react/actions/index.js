@@ -1,9 +1,15 @@
 /* ========== CONSTANTS ========== */
 const LOAD_PLAY = 'LOAD_PLAY';
+const LOAD_CHARACTERS = 'LOAD_CHARACTERS';
 const SET_CURRENT_LINE = 'SET_CURRENT_LINE';
 
 /* ========== ACTION CREATORS ========== */
 export const loadPlay = play => ({ type: LOAD_PLAY, play });
+
+export const loadCharacters = characters => ({
+	type: LOAD_CHARACTERS,
+	characters
+});
 
 export const setCurrentLine = line => ({
 	type: SET_CURRENT_LINE,
@@ -23,7 +29,18 @@ export const fetchPlay = playName => {
 	}
 };
 
-const sayLine = line => {
+export const fetchCharacters = playName => {
+	return dispatch => {
+		fetch(`/api/${playName}/characters`)
+		.then(res => res.json())
+		.then(characters => {
+			dispatch(loadCharacters(characters))
+		})
+		.catch(err => console.error(err.stack));
+	}
+}
+
+export const sayLine = line => {
 	return dispatch => {
 		const synth = window.speechSynthesis;
 
@@ -42,7 +59,7 @@ const sayLine = line => {
 	}
 }
 	
-export const startPlayingFromLine = (line, play, index) => {
+export const startPlayingFromLine = (line, play) => {
 	return dispatch => {
 		dispatch(sayLine(line));
 
@@ -53,7 +70,7 @@ export const startPlayingFromLine = (line, play, index) => {
 
 		if (sameSpeaker && sameSpeech && line.line_number && nextLine.line_number) {
 			nextLine.index = nextLineIdx;
-			dispatch(startPlayingFromLine(nextLine));
+			dispatch(startPlayingFromLine(nextLine, play));
 		};
 	}
 }
