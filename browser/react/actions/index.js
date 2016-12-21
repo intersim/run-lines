@@ -20,7 +20,7 @@ export const setCurrentLine = line => ({
 
 export const fetchPlay = playName => {
 	return dispatch => {
-		fetch(`/api/${playName}`)
+		fetch(`/api/plays/${playName}`)
 		.then (res => res.json())
 		.then(play => { 
 			dispatch(loadPlay(play));
@@ -31,7 +31,7 @@ export const fetchPlay = playName => {
 
 export const fetchCharacters = playName => {
 	return dispatch => {
-		fetch(`/api/${playName}/characters`)
+		fetch(`/api/plays/${playName}/characters`)
 		.then(res => res.json())
 		.then(characters => {
 			dispatch(loadCharacters(characters))
