@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CharacterSelect from '../components/CharacterSelect';
 
-class CharacterSelectContainer extends Component {
+class CharacterSelectForm extends Component {
 	constructor(){
 		super();
 
@@ -26,15 +26,23 @@ class CharacterSelectContainer extends Component {
 }
 
 // ========== REACT-REDUX ==========
-// import { connect } from 'react-redux';
-// import { fetchCharacters } from '../actions';
+import { connect } from 'react-redux';
+import { fetchCharacters } from '../actions';
 
-// const mapDispatchToProps = dispatch => ({
-// 	loadCharacters (playName) {
-// 		dispatch(fetchCharacters(playName))
-// 	}
-// });
+const mapStateToProps = ({ characters }, { handleChange }) => {
+	console.log(characters);
+	return ({
+		characters,
+		handleChange
+	});
+}
 
-// CharacterSelectContainer = connect(null, mapDispatchToProps)(CharacterSelectContainer);
+const mapDispatchToProps = dispatch => ({
+	loadCharacters (playName) {
+		dispatch(fetchCharacters(playName))
+	}
+});
+
+const CharacterSelectContainer = connect(mapStateToProps, mapDispatchToProps)(CharacterSelectForm);
 
 export default CharacterSelectContainer;

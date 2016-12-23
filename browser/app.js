@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppContainer from './react/containers/AppContainer';
+import Routes from './react/Routes';
 
 import { Provider } from 'react-redux';
 import reducer from './react/reducers';
@@ -18,7 +18,7 @@ const store = createStore(
 
 ReactDOM.render(
 	<Provider store={store}>
-	  <AppContainer />
+	  <Routes />
   </Provider>,
   document.getElementById('app')
 );
