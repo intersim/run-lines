@@ -1,6 +1,7 @@
 /* ========== CONSTANTS ========== */
 const LOAD_PLAY = 'LOAD_PLAY';
 const LOAD_CHARACTERS = 'LOAD_CHARACTERS';
+const SET_CURRENT_CHARACTER = 'SET_CURRENT_CHARACTER';
 const SET_CURRENT_LINE = 'SET_CURRENT_LINE';
 
 /* ========== ACTION CREATORS ========== */
@@ -10,6 +11,11 @@ export const loadCharacters = characters => ({
 	type: LOAD_CHARACTERS,
 	characters
 });
+
+export const setCurrentCharacter = character => ({
+	type: SET_CURRENT_CHARACTER,
+	character
+})
 
 export const setCurrentLine = line => ({
 	type: SET_CURRENT_LINE,

@@ -7,7 +7,7 @@ import CharacterSelectContainer from '../containers/CharacterSelectContainer';
 
 const App = props => {
 	const currentPlay = props.currentPlay;
-	const playName = currentPlay[0].play_name;
+	const playName = currentPlay.length ? currentPlay[0].play_name : null;
 
 	return (
 		<div>

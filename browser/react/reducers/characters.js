@@ -1,4 +1,4 @@
-const currentPlayCharacters = (state = [], action) => {
+export const currentPlayCharacters = (state = [], action) => {
 	switch (action.type) {
 		case 'LOAD_CHARACTERS':
 			return action.characters;
@@ -8,4 +8,12 @@ const currentPlayCharacters = (state = [], action) => {
 	}
 }
 
-export default currentPlayCharacters;
+export const currentCharacter = (state = '', action) => {
+	switch (action.type) {
+		case 'SET_CURRENT_CHARACTER':
+			return action.character;
+
+		default:
+			return state;
+	}
+}

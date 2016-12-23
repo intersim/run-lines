@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import currentPlay from './play';
 import currentLine from './line';
+import { currentPlayCharacters as characters, currentCharacter } from './characters';
 
 /*
 	play
@@ -13,8 +14,10 @@ import currentLine from './line';
 
 
 const rootReducer = combineReducers({
+	currentCharacter,
 	currentPlay,
-	currentLine
+	currentLine,
+	characters
 });
 
 export default rootReducer;
