@@ -20,7 +20,8 @@ class CharacterSelectForm extends Component {
 
 	render(){
 		return <CharacterSelect 
-			handleChange={this.handleChange} 
+				handleChange={this.handleChange}
+				characters={this.props.characters}
 			/>
 	}
 }
@@ -30,19 +31,12 @@ import { connect } from 'react-redux';
 import { fetchCharacters } from '../actions';
 
 const mapStateToProps = ({ characters }, { handleChange }) => {
-	console.log(characters);
-	return ({
+	return {
 		characters,
 		handleChange
-	});
+	};
 }
 
-const mapDispatchToProps = dispatch => ({
-	loadCharacters (playName) {
-		dispatch(fetchCharacters(playName))
-	}
-});
-
-const CharacterSelectContainer = connect(mapStateToProps, mapDispatchToProps)(CharacterSelectForm);
+const CharacterSelectContainer = connect(mapStateToProps)(CharacterSelectForm);
 
 export default CharacterSelectContainer;
