@@ -4,18 +4,12 @@ import CharacterSelect from '../components/CharacterSelect';
 class CharacterSelectForm extends Component {
 	constructor(){
 		super();
-
-		this.state = {
-			selectedCharacter: ''
-		}
-
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleChange(e){
 		const selectedCharacter = e.target.value;
-		console.log(selectedCharacter);
-		this.setState({ selectedCharacter });
+		this.props.setCurrentCharacter(selectedCharacter);
 	}
 
 	render(){
@@ -28,15 +22,19 @@ class CharacterSelectForm extends Component {
 
 // ========== REACT-REDUX ==========
 import { connect } from 'react-redux';
-import { fetchCharacters } from '../actions';
+import { fetchCharacters, setCurrentCharacter } from '../actions';
 
-const mapStateToProps = ({ characters }, { handleChange }) => {
-	return {
-		characters,
-		handleChange
-	};
-}
+const mapStateToProps = ({ characters }, { handleChange }) => ({
+	characters,
+	handleChange
+});
 
-const CharacterSelectContainer = connect(mapStateToProps)(CharacterSelectForm);
+const mapDispatchToProps = dispatch => ({
+	setCurrentCharacter(character) {
+		dispatch(setCurrentCharacter(character));
+	}
+});
+
+const CharacterSelectContainer = connect(mapStateToProps, mapDispatchToProps)(CharacterSelectForm);
 
 export default CharacterSelectContainer;
