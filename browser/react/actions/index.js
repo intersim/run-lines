@@ -3,6 +3,8 @@ const LOAD_PLAY = 'LOAD_PLAY';
 const LOAD_CHARACTERS = 'LOAD_CHARACTERS';
 const SET_CURRENT_CHARACTER = 'SET_CURRENT_CHARACTER';
 const SET_CURRENT_LINE = 'SET_CURRENT_LINE';
+const START_LISTENING = 'START_LISTENING';
+const STOP_LISTENING = 'STOP_LISTENING';
 
 /* ========== ACTION CREATORS ========== */
 export const loadPlay = play => ({ type: LOAD_PLAY, play });
@@ -21,6 +23,14 @@ export const setCurrentLine = line => ({
 	type: SET_CURRENT_LINE,
 	line
 });
+
+export const startListening = () => ({
+	type: START_LISTENING
+})
+
+export const stopListening = () => ({
+	type: STOP_LISTENING
+})
 
 // ========== ASYNC ==========
 
@@ -78,5 +88,36 @@ export const startPlayingFromLine = (line, play) => {
 			nextLine.index = nextLineIdx;
 			dispatch(startPlayingFromLine(nextLine, play));
 		};
+	}
+}
+
+export const listenToLine = (line, isListening) => {
+
+	return dispatch => {
+
+		// if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
+
+		// var recognition = new webkitSpeechRecognition();
+	 //  recognition.continuous = true;
+	 //  recognition.interimResults = true;
+
+	 //  recognition.onerror = function(event) {
+	 //  	console.error("Error: ", event.error);
+	 //  };
+
+	 //  recognition.onresult = function(event) {
+	 //  	if (!event.results[0].isFinal) console.log("Thinking...")
+	 //  	if (event.results[0].isFinal) console.log(event.results[0][0].transcript);
+  // 	}
+
+		// if (isListening) {
+		// 	dispatch(stopListening());
+		// 	recognition.stop();
+		// }
+
+		// else {
+		// 	dispatch(startListening());
+		// 	recognition.start();
+		// }
 	}
 }
