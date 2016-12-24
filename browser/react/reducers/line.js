@@ -21,4 +21,17 @@ export const isListening = (state = false, action) => {
 	}
 }
 
+export const isSpeaking = (state = false, action) => {
+	switch (action.type) {
+		case 'START_SPEAKING': 
+			return true;
+
+		case 'STOP_SPEAKING':
+			return false;
+
+		default:
+			return state;
+	}
+}
+
 export default currentLine;

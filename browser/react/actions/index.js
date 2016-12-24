@@ -5,6 +5,8 @@ const SET_CURRENT_CHARACTER = 'SET_CURRENT_CHARACTER';
 const SET_CURRENT_LINE = 'SET_CURRENT_LINE';
 const START_LISTENING = 'START_LISTENING';
 const STOP_LISTENING = 'STOP_LISTENING';
+const START_SPEAKING = 'START_SPEAKING';
+const STOP_SPEAKING = 'STOP_SPEAKING';
 
 /* ========== ACTION CREATORS ========== */
 export const loadPlay = play => ({ type: LOAD_PLAY, play });
@@ -30,6 +32,14 @@ export const startListening = () => ({
 
 export const stopListening = () => ({
 	type: STOP_LISTENING
+})
+
+export const startSpeaking = () => ({
+	type: START_SPEAKING
+})
+
+export const stopSpeaking = () => ({
+	type: STOP_SPEAKING
 })
 
 // ========== ASYNC ==========
@@ -58,6 +68,9 @@ export const fetchCharacters = playName => {
 
 export const sayLine = line => {
 	return dispatch => {
+		dispatch(setCurrentLine(line));
+		dispatch(startSpeaking());
+
 		const synth = window.speechSynthesis;
 
 		// // this is only saying one line...?
@@ -70,8 +83,14 @@ export const sayLine = line => {
 
 		const utterThis = new SpeechSynthesisUtterance(line.text_entry);
 		synth.speak(utterThis);
-		
-		dispatch(setCurrentLine(line));
+	}
+}
+
+export const stopSpeakingLine = () => {
+	return dispatch => {
+		window.speechSynthesis.cancel();
+
+		dispatch(stopSpeaking());
 	}
 }
 	
