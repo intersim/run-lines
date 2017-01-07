@@ -70,8 +70,8 @@ export const fetchCharacters = playName => {
 	}
 }
 
-export const sayLine = line => {
-	return dispatch => {
+export const sayLine = (line, nextLine) => {
+	return (dispatch, getState) => {
 		dispatch(setCurrentLine(line));
 		dispatch(startSpeaking());
 
@@ -85,8 +85,17 @@ export const sayLine = line => {
 		// 	const ukMale = voices[2];
 		// }
 
+		const { currentCharacter } = getState();
+
 		const utterThis = new SpeechSynthesisUtterance(line.text_entry);
-		// E: Does this need to be global?
+
+		utterThis.onend = (e) => {
+			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
+				console.log("now it's your turn to speak!")
+				// dispatch(listenToLine(nextLine))	
+			}
+		}
+		
 		window.speechSynthesis.speak(utterThis);
 	}
 }
@@ -94,19 +103,18 @@ export const sayLine = line => {
 export const stopSpeakingLine = () => {
 	return dispatch => {
 		window.speechSynthesis.cancel();
-
 		dispatch(stopSpeaking());
 	}
 }
 	
 export const startPlayingFromLine = (line, play) => {
-	return dispatch => {
-		dispatch(sayLine(line));
-
+	return (dispatch) => {
 		const nextLineIdx = Number(line.index) + 1;
 		const nextLine = play[nextLineIdx];
 		const sameSpeaker = nextLine.speaker === line.speaker;
 		const sameSpeech = nextLine.speech_number === line.speech_number;
+
+		dispatch(sayLine(line, nextLine));
 
 		if (sameSpeaker && sameSpeech && line.line_number && nextLine.line_number) {
 			nextLine.index = nextLineIdx;
@@ -119,29 +127,29 @@ export const listenToLine = (line, isListening) => {
 
 	return dispatch => {
 
-		// if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
+		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 
-		// var recognition = new webkitSpeechRecognition();
-	 //  recognition.continuous = true;
-	 //  recognition.interimResults = true;
+		var recognition = new webkitSpeechRecognition();
+	  recognition.continuous = true;
+	  recognition.interimResults = true;
 
-	 //  recognition.onerror = function(event) {
-	 //  	console.error("Error: ", event.error);
-	 //  };
+	  recognition.onerror = e  => console.error("Error: ", e.error)
 
-	 //  recognition.onresult = function(event) {
-	 //  	if (!event.results[0].isFinal) console.log("Thinking...")
-	 //  	if (event.results[0].isFinal) console.log(event.results[0][0].transcript);
-  // 	}
+	  recognition.onresult = e => {
+	  	if (!e.results[0].isFinal) console.log("Thinking...")
+	  	if (e.results[0].isFinal) console.log(e.results[0][0].transcript);
+  	}
 
-		// if (isListening) {
-		// 	dispatch(stopListening());
-		// 	recognition.stop();
-		// }
+  	recognition.onspeechend = e => console.log("Done listening, time to start speaking again!")
 
-		// else {
-		// 	dispatch(startListening());
-		// 	recognition.start();
-		// }
+		if (isListening) {
+			dispatch(stopListening());
+			recognition.stop();
+		}
+
+		else {
+			dispatch(startListening());
+			recognition.start();
+		}
 	}
 }
