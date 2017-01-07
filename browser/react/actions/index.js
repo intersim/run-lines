@@ -7,9 +7,13 @@ const START_LISTENING = 'START_LISTENING';
 const STOP_LISTENING = 'STOP_LISTENING';
 const START_SPEAKING = 'START_SPEAKING';
 const STOP_SPEAKING = 'STOP_SPEAKING';
+const TOGGLE_SPEAKING = 'TOGGLE_SPEAKING';
 
 /* ========== ACTION CREATORS ========== */
-export const loadPlay = play => ({ type: LOAD_PLAY, play });
+export const loadPlay = play => ({ 
+	type: LOAD_PLAY, 
+	play 
+});
 
 export const loadCharacters = characters => ({
 	type: LOAD_CHARACTERS,
@@ -42,7 +46,7 @@ export const stopSpeaking = () => ({
 	type: STOP_SPEAKING
 })
 
-// ========== ASYNC ==========
+/* ========== ASYNC ========== */
 
 export const fetchPlay = playName => {
 	return dispatch => {
@@ -71,7 +75,7 @@ export const sayLine = line => {
 		dispatch(setCurrentLine(line));
 		dispatch(startSpeaking());
 
-		const synth = window.speechSynthesis;
+		// const synth = window.speechSynthesis;
 
 		// // this is only saying one line...?
 		// synth.onvoiceschanged = () => {
@@ -82,7 +86,8 @@ export const sayLine = line => {
 		// }
 
 		const utterThis = new SpeechSynthesisUtterance(line.text_entry);
-		synth.speak(utterThis);
+		// E: Does this need to be global?
+		window.speechSynthesis.speak(utterThis);
 	}
 }
 

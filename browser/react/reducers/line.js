@@ -1,4 +1,4 @@
-const currentLine = (state = {}, action) => {
+export const currentLine = (state = {}, action) => {
 	switch (action.type) {
 		case 'SET_CURRENT_LINE':
 			return action.line;
@@ -33,5 +33,3 @@ export const isSpeaking = (state = false, action) => {
 			return state;
 	}
 }
-
-export default currentLine;
