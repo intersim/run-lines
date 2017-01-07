@@ -3,9 +3,17 @@ const LOAD_PLAY = 'LOAD_PLAY';
 const LOAD_CHARACTERS = 'LOAD_CHARACTERS';
 const SET_CURRENT_CHARACTER = 'SET_CURRENT_CHARACTER';
 const SET_CURRENT_LINE = 'SET_CURRENT_LINE';
+const START_LISTENING = 'START_LISTENING';
+const STOP_LISTENING = 'STOP_LISTENING';
+const START_SPEAKING = 'START_SPEAKING';
+const STOP_SPEAKING = 'STOP_SPEAKING';
+const TOGGLE_SPEAKING = 'TOGGLE_SPEAKING';
 
 /* ========== ACTION CREATORS ========== */
-export const loadPlay = play => ({ type: LOAD_PLAY, play });
+export const loadPlay = play => ({ 
+	type: LOAD_PLAY, 
+	play 
+});
 
 export const loadCharacters = characters => ({
 	type: LOAD_CHARACTERS,
@@ -22,7 +30,23 @@ export const setCurrentLine = line => ({
 	line
 });
 
-// ========== ASYNC ==========
+export const startListening = () => ({
+	type: START_LISTENING
+})
+
+export const stopListening = () => ({
+	type: STOP_LISTENING
+})
+
+export const startSpeaking = () => ({
+	type: START_SPEAKING
+})
+
+export const stopSpeaking = () => ({
+	type: STOP_SPEAKING
+})
+
+/* ========== ASYNC ========== */
 
 export const fetchPlay = playName => {
 	return dispatch => {
@@ -48,7 +72,10 @@ export const fetchCharacters = playName => {
 
 export const sayLine = line => {
 	return dispatch => {
-		const synth = window.speechSynthesis;
+		dispatch(setCurrentLine(line));
+		dispatch(startSpeaking());
+
+		// const synth = window.speechSynthesis;
 
 		// // this is only saying one line...?
 		// synth.onvoiceschanged = () => {
@@ -59,9 +86,16 @@ export const sayLine = line => {
 		// }
 
 		const utterThis = new SpeechSynthesisUtterance(line.text_entry);
-		synth.speak(utterThis);
-		
-		dispatch(setCurrentLine(line));
+		// E: Does this need to be global?
+		window.speechSynthesis.speak(utterThis);
+	}
+}
+
+export const stopSpeakingLine = () => {
+	return dispatch => {
+		window.speechSynthesis.cancel();
+
+		dispatch(stopSpeaking());
 	}
 }
 	
@@ -78,5 +112,36 @@ export const startPlayingFromLine = (line, play) => {
 			nextLine.index = nextLineIdx;
 			dispatch(startPlayingFromLine(nextLine, play));
 		};
+	}
+}
+
+export const listenToLine = (line, isListening) => {
+
+	return dispatch => {
+
+		// if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
+
+		// var recognition = new webkitSpeechRecognition();
+	 //  recognition.continuous = true;
+	 //  recognition.interimResults = true;
+
+	 //  recognition.onerror = function(event) {
+	 //  	console.error("Error: ", event.error);
+	 //  };
+
+	 //  recognition.onresult = function(event) {
+	 //  	if (!event.results[0].isFinal) console.log("Thinking...")
+	 //  	if (event.results[0].isFinal) console.log(event.results[0][0].transcript);
+  // 	}
+
+		// if (isListening) {
+		// 	dispatch(stopListening());
+		// 	recognition.stop();
+		// }
+
+		// else {
+		// 	dispatch(startListening());
+		// 	recognition.start();
+		// }
 	}
 }
