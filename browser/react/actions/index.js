@@ -9,6 +9,22 @@ const START_SPEAKING = 'START_SPEAKING';
 const STOP_SPEAKING = 'STOP_SPEAKING';
 const TOGGLE_SPEAKING = 'TOGGLE_SPEAKING';
 
+/* ========== HELPERS ========== */
+const getNextLine = (line, play) => {
+	const nextLineIdx = Number(line.index) + 1
+	const nextLine = play[nextLineIdx]
+	nextLine.index = nextLineIdx
+	return nextLine	
+}
+
+const getNextSpeakerLine = (line, play) => {
+	let currentLine = line
+	while (currentLine.speaker == getNextLine(currentLine, play).speaker) {
+		currentLine = getNextLine(currentLine, play)
+	}
+	return getNextLine(currentLine, play)
+}
+
 /* ========== ACTION CREATORS ========== */
 export const loadPlay = play => ({ 
 	type: LOAD_PLAY, 
@@ -70,8 +86,8 @@ export const fetchCharacters = playName => {
 	}
 }
 
-export const sayLine = line => {
-	return dispatch => {
+export const sayLine = (line, nextLine, play) => {
+	return (dispatch, getState) => {
 		dispatch(setCurrentLine(line));
 		dispatch(startSpeaking());
 
@@ -85,8 +101,17 @@ export const sayLine = line => {
 		// 	const ukMale = voices[2];
 		// }
 
+		const { currentCharacter } = getState();
+
 		const utterThis = new SpeechSynthesisUtterance(line.text_entry);
-		// E: Does this need to be global?
+
+		utterThis.onend = e => {
+			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
+				console.log("now it's your turn to speak!")
+				dispatch(listenToLine(nextLine, play))	
+			}
+		}
+		
 		window.speechSynthesis.speak(utterThis);
 	}
 }
@@ -94,54 +119,54 @@ export const sayLine = line => {
 export const stopSpeakingLine = () => {
 	return dispatch => {
 		window.speechSynthesis.cancel();
-
 		dispatch(stopSpeaking());
 	}
 }
 	
 export const startPlayingFromLine = (line, play) => {
-	return dispatch => {
-		dispatch(sayLine(line));
-
-		const nextLineIdx = Number(line.index) + 1;
-		const nextLine = play[nextLineIdx];
+	return (dispatch) => {
+		const nextLine = getNextLine(line, play)
 		const sameSpeaker = nextLine.speaker === line.speaker;
 		const sameSpeech = nextLine.speech_number === line.speech_number;
 
+		dispatch(sayLine(line, nextLine, play));
+
 		if (sameSpeaker && sameSpeech && line.line_number && nextLine.line_number) {
-			nextLine.index = nextLineIdx;
 			dispatch(startPlayingFromLine(nextLine, play));
 		};
 	}
 }
 
-export const listenToLine = (line, isListening) => {
+export const listenToLine = (line, play, isListening) => {
 
 	return dispatch => {
+		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 
-		// if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
+		var recognition = new webkitSpeechRecognition();
+	  recognition.continuous = true;
+	  recognition.interimResults = true;
 
-		// var recognition = new webkitSpeechRecognition();
-	 //  recognition.continuous = true;
-	 //  recognition.interimResults = true;
+	  recognition.onerror = e => console.error("Error: ", e.error)
 
-	 //  recognition.onerror = function(event) {
-	 //  	console.error("Error: ", event.error);
-	 //  };
+	  recognition.onresult = e => {
+	  	// if (!e.results[0].isFinal) console.log("Thinking...")
+	  	if (e.results[0].isFinal) {
+	  		// console.log(e.results[0][0].transcript);
+	  		console.log("you're done, my turn now!")
+	  		recognition.stop()
+	  		const nextLine = getNextSpeakerLine(line, play)
+	  		dispatch(startPlayingFromLine(nextLine, play))
+	  	}
+  	}
 
-	 //  recognition.onresult = function(event) {
-	 //  	if (!event.results[0].isFinal) console.log("Thinking...")
-	 //  	if (event.results[0].isFinal) console.log(event.results[0][0].transcript);
-  // 	}
+		if (isListening) {
+			dispatch(stopListening());
+			recognition.stop();
+		}
 
-		// if (isListening) {
-		// 	dispatch(stopListening());
-		// 	recognition.stop();
-		// }
-
-		// else {
-		// 	dispatch(startListening());
-		// 	recognition.start();
-		// }
+		else {
+			dispatch(startListening());
+			recognition.start();
+		}
 	}
 }
