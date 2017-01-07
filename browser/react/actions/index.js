@@ -9,6 +9,22 @@ const START_SPEAKING = 'START_SPEAKING';
 const STOP_SPEAKING = 'STOP_SPEAKING';
 const TOGGLE_SPEAKING = 'TOGGLE_SPEAKING';
 
+/* ========== HELPERS ========== */
+const getNextLine = (line, play) => {
+	const nextLineIdx = Number(line.index) + 1
+	const nextLine = play[nextLineIdx]
+	nextLine.index = nextLineIdx
+	return nextLine	
+}
+
+const getNextSpeakerLine = (line, play) => {
+	let currentLine = line
+	while (currentLine.speaker == getNextLine(currentLine, play).speaker) {
+		currentLine = getNextLine(currentLine, play)
+	}
+	return getNextLine(currentLine, play)
+}
+
 /* ========== ACTION CREATORS ========== */
 export const loadPlay = play => ({ 
 	type: LOAD_PLAY, 
@@ -70,7 +86,7 @@ export const fetchCharacters = playName => {
 	}
 }
 
-export const sayLine = (line, nextLine) => {
+export const sayLine = (line, nextLine, play) => {
 	return (dispatch, getState) => {
 		dispatch(setCurrentLine(line));
 		dispatch(startSpeaking());
@@ -92,7 +108,7 @@ export const sayLine = (line, nextLine) => {
 		utterThis.onend = (e) => {
 			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
 				console.log("now it's your turn to speak!")
-				// dispatch(listenToLine(nextLine))	
+				dispatch(listenToLine(nextLine, play))	
 			}
 		}
 		
@@ -109,38 +125,39 @@ export const stopSpeakingLine = () => {
 	
 export const startPlayingFromLine = (line, play) => {
 	return (dispatch) => {
-		const nextLineIdx = Number(line.index) + 1;
-		const nextLine = play[nextLineIdx];
+		const nextLine = getNextLine(line, play)
 		const sameSpeaker = nextLine.speaker === line.speaker;
 		const sameSpeech = nextLine.speech_number === line.speech_number;
 
-		dispatch(sayLine(line, nextLine));
+		dispatch(sayLine(line, nextLine, play));
 
 		if (sameSpeaker && sameSpeech && line.line_number && nextLine.line_number) {
-			nextLine.index = nextLineIdx;
 			dispatch(startPlayingFromLine(nextLine, play));
 		};
 	}
 }
 
-export const listenToLine = (line, isListening) => {
+export const listenToLine = (line, play, isListening) => {
 
 	return dispatch => {
-
 		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 
 		var recognition = new webkitSpeechRecognition();
 	  recognition.continuous = true;
 	  recognition.interimResults = true;
 
-	  recognition.onerror = e  => console.error("Error: ", e.error)
+	  recognition.onerror = e => console.error("Error: ", e.error)
 
 	  recognition.onresult = e => {
-	  	if (!e.results[0].isFinal) console.log("Thinking...")
-	  	if (e.results[0].isFinal) console.log(e.results[0][0].transcript);
+	  	// if (!e.results[0].isFinal) console.log("Thinking...")
+	  	if (e.results[0].isFinal) {
+	  		// console.log(e.results[0][0].transcript);
+	  		console.log("you're done, my turn now!")
+	  		recognition.stop()
+	  		const nextLine = getNextSpeakerLine(line, play)
+	  		dispatch(startPlayingFromLine(nextLine, play))
+	  	}
   	}
-
-  	recognition.onspeechend = e => console.log("Done listening, time to start speaking again!")
 
 		if (isListening) {
 			dispatch(stopListening());
