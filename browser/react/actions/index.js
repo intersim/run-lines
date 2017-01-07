@@ -105,7 +105,7 @@ export const sayLine = (line, nextLine, play) => {
 
 		const utterThis = new SpeechSynthesisUtterance(line.text_entry);
 
-		utterThis.onend = (e) => {
+		utterThis.onend = e => {
 			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
 				console.log("now it's your turn to speak!")
 				dispatch(listenToLine(nextLine, play))	
