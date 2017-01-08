@@ -37,7 +37,7 @@ const splitPlayIntoActsAndScenes = play => {
 	play.forEach(line => {
 
 	// for stage directions that don't have a line number:
-		if (!line.line_number) line.line_number = [lastAct, lastScene, emptyLineNum]
+		if (!line.line_number) line.line_number = [lastAct, lastScene, emptyLineNum].join('.')
 		if (line.text_entry.includes("ACT")) lastAct++, lastScene++
 
 		const [act, scene] = line.line_number.split(".").map(str => Number(str))
