@@ -109,6 +109,10 @@ export const sayLine = (line, nextLine, play) => {
 			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
 				console.log("now it's your turn to speak!")
 				dispatch(listenToLine(nextLine, play))	
+			} 
+			else {
+				// console.log(nextLine)
+				dispatch(startPlayingFromLine(nextLine, play))
 			}
 		}
 		
@@ -124,7 +128,7 @@ export const stopSpeakingLine = () => {
 }
 	
 export const startPlayingFromLine = (line, play) => {
-	return (dispatch) => {
+	return dispatch => {
 		const nextLine = getNextLine(line, play)
 		const sameSpeaker = nextLine.speaker === line.speaker;
 		const sameSpeech = nextLine.speech_number === line.speech_number;
@@ -149,12 +153,14 @@ export const listenToLine = (line, play, isListening) => {
 	  recognition.onerror = e => console.error("Error: ", e.error)
 
 	  recognition.onresult = e => {
-	  	// if (!e.results[0].isFinal) console.log("Thinking...")
 	  	if (e.results[0].isFinal) {
+	  		// // To get transcript of what user said:
 	  		// console.log(e.results[0][0].transcript);
-	  		console.log("you're done, my turn now!")
+	  		console.log("you're done, time for the computer to speak")
+	  		dispatch(stopListening());
 	  		recognition.stop()
 	  		const nextLine = getNextSpeakerLine(line, play)
+	  		console.log(nextLine)
 	  		dispatch(startPlayingFromLine(nextLine, play))
 	  	}
   	}

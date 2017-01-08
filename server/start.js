@@ -1,11 +1,11 @@
 'use strict';
 
-var app = require('./app');
+const app = require('./app');
 
-var port = 8080;
-var server = app.listen(port, function (err) {
+const portNum = 8080;
+const server = app.listen(portNum, err => {
   if (err) throw err;
-  console.log('HTTP server patiently listening on port', port);
+  console.log(`HTTP server patiently listening on port ${portNum}`);
 });
 
 module.exports = server;
