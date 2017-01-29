@@ -9,12 +9,18 @@ const Routes = ({ fetchInitialData }) => (
 	</Router>
 )
 
-import { fetchPlay, fetchCharacters } from './actions';
+import { fetchPlay, loadPlay, fetchCharacters } from './actions';
+import testScene from '../../data/twelfth-night-s1.js';
 
 const mapDispatchToProps = dispatch => ({
+	// fetchInitialData() {
+	// 	dispatch(fetchPlay('Henry-IV'));
+	// 	dispatch(fetchCharacters('Henry-IV'));
+	// }
+	// // only fetching one scene now for debugging purposes
 	fetchInitialData() {
-		dispatch(fetchPlay('Henry-IV'));
-		dispatch(fetchCharacters('Henry-IV'));
+		dispatch(loadPlay(testScene));
+		dispatch(fetchCharacters('Twelfth-Night'));
 	}
 })
 
