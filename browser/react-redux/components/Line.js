@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 const Line = props => {
 	const line = props.line;
+	const currentLine = props.currentLine;
 	const play = props.currentPlay;
 	const isListening = props.isListening;
 	const isSpeaking = props.isSpeaking;

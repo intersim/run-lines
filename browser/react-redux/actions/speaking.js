@@ -41,13 +41,12 @@ export const sayLine = (line, nextLine, play) => {
 
 		// If the next line should be said by the app user, then listen; otherwise, keep saying the next lines
 		utterThis.onend = e => {
-			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
+			if (!nextLine) return
+			else if	(nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
 				console.log("now it's your turn to speak!")
 				dispatch(listenToLine(nextLine, play))	
-			} else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase()) {
-				console.log("MOVE ON")
-				// move on to next character's speech
-				dispatch(startSpeakingFromLine(nextLine, play))
+			} else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
+				dispatch(sayLine(nextLine, getNextLine(nextLine, play), play))
 			}
 		}
 		
@@ -62,21 +61,23 @@ export const stopSpeakingLine = () => {
 	}
 }
 
+// EI: stop using this method?
 // For saying a whole speech by one character
 export const startSpeakingFromLine = (line, play) => {
 	return (dispatch, getState) => {
 		const nextLine = getNextLine(line, play)
-		if (!nextLine) return;
-
-		const sameSpeaker = nextLine.speaker === line.speaker;
-		const sameSpeech = nextLine.speech_number === line.speech_number;
-		const { currentCharacter } = getState()
 
 		dispatch(sayLine(line, nextLine, play));
 
-		if (sameSpeaker && sameSpeech && line.line_number && nextLine.line_number) {
-			dispatch(startSpeakingFromLine(nextLine, play));
-		}
+		// if (!nextLine) return;
+
+		// const sameSpeaker = nextLine.speaker === line.speaker;
+		// const sameSpeech = nextLine.speech_number === line.speech_number;
+		// const { currentCharacter } = getState()
+
+		// if (sameSpeaker && sameSpeech && line.line_number && nextLine.line_number) {
+		// 	dispatch(startSpeakingFromLine(nextLine, play));
+		// }
 	}
 }
 
