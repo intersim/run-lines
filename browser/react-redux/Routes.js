@@ -9,7 +9,8 @@ const Routes = ({ fetchInitialData }) => (
 	</Router>
 )
 
-import { fetchPlay, loadPlay, fetchCharacters } from './actions';
+import { fetchPlay, loadPlay } from './actions/plays';
+import { fetchCharacters } from './actions/characters';
 import testScene from '../../data/twelfth-night-s1.js';
 
 const mapDispatchToProps = dispatch => ({

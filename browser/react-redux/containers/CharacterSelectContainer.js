@@ -22,7 +22,7 @@ class CharacterSelectForm extends Component {
 
 // ========== REACT-REDUX ==========
 import { connect } from 'react-redux';
-import { fetchCharacters, setCurrentCharacter } from '../actions';
+import { fetchCharacters, setCurrentCharacter } from '../actions/characters';
 
 const mapStateToProps = ({ characters }, { handleChange }) => ({
 	characters,
