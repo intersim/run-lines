@@ -36,7 +36,7 @@ export const listenToLine = (line, play, isListening) => {
 	  		dispatch(stopListening());
 	  		recognition.stop()
 	  		const nextLine = getNextSpeakerLine(line, play)
-	  		dispatch(sayLine(nextLine, getNextLine(nextLine, play), play))
+	  		dispatch(sayLine(nextLine, play))
 	  	}
   	}
 

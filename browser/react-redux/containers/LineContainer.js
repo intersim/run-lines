@@ -16,7 +16,7 @@ const mapStateToProps = ({ currentPlay, currentLine, isListening, isSpeaking }, 
 
 const mapDispatchToProps = dispatch => ({
 	toggleLine(line, play, isSpeaking) {
-		if (!isSpeaking) dispatch(sayLine(line, getNextLine(line, play), play));
+		if (!isSpeaking) dispatch(sayLine(line, play));
 		else dispatch(stopSpeakingLine());
 	},
 
