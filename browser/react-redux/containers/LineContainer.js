@@ -1,6 +1,8 @@
 import Line from '../components/Line';
 import { connect } from 'react-redux';
-import { startPlayingFromLine, listenToLine, stopSpeakingLine } from '../actions';
+import { sayLine, stopSpeakingLine } from '../actions/speaking';
+import { listenToLine } from '../actions/listening';
+import { getNextLine } from '../actions/utils';
 
 const mapStateToProps = ({ currentPlay, currentLine, isListening, isSpeaking }, { line }) => {
 	return {
@@ -14,7 +16,7 @@ const mapStateToProps = ({ currentPlay, currentLine, isListening, isSpeaking }, 
 
 const mapDispatchToProps = dispatch => ({
 	toggleLine(line, play, isSpeaking) {
-		if (!isSpeaking) dispatch(startPlayingFromLine(line, play));
+		if (!isSpeaking) dispatch(sayLine(line, play));
 		else dispatch(stopSpeakingLine());
 	},
 
