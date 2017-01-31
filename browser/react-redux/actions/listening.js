@@ -1,11 +1,11 @@
-import { startSpeakingFromLine } from './speaking';
+import { sayLine } from './speaking';
 
 /* ========== CONSTANTS ========== */
 const START_LISTENING = 'START_LISTENING';
 const STOP_LISTENING = 'STOP_LISTENING';
 
 /* ========== HELPERS ========== */
-import { getNextSpeakerLine } from './utils'
+import { getNextLine, getNextSpeakerLine } from './utils'
 
 /* ========== ACTION CREATORS ========== */
 export const startListening = () => ({
@@ -36,7 +36,7 @@ export const listenToLine = (line, play, isListening) => {
 	  		dispatch(stopListening());
 	  		recognition.stop()
 	  		const nextLine = getNextSpeakerLine(line, play)
-	  		dispatch(startSpeakingFromLine(nextLine, play))
+	  		dispatch(sayLine(nextLine, getNextLine(nextLine, play), play))
 	  	}
   	}
 

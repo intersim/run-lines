@@ -46,7 +46,7 @@ export const sayLine = (line, nextLine, play) => {
 				console.log("now it's your turn to speak!")
 				dispatch(listenToLine(nextLine, play))	
 			}
-			if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
+			else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
 				dispatch(sayLine(nextLine, getNextLine(nextLine, play), play))
 			}
 		}
