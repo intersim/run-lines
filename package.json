@@ -4,8 +4,9 @@
   "description": "",
   "main": "server/start.js",
   "scripts": {
-    "build": "webpack -w",
-    "start": "nodemon --watch server -e js,html server/start.js"
+    "build-watch": "webpack -w",
+    "start-dev": "nodemon --watch server -e js,html server/start.js",
+    "start": "node server/start.js"
   },
   "author": "",
   "license": "ISC",
@@ -30,5 +31,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.7.1"
+  },
+  "engine": {
+    "node": "6.0.0"
   }
 }
