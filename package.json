@@ -4,6 +4,7 @@
   "description": "",
   "main": "server/start.js",
   "scripts": {
+    "build": "webpack",
     "build-watch": "webpack -w",
     "start-dev": "nodemon --watch server -e js,html server/start.js",
     "start": "node server/start.js"

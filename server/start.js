@@ -2,7 +2,7 @@
 
 const app = require('./app');
 
-const portNum = 8080;
+const portNum = process.env.PORT || 8080;
 const server = app.listen(portNum, err => {
   if (err) throw err;
   console.log(`HTTP server patiently listening on port ${portNum}`);

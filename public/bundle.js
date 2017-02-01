@@ -29081,12 +29081,13 @@
 			var utterThis = new SpeechSynthesisUtterance(line.text_entry);
 			var nextLine = (0, _utils.getNextLine)(line, play);
 	
-			// If the next line should be said by the app user, then computer should listen; otherwise, computer should keep saying the next lines
+			// If the next line should be said by the app user, then listen; otherwise, keep saying the next lines
 			utterThis.onend = function (e) {
 				if (!getState().isSpeaking) return;
 				if (!nextLine) return;
 	
 				if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
+					console.log("now it's your turn to speak!");
 					dispatch((0, _listening.listenToLine)(nextLine, play));
 				} else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
 					dispatch(sayLine(nextLine, play));
@@ -29164,8 +29165,6 @@
 	
 	var _speaking = __webpack_require__(274);
 	
-	var _lines = __webpack_require__(276);
-	
 	var _utils = __webpack_require__(275);
 	
 	/* ========== CONSTANTS ========== */
@@ -29192,7 +29191,6 @@
 	var listenToLine = exports.listenToLine = function listenToLine(line, play, isListening) {
 	
 		return function (dispatch) {
-			dispatch((0, _lines.setCurrentLine)(line));
 			if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 	
 			var recognition = new webkitSpeechRecognition();
@@ -29205,7 +29203,9 @@
 	
 			recognition.onresult = function (e) {
 				if (e.results[0].isFinal) {
-					// To get transcript of what user said: console.log(e.results[0][0].transcript);
+					// // To get transcript of what user said:
+					// console.log(e.results[0][0].transcript);
+					console.log("you're done, time for the computer to speak");
 					dispatch(stopListening());
 					recognition.stop();
 					var nextLine = (0, _utils.getNextSpeakerLine)(line, play);
@@ -29213,7 +29213,6 @@
 				}
 			};
 	
-			// EI: is this necessary?
 			if (isListening) {
 				dispatch(stopListening());
 				recognition.stop();
