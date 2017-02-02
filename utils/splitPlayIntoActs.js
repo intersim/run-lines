@@ -3,31 +3,7 @@ const toc = require('../data/plays/toc.json');
 const TwelfthNight = require('../data/plays/Twelfth-Night/Twelfth-Night.json');
 const path = require('path');
 
-// const makeFolders = () => {
-// 	toc.forEach(play => fs.mkdir(
-// 		path.join(__dirname, '..', 'data', 'plays', play, 'acts'),
-// 		err => {
-// 			if (err) console.log(`Something went wrong: ${err}\n`)
-// 		})
-// 	)
-//
-// for (var i = 1; i <= 5; i++) {
-// 	toc.forEach(play => fs.mkdir(
-// 		path.join(__dirname, '..', 'data', 'plays', play, 'acts', i),
-// 		err => {
-// 			if (err) console.log(`Something went wrong: ${err}\n`)
-// 		})
-// 	)
-// }
-//
-// 	toc.forEach(play => fs.mkdir(
-// 		path.join(__dirname, '..', 'data', 'plays', play, 'acts', 'scenes'),
-// 		err => {
-// 			if (err) console.log(`Something went wrong: ${err}\n`)
-// 		})
-// 	)
-// }
-
+// TO-DO: this is doing weird stuff...
 const splitPlayIntoActsAndScenes = play => {
 	const splitPlay = {}
 
@@ -35,13 +11,15 @@ const splitPlayIntoActsAndScenes = play => {
 	let lastScene = 0
 	let emptyLineNum = 0
 
-	play.forEach(line => {
-		// increment last
+	play.forEach((line, idx, arr) => {
+		// increment lastAct num at beginning of new act
 		if (line.text_entry.toLowerCase().includes("act")) {
 			lastAct++;
+			lastScene = 1;
 		}
 
-		if (line.text_entry.toLowerCase().includes("scene")) {
+		// increment scene if it's not the beginning of a new act
+		if (arr[idx-1] && !arr[idx-1].text_entry.toLowerCase().includes("act") && line.text_entry.toLowerCase().includes("scene")) {
 			lastScene++;
 		}
 
@@ -55,14 +33,17 @@ const splitPlayIntoActsAndScenes = play => {
 			[act, scene] = line.line_number.split(".").map(str => Number(str));
 		}
 
+		// make act obj
 		if (!splitPlay[`act_${act}`]) {
 			splitPlay[`act_${act}`] = {}
 		}
 
+		// make scene arr
 		if (!splitPlay[`act_${act}`][`scene_${scene}`]) {
 			splitPlay[`act_${act}`][`scene_${scene}`] = [];
 		}
 
+		// add line to scene arr
 		splitPlay[`act_${act}`][`scene_${scene}`].push(line);
 
 		lastAct = act;
@@ -72,26 +53,31 @@ const splitPlayIntoActsAndScenes = play => {
 	return splitPlay;
 }
 
-console.log(JSON.stringify(splitPlayIntoActsAndScenes(TwelfthNight)[`act_1`][`scene_2`]));
+const writePlayScenesToFile = (play) => {
+	const playName = play[0].play_name.replace(/\s/g, "-");
+	splitPlayObj = splitPlayIntoActsAndScenes(play);
 
-const writePlayScenesToFile = (playObj) => {
-	const playName = playObj.act_1.scene_1[0].play_name.replace(/\s/g, "-");
-
-	for (let act in play) {
+	for (let act in splitPlayObj) {
 		// make a folder for the current act
 		const actPath = path.join(__dirname, '..', 'data', 'plays', playName, act);
 
 		fs.mkdir(actPath, err => {
-			if (err) console.log(`Something went wrong: ${err}\n`)
+			if (err) console.log(`Something went wrong: ${err}`)
 		})
 
 		// write scenes to file in that folder
-		for (let scene in act) {
-			const err = fs.writeFileSync(`../data/plays/${playName}/${act}/${scene}.json`)
+		for (let scene in splitPlayObj[act]) {
+			const err = fs.writeFileSync(path.join(actPath, `${scene}.json`), JSON.stringify(splitPlayObj[act][scene]));
 			if (err) console.error(err);
 			console.log(`Wrote ${scene}.`)
 		}
-		console.log(`Finished with ${act}`!)
+
+		console.log(`Finished with ${act}!`)
 	}
 	console.log(`All done with ${playName}`)
 }
+
+toc.forEach(play => {
+	writePlayScenesToFile(play);
+	console.log("***** Finished writing all plays! *****")
+})
