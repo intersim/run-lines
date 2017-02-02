@@ -30088,6 +30088,10 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// currentAct: string?
+	// currentScene: string?
+	// sceneLines: array of objects
+	
 	var rootReducer = (0, _redux.combineReducers)({
 		currentCharacter: _characters.currentCharacter,
 		currentPlay: _play2.default,
