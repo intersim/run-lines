@@ -3,7 +3,7 @@ const toc = require('../data/plays/toc.json');
 const TwelfthNight = require('../data/plays/Twelfth-Night/Twelfth-Night.json');
 const path = require('path');
 
-// TO-DO: this is doing weird stuff...
+// THIS IS BUGGY BUT ULTIMATELY WORKS
 const splitPlayIntoActsAndScenes = play => {
 	const splitPlay = {}
 
@@ -69,15 +69,13 @@ const writePlayScenesToFile = (play) => {
 		for (let scene in splitPlayObj[act]) {
 			const err = fs.writeFileSync(path.join(actPath, `${scene}.json`), JSON.stringify(splitPlayObj[act][scene]));
 			if (err) console.error(err);
-			console.log(`Wrote ${scene}.`)
 		}
-
-		console.log(`Finished with ${act}!`)
 	}
-	console.log(`All done with ${playName}`)
+	console.log(`Finished writing ${playName}.`)
 }
 
 toc.forEach(play => {
-	writePlayScenesToFile(play);
-	console.log("***** Finished writing all plays! *****")
+	const playObj = require(`../data/plays/${play}/${play}.json`)
+	writePlayScenesToFile(playObj);
 })
+console.log("***** Finished writing all plays! *****")
