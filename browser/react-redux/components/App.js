@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import SceneContainer from '../containers/SceneContainer';
 import LineContainer from '../containers/LineContainer';
 import PlaySelectContainer from '../containers/PlaySelectContainer';
 import ActSelectContainer from '../containers/ActSelectContainer';
@@ -18,7 +17,17 @@ const App = props => {
 			<div>
 			<h1>{playName}</h1>
 			</div>
-			  { props.children }
+			<div>
+		    {currentPlay.map((line, i) => {
+		      line.index = i;
+		      return (
+		        <LineContainer
+		          key={line.line_id}
+		          line={line}
+		        />
+		      )})
+		    }
+		  </div>
 		</div>
 	)
 }
