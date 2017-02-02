@@ -3,7 +3,8 @@ const toc = require('../data/plays/toc.json');
 const TwelfthNight = require('../data/plays/Twelfth-Night/Twelfth-Night.json');
 const path = require('path');
 
-// THIS IS BUGGY BUT ULTIMATELY WORKS
+// TO-DO: FIX THIS; IT IS BUGGY BUT ULTIMATELY WORKS IF YOU RUN IT MULTIPLE TIMES (often gets "file/directory doesn't exist?")
+
 const splitPlayIntoActsAndScenes = play => {
 	const splitPlay = {}
 
@@ -53,6 +54,7 @@ const splitPlayIntoActsAndScenes = play => {
 	return splitPlay;
 }
 
+// THIS IS WHAT'S NOT QUITE WORKING
 const writePlayScenesToFile = (play) => {
 	const playName = play[0].play_name.replace(/\s/g, "-");
 	splitPlayObj = splitPlayIntoActsAndScenes(play);
