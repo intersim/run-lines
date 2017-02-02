@@ -32,7 +32,8 @@ class PlaySelectContainer extends Component {
 
 // ========== REACT-REDUX ==========
 import { connect } from 'react-redux';
-import { fetchPlay, fetchCharacters } from '../actions';
+import { fetchPlay } from '../actions/plays';
+import { fetchCharacters } from '../actions/characters';
 
 const mapDispatchToProps = dispatch => ({
 	loadPlay (playName) {
