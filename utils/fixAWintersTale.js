@@ -3,16 +3,20 @@ const path = require('path');
 
 (function() {
   // 4 scenes in act 4
+  let fixNum = 1;
   for (let i = 1; i <=4; i++) {
     const scenePath = path.join(__dirname, '..', 'data', 'plays', 'A-Winters-Tale', 'act_4', `scene_${i}.json`)
     const scene = JSON.parse(fs.readFileSync(scenePath, 'utf8'));
 
     scene.map(line => {
-      const lineNum = line.line_number.split('.')[2]
+      let lineNum = line.line_number.split('.')[2]
       let sceneNum;
 
       if (line.line_id >= 109548 && line.line_id <= 109584) {
         sceneNum = 1;
+        if (Number(lineNum)) {
+          lineNum = fixNum++;
+        }
       }
       if (line.line_id >= 109585 && line.line_id <= 109641) {
         sceneNum = 2;
