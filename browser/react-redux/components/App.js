@@ -18,16 +18,16 @@ const App = props => {
 			<h1>{playName}</h1>
 			</div>
 			<div>
-			{currentPlay.map((line, i) => {
-				line.index = i;
-				return (
-					<LineContainer 
-						key={line.line_id}
-						line={line}
-					/>
-				)})
-			}
-			</div>
+		    {currentPlay.map((line, i) => {
+		      line.index = i;
+		      return (
+		        <LineContainer
+		          key={line.line_id}
+		          line={line}
+		        />
+		      )})
+		    }
+		  </div>
 		</div>
 	)
 }

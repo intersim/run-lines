@@ -5,7 +5,9 @@ import AppContainer from './containers/AppContainer'
 
 const Routes = ({ fetchInitialData }) => (
 	<Router history={browserHistory}>
-		<Route path="/" component={AppContainer} onEnter={fetchInitialData} />
+		<Route path="/" component={AppContainer} onEnter={fetchInitialData}>
+		</ Route>
+
 	</Router>
 )
 
