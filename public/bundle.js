@@ -21517,10 +21517,6 @@
 	
 	var _characters = __webpack_require__(282);
 	
-	var _twelfthNightS = __webpack_require__(289);
-	
-	var _twelfthNightS2 = _interopRequireDefault(_twelfthNightS);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Routes = function Routes(_ref) {
@@ -21534,15 +21530,10 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			// fetchInitialData() {
-			// 	dispatch(fetchPlay('Henry-IV'));
-			// 	dispatch(fetchCharacters('Henry-IV'));
-			// 	dispatch(setCurrentCharacter('Archbishop-Of-York'));
-			// }
-			// only fetching one scene now for debugging purposes
 			fetchInitialData: function fetchInitialData() {
-				dispatch((0, _plays.loadPlay)(_twelfthNightS2.default));
-				dispatch((0, _characters.fetchCharacters)('Twelfth-Night'));
+				dispatch((0, _plays.fetchPlay)('Henry-IV'));
+				dispatch((0, _characters.fetchCharacters)('Henry-IV'));
+				dispatch((0, _characters.setCurrentCharacter)('Archbishop-Of-York'));
 			}
 		};
 	};
@@ -28842,7 +28833,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _App = __webpack_require__(271);
@@ -28854,10 +28845,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-		var currentPlay = _ref.currentPlay;
-		return {
-			currentPlay: currentPlay
-		};
+	  var currentPlay = _ref.currentPlay,
+	      currentScene = _ref.currentScene;
+	  return {
+	    currentPlay: currentPlay,
+	    currentScene: currentScene
+	  };
 	};
 	
 	var AppContainer = (0, _reactRedux.connect)(mapStateToProps)(_App2.default);
@@ -28886,25 +28879,22 @@
 	
 	var _PlaySelectContainer2 = _interopRequireDefault(_PlaySelectContainer);
 	
-	var _ActSelectContainer = __webpack_require__(283);
-	
-	var _ActSelectContainer2 = _interopRequireDefault(_ActSelectContainer);
-	
 	var _CharacterSelectContainer = __webpack_require__(287);
 	
 	var _CharacterSelectContainer2 = _interopRequireDefault(_CharacterSelectContainer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var App = function App(props) {
-		var currentPlay = props.currentPlay;
+	var App = function App(_ref) {
+		var currentPlay = _ref.currentPlay,
+		    currentScene = _ref.currentScene;
+	
 		var playName = currentPlay.length ? currentPlay[0].play_name : null;
 	
 		return _react2.default.createElement(
 			'div',
 			null,
 			_react2.default.createElement(_PlaySelectContainer2.default, null),
-			_react2.default.createElement(_ActSelectContainer2.default, null),
 			_react2.default.createElement(_CharacterSelectContainer2.default, null),
 			_react2.default.createElement(
 				'div',
@@ -28918,7 +28908,7 @@
 			_react2.default.createElement(
 				'div',
 				null,
-				currentPlay.map(function (line, i) {
+				currentScene.lines.map(function (line, i) {
 					line.index = i;
 					return _react2.default.createElement(_LineContainer2.default, {
 						key: line.line_id,
@@ -28928,7 +28918,7 @@
 			)
 		);
 	};
-	// import SceneSelectContainer from '../containers/SceneSelectContainer';
+	
 	exports.default = App;
 
 /***/ },
@@ -29010,16 +29000,18 @@
 		var toggleLine = props.toggleLine;
 		var listenToLine = props.listenToLine;
 	
+		var isStageDirection = line.line_number.split('.')[2] === '0';
+	
 		return _react2.default.createElement(
 			'p',
 			{
-				className: line.line_id === currentLine.line_id ? 'bg-silver' : null,
+				className: (isStageDirection ? 'italic' : null) + " " + (line.line_id === currentLine.line_id ? 'bg-silver' : null),
 				onClick: function onClick() {
 					return toggleLine(line, play, isSpeaking);
 				},
 				id: line.text_entry && line.text_entry.includes("ACT") ? line.text_entry.slice(4) : null
 			},
-			line.line_number ? line.speaker + ': ' : null,
+			isStageDirection ? null : line.speaker + ': ',
 			line.text_entry
 		);
 	};
@@ -29243,11 +29235,21 @@
 	
 	var _PlaySelect2 = _interopRequireDefault(_PlaySelect);
 	
+	var _ActSelect = __webpack_require__(284);
+	
+	var _ActSelect2 = _interopRequireDefault(_ActSelect);
+	
+	var _SceneSelect = __webpack_require__(286);
+	
+	var _SceneSelect2 = _interopRequireDefault(_SceneSelect);
+	
 	var _reactRedux = __webpack_require__(179);
 	
 	var _plays = __webpack_require__(281);
 	
 	var _characters = __webpack_require__(282);
+	
+	var _scenes = __webpack_require__(303);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29266,32 +29268,59 @@
 			var _this = _possibleConstructorReturn(this, (PlaySelectContainer.__proto__ || Object.getPrototypeOf(PlaySelectContainer)).call(this));
 	
 			_this.state = {
-				selectedPlay: 'Henry-IV'
+				selectedPlay: 'Henry-IV',
+				selectedAct: 1,
+				selectedScene: 1
 			};
 	
-			_this.handleChange = _this.handleChange.bind(_this);
-			_this.handleSubmit = _this.handleSubmit.bind(_this);
+			_this.handlePlayChange = _this.handlePlayChange.bind(_this);
+			_this.handleActChange = _this.handleActChange.bind(_this);
+			_this.handleSceneChange = _this.handleSceneChange.bind(_this);
 			return _this;
 		}
 	
 		_createClass(PlaySelectContainer, [{
-			key: 'handleChange',
-			value: function handleChange(e) {
+			key: 'handlePlayChange',
+			value: function handlePlayChange(e) {
 				var selectedPlay = e.target.value;
 				this.setState({ selectedPlay: selectedPlay });
+				this.props.loadPlay(selectedPlay);
 			}
 		}, {
-			key: 'handleSubmit',
-			value: function handleSubmit(e) {
-				e.preventDefault();
-				this.props.loadPlay(this.state.selectedPlay);
+			key: 'handleActChange',
+			value: function handleActChange(e) {
+				var selectedAct = e.target.value;
+				this.setState({ selectedAct: selectedAct });
+			}
+		}, {
+			key: 'handleSceneChange',
+			value: function handleSceneChange(e) {
+				var _state = this.state,
+				    selectedPlay = _state.selectedPlay,
+				    selectedAct = _state.selectedAct;
+	
+				var selectedScene = e.target.value;
+				this.setState({ selectedScene: selectedScene });
+				this.props.loadScene(selectedPlay, selectedAct, selectedScene);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(_PlaySelect2.default, {
-					handleChange: this.handleChange,
-					handleSubmit: this.handleSubmit });
+				var acts = this.props.currentPlay.acts;
+				var scenes = this.props.currentPlay.acts && this.props.currentPlay.acts[this.state.selectedAct];
+	
+				return _react2.default.createElement(
+					'form',
+					{ className: 'mt1 inline-block' },
+					_react2.default.createElement(_PlaySelect2.default, {
+						handleChange: this.handlePlayChange }),
+					_react2.default.createElement(_ActSelect2.default, {
+						acts: acts,
+						handleChange: this.handleActChange }),
+					_react2.default.createElement(_SceneSelect2.default, {
+						scenes: scenes,
+						handleChange: this.handleSceneChange })
+				);
 			}
 		}]);
 	
@@ -29301,16 +29330,24 @@
 	/* ========== REACT-REDUX ========== */
 	
 	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var currentPlay = _ref.currentPlay;
+		return { currentPlay: currentPlay };
+	};
+	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
 			loadPlay: function loadPlay(playName) {
 				dispatch((0, _plays.fetchPlay)(playName));
 				dispatch((0, _characters.fetchCharacters)(playName));
+			},
+			loadScene: function loadScene(play, act, scene) {
+				dispatch((0, _scenes.fetchScene)(play, act, scene));
 			}
 		};
 	};
 	
-	PlaySelectContainer = (0, _reactRedux.connect)(null, mapDispatchToProps)(PlaySelectContainer);
+	PlaySelectContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PlaySelectContainer);
 	
 	exports.default = PlaySelectContainer;
 
@@ -29338,25 +29375,16 @@
 		var handleChange = _ref.handleChange,
 		    handleSubmit = _ref.handleSubmit;
 		return _react2.default.createElement(
-			'form',
-			{ className: 'mt1 inline-block', onSubmit: handleSubmit },
-			_react2.default.createElement(
-				'select',
-				{ onChange: handleChange },
-				_toc2.default.map(function (play, i) {
-					return _react2.default.createElement(
-						'option',
-						{ key: i, value: play },
-						play.replace(/-/g, " ")
-					);
-				}),
-				';'
-			),
-			_react2.default.createElement(
-				'button',
-				{ type: 'submit', className: 'btn btn-outline ml1' },
-				'Go'
-			)
+			'select',
+			{ onChange: handleChange },
+			_toc2.default.map(function (play, i) {
+				return _react2.default.createElement(
+					'option',
+					{ key: i, value: play },
+					play.replace(/-/g, " ")
+				);
+			}),
+			';'
 		);
 	};
 	
@@ -29480,87 +29508,11 @@
 	};
 
 /***/ },
-/* 283 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _ActSelect = __webpack_require__(284);
-	
-	var _ActSelect2 = _interopRequireDefault(_ActSelect);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ActSelectContainer = function (_Component) {
-		_inherits(ActSelectContainer, _Component);
-	
-		function ActSelectContainer() {
-			_classCallCheck(this, ActSelectContainer);
-	
-			var _this = _possibleConstructorReturn(this, (ActSelectContainer.__proto__ || Object.getPrototypeOf(ActSelectContainer)).call(this));
-	
-			_this.state = {
-				selectedAct: 'I'
-			};
-	
-			_this.handleChange = _this.handleChange.bind(_this);
-			return _this;
-		}
-	
-		_createClass(ActSelectContainer, [{
-			key: 'handleChange',
-			value: function handleChange(e) {
-				var selectedAct = e.target.value;
-				console.log(selectedAct);
-				this.setState({ selectedAct: selectedAct });
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(_ActSelect2.default, {
-					handleChange: this.handleChange
-				});
-			}
-		}]);
-	
-		return ActSelectContainer;
-	}(_react.Component);
-	
-	// ========== REACT-REDUX ==========
-	// import { connect } from 'react-redux';
-	// import { fetchPlay } from '../actions';
-	
-	// const mapDispatchToProps = dispatch => ({
-	// 	loadPlay (playName) {
-	// 		dispatch(fetchPlay(playName))
-	// 	}
-	// });
-	
-	// ActSelectContainer = connect(null, mapDispatchToProps)(ActSelectContainer);
-	
-	exports.default = ActSelectContainer;
-
-/***/ },
+/* 283 */,
 /* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -29573,20 +29525,20 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ActSelect = function ActSelect(props) {
-	  var acts = ['I', 'II', 'III', 'IV', 'V'];
+	  var acts = [1, 2, 3, 4, 5];
 	
 	  return _react2.default.createElement(
-	    'select',
-	    { className: 'ml2 inline-block', onChange: props.handleChange },
+	    "select",
+	    { className: "ml2 inline-block", onChange: props.handleChange },
 	    acts.map(function (num, i) {
 	      return _react2.default.createElement(
-	        'option',
+	        "option",
 	        { key: i, value: num },
-	        'Act ',
+	        "Act ",
 	        num
 	      );
 	    }),
-	    ';'
+	    ";"
 	  );
 	};
 	
@@ -29594,7 +29546,47 @@
 
 /***/ },
 /* 285 */,
-/* 286 */,
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @param {number[]} scenes
+	 * @param {SceneSelectContainer~handleChange} cb - Called on
+	 * change.
+	 */
+	var SceneSelect = function SceneSelect(_ref) {
+	  var scenes = _ref.scenes,
+	      handleChange = _ref.handleChange;
+	  return _react2.default.createElement(
+	    "select",
+	    { className: "ml2 inline-block", onChange: handleChange },
+	    scenes && scenes.map(function (num, i) {
+	      return _react2.default.createElement(
+	        "option",
+	        { key: i, value: num },
+	        "Scene ",
+	        num
+	      );
+	    }),
+	    ";"
+	  );
+	};
+	
+	exports.default = SceneSelect;
+
+/***/ },
 /* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29722,353 +29714,7 @@
 	exports.default = CharacterSelect;
 
 /***/ },
-/* 289 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = [{
-	  line_id: 102903,
-	  play_name: "Twelfth Night",
-	  speech_number: 9,
-	  line_number: "",
-	  speaker: "PANDARUS",
-	  text_entry: "ACT I"
-	}, {
-	  line_id: 102904,
-	  play_name: "Twelfth Night",
-	  speech_number: 9,
-	  line_number: "",
-	  speaker: "PANDARUS",
-	  text_entry: "SCENE I. DUKE ORSINO's palace."
-	}, {
-	  line_id: 102905,
-	  play_name: "Twelfth Night",
-	  speech_number: 9,
-	  line_number: "",
-	  speaker: "PANDARUS",
-	  text_entry: "Enter DUKE ORSINO, CURIO, and other Lords; Musicians attending"
-	}, {
-	  line_id: 102906,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.1",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "If music be the food of love, play on;"
-	}, {
-	  line_id: 102907,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.2",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Give me excess of it, that, surfeiting,"
-	}, {
-	  line_id: 102908,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.3",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "The appetite may sicken, and so die."
-	}, {
-	  line_id: 102909,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.4",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "That strain again! it had a dying fall:"
-	}, {
-	  line_id: 102910,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.5",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "O, it came o'er my ear like the sweet sound,"
-	}, {
-	  line_id: 102911,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.6",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "That breathes upon a bank of violets,"
-	}, {
-	  line_id: 102912,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.7",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Stealing and giving odour! Enough; no more:"
-	}, {
-	  line_id: 102913,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.8",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "'Tis not so sweet now as it was before."
-	}, {
-	  line_id: 102914,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.9",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "O spirit of love! how quick and fresh art thou,"
-	}, {
-	  line_id: 102915,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.10",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "That, notwithstanding thy capacity"
-	}, {
-	  line_id: 102916,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.11",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Receiveth as the sea, nought enters there,"
-	}, {
-	  line_id: 102917,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.12",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Of what validity and pitch soe'er,"
-	}, {
-	  line_id: 102918,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.13",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "But falls into abatement and low price,"
-	}, {
-	  line_id: 102919,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.14",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Even in a minute: so full of shapes is fancy"
-	}, {
-	  line_id: 102920,
-	  play_name: "Twelfth Night",
-	  speech_number: 1,
-	  line_number: "1.1.15",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "That it alone is high fantastical."
-	}, {
-	  line_id: 102921,
-	  play_name: "Twelfth Night",
-	  speech_number: 2,
-	  line_number: "1.1.16",
-	  speaker: "CURIO",
-	  text_entry: "Will you go hunt, my lord?"
-	}, {
-	  line_id: 102922,
-	  play_name: "Twelfth Night",
-	  speech_number: 3,
-	  line_number: "1.1.17",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "What, Curio?"
-	}, {
-	  line_id: 102923,
-	  play_name: "Twelfth Night",
-	  speech_number: 4,
-	  line_number: "1.1.18",
-	  speaker: "CURIO",
-	  text_entry: "The hart."
-	}, {
-	  line_id: 102924,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "1.1.19",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Why, so I do, the noblest that I have:"
-	}, {
-	  line_id: 102925,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "1.1.20",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "O, when mine eyes did see Olivia first,"
-	}, {
-	  line_id: 102926,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "1.1.21",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Methought she purged the air of pestilence!"
-	}, {
-	  line_id: 102927,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "1.1.22",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "That instant was I turn'd into a hart;"
-	}, {
-	  line_id: 102928,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "1.1.23",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "And my desires, like fell and cruel hounds,"
-	}, {
-	  line_id: 102929,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "1.1.24",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "E'er since pursue me."
-	}, {
-	  line_id: 102930,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Enter VALENTINE"
-	}, {
-	  line_id: 102931,
-	  play_name: "Twelfth Night",
-	  speech_number: 5,
-	  line_number: "1.1.25",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "How now! what news from her?"
-	}, {
-	  line_id: 102932,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.26",
-	  speaker: "VALENTINE",
-	  text_entry: "So please my lord, I might not be admitted;"
-	}, {
-	  line_id: 102933,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.27",
-	  speaker: "VALENTINE",
-	  text_entry: "But from her handmaid do return this answer:"
-	}, {
-	  line_id: 102934,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.28",
-	  speaker: "VALENTINE",
-	  text_entry: "The element itself, till seven years' heat,"
-	}, {
-	  line_id: 102935,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.29",
-	  speaker: "VALENTINE",
-	  text_entry: "Shall not behold her face at ample view;"
-	}, {
-	  line_id: 102936,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.30",
-	  speaker: "VALENTINE",
-	  text_entry: "But, like a cloistress, she will veiled walk"
-	}, {
-	  line_id: 102937,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.31",
-	  speaker: "VALENTINE",
-	  text_entry: "And water once a day her chamber round"
-	}, {
-	  line_id: 102938,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.32",
-	  speaker: "VALENTINE",
-	  text_entry: "With eye-offending brine: all this to season"
-	}, {
-	  line_id: 102939,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.33",
-	  speaker: "VALENTINE",
-	  text_entry: "A brother's dead love, which she would keep fresh"
-	}, {
-	  line_id: 102940,
-	  play_name: "Twelfth Night",
-	  speech_number: 6,
-	  line_number: "1.1.34",
-	  speaker: "VALENTINE",
-	  text_entry: "And lasting in her sad remembrance."
-	}, {
-	  line_id: 102941,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.35",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "O, she that hath a heart of that fine frame"
-	}, {
-	  line_id: 102942,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.36",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "To pay this debt of love but to a brother,"
-	}, {
-	  line_id: 102943,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.37",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "How will she love, when the rich golden shaft"
-	}, {
-	  line_id: 102944,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.38",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Hath kill'd the flock of all affections else"
-	}, {
-	  line_id: 102945,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.39",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "That live in her; when liver, brain and heart,"
-	}, {
-	  line_id: 102946,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.40",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "These sovereign thrones, are all supplied, and fill'd"
-	}, {
-	  line_id: 102947,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.41",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Her sweet perfections with one self king!"
-	}, {
-	  line_id: 102948,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.42",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Away before me to sweet beds of flowers:"
-	}, {
-	  line_id: 102949,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "1.1.43",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Love-thoughts lie rich when canopied with bowers."
-	}, {
-	  line_id: 102950,
-	  play_name: "Twelfth Night",
-	  speech_number: 7,
-	  line_number: "",
-	  speaker: "DUKE ORSINO",
-	  text_entry: "Exeunt"
-	}];
-
-/***/ },
+/* 289 */,
 /* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30090,7 +29736,11 @@
 	
 	var _scenes = __webpack_require__(294);
 	
+	var _scenes2 = _interopRequireDefault(_scenes);
+	
 	var _acts = __webpack_require__(295);
+	
+	var _acts2 = _interopRequireDefault(_acts);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30111,8 +29761,8 @@
 	
 	var rootReducer = (0, _redux.combineReducers)({
 	  currentPlay: _play2.default,
-	  currentAct: _acts.currentAct,
-	  currentScene: _scenes.currentScene,
+	  currentAct: _acts2.default,
+	  currentScene: _scenes2.default,
 	  characters: _characters.currentPlayCharacters,
 	  currentCharacter: _characters.currentCharacter,
 	  currentLine: _line.currentLine,
@@ -30252,7 +29902,7 @@
 	
 	  switch (action.type) {
 	    case 'SET_CURRENT_SCENE':
-	      newState.num = action.sceneNum;
+	      newState.sceneNum = action.sceneNum;
 	      break;
 	
 	    case 'LOAD_SCENE':
@@ -31178,6 +30828,47 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
+
+/***/ },
+/* 303 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/* ========== CONSTANTS ========== */
+	var LOAD_SCENE = 'LOAD_SCENE';
+	var SET_CURRENT_SCENE = 'SET_CURRENT_SCENE';
+	
+	/* ========== ACTION CREATORS ========== */
+	var loadScene = exports.loadScene = function loadScene(scene) {
+	  return {
+	    type: LOAD_SCENE,
+	    lines: scene
+	  };
+	};
+	
+	var setCurrentScene = exports.setCurrentScene = function setCurrentScene(sceneNum) {
+	  return {
+	    type: SET_CURRENT_SCENE,
+	    num: sceneNum
+	  };
+	};
+	
+	/* ========== ASYNC ========== */
+	var fetchScene = exports.fetchScene = function fetchScene(playName, actNum, sceneNum) {
+	  return function (dispatch) {
+	    fetch('/api/plays/' + playName + '/acts/' + actNum + '/scenes/' + sceneNum).then(function (res) {
+	      return res.json();
+	    }).then(function (scene) {
+	      dispatch(loadScene(scene));
+	    }).catch(function (err) {
+	      return console.error(err.stack);
+	    });
+	  };
+	};
 
 /***/ }
 /******/ ]);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const ActSelect = props => {
-  const acts = ['I', 'II', 'III', 'IV', 'V'];
+  const acts = [1, 2, 3, 4, 5];
 
   return (
   	<select className="ml2 inline-block" onChange={props.handleChange}>

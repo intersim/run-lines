@@ -1,32 +1,57 @@
 import React, { Component } from 'react';
 import PlaySelect from '../components/PlaySelect';
+import ActSelect from '../components/ActSelect';
+import SceneSelect from '../components/SceneSelect';
 
 class PlaySelectContainer extends Component {
 	constructor(){
 		super();
 
 		this.state = {
-			selectedPlay: 'Henry-IV'
+			selectedPlay: 'Henry-IV',
+			selectedAct: 1,
+			selectedScene: 1
 		}
 
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handlePlayChange = this.handlePlayChange.bind(this);
+		this.handleActChange = this.handleActChange.bind(this);
+		this.handleSceneChange = this.handleSceneChange.bind(this);
 	}
 
-	handleChange(e){
+	handlePlayChange(e){
 		const selectedPlay = e.target.value;
 		this.setState({ selectedPlay });
+		this.props.loadPlay(selectedPlay);
 	}
 
-	handleSubmit(e){
-		e.preventDefault();
-		this.props.loadPlay(this.state.selectedPlay);
+	handleActChange(e){
+		const selectedAct = e.target.value;
+		this.setState({ selectedAct });
+	}
+
+	handleSceneChange(e){
+		const { selectedPlay, selectedAct } = this.state;
+		const selectedScene = e.target.value;
+		this.setState({ selectedScene });
+		this.props.loadScene(selectedPlay, selectedAct, selectedScene);
 	}
 
 	render(){
-		return <PlaySelect
-			handleChange={this.handleChange}
-			handleSubmit={this.handleSubmit}/>
+		const acts = this.props.currentPlay.acts;
+		const scenes = this.props.currentPlay.acts && this.props.currentPlay.acts[this.state.selectedAct];
+
+		return (
+		        <form className="mt1 inline-block">
+		        	<PlaySelect
+								handleChange={this.handlePlayChange} />
+							<ActSelect
+								acts={acts}
+								handleChange={this.handleActChange} />
+							<SceneSelect
+								scenes={scenes}
+								handleChange={this.handleSceneChange} />
+						</form>
+		        )
 	}
 }
 
@@ -34,14 +59,21 @@ class PlaySelectContainer extends Component {
 import { connect } from 'react-redux';
 import { fetchPlay } from '../actions/plays';
 import { fetchCharacters } from '../actions/characters';
+import { fetchScene } from '../actions/scenes';
+
+const mapStateToProps = ({ currentPlay }) => ({ currentPlay });
 
 const mapDispatchToProps = dispatch => ({
 	loadPlay (playName) {
 		dispatch(fetchPlay(playName))
 		dispatch(fetchCharacters(playName))
+	},
+
+	loadScene (play, act, scene) {
+		dispatch(fetchScene(play, act, scene));
 	}
 });
 
-PlaySelectContainer = connect(null, mapDispatchToProps)(PlaySelectContainer);
+PlaySelectContainer = connect(mapStateToProps, mapDispatchToProps)(PlaySelectContainer);
 
 export default PlaySelectContainer;

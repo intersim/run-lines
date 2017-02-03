@@ -10,13 +10,15 @@ const Line = props => {
 	const toggleLine = props.toggleLine;
 	const listenToLine = props.listenToLine;
 
+	const isStageDirection = line.line_number.split('.')[2] === '0'
+
 	return (
-		<p 
-			className={line.line_id === currentLine.line_id ? 'bg-silver' : null} 
+		<p
+			className={(isStageDirection ? 'italic' : null) + " " + (line.line_id === currentLine.line_id ? 'bg-silver' : null)}
       onClick={() => toggleLine(line, play, isSpeaking)}
 			id={line.text_entry && line.text_entry.includes("ACT") ? line.text_entry.slice(4) : null}
 		>
-			{line.line_number ? `${line.speaker}: ` : null}{line.text_entry}
+			{ isStageDirection ? null : `${line.speaker}: `}{line.text_entry}
 		</p>)
 }
 

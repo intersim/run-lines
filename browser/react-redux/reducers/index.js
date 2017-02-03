@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 import currentPlay from './play';
 import { currentLine, isListening, isSpeaking } from './line';
 import { currentPlayCharacters as characters, currentCharacter } from './characters';
-import { currentScene } from './scenes';
-import { currentAct } from './acts';
+import currentScene from './scenes';
+import currentAct from './acts';
 
 /**
  * @param {Object} currentPlay

@@ -3,7 +3,7 @@ const currentScene = (state = {lines: [], num: 1}, action) => {
 
   switch (action.type) {
     case 'SET_CURRENT_SCENE':
-      newState.num = action.sceneNum;
+      newState.sceneNum = action.sceneNum;
       break;
 
     case 'LOAD_SCENE':
