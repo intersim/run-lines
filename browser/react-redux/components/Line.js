@@ -22,6 +22,4 @@ const Line = props => {
 		</p>)
 }
 
-		// onClick={() => listenToLine(line, isListening)}
-
 export default Line;

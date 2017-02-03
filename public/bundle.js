@@ -21517,6 +21517,8 @@
 	
 	var _characters = __webpack_require__(282);
 	
+	var _scenes = __webpack_require__(303);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Routes = function Routes(_ref) {
@@ -21532,6 +21534,7 @@
 		return {
 			fetchInitialData: function fetchInitialData() {
 				dispatch((0, _plays.fetchPlay)('Henry-IV'));
+				dispatch((0, _scenes.fetchScene)('Henry-IV', 1, 1));
 				dispatch((0, _characters.fetchCharacters)('Henry-IV'));
 				dispatch((0, _characters.setCurrentCharacter)('Archbishop-Of-York'));
 			}
@@ -28889,12 +28892,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var App = function App(_ref) {
-		var currentPlay = _ref.currentPlay,
-		    currentScene = _ref.currentScene;
-	
-		var playName = currentPlay.length ? currentPlay[0].play_name : null;
-	
+	var App = function App() {
 		return _react2.default.createElement(
 			'div',
 			{ className: 'container' },
@@ -29000,8 +28998,6 @@
 			line.text_entry
 		);
 	};
-	
-	// onClick={() => listenToLine(line, isListening)}
 	
 	exports.default = Line;
 
@@ -29275,7 +29271,10 @@
 			key: 'handleActChange',
 			value: function handleActChange(e) {
 				var selectedAct = e.target.value;
+				var selectedPlay = this.state.selectedPlay;
+	
 				this.setState({ selectedAct: selectedAct });
+				this.props.loadScene(selectedPlay, selectedAct, 1);
 			}
 		}, {
 			key: 'handleSceneChange',

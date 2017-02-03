@@ -11,10 +11,12 @@ const Routes = ({ fetchInitialData }) => (
 
 import { fetchPlay, loadPlay } from './actions/plays';
 import { fetchCharacters, setCurrentCharacter } from './actions/characters';
+import { fetchScene } from './actions/scenes';
 
 const mapDispatchToProps = dispatch => ({
 	fetchInitialData() {
 		dispatch(fetchPlay('Henry-IV'));
+    dispatch(fetchScene('Henry-IV', 1, 1));
 		dispatch(fetchCharacters('Henry-IV'));
 		dispatch(setCurrentCharacter('Archbishop-Of-York'));
 	}

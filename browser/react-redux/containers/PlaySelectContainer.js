@@ -26,7 +26,9 @@ class PlaySelectContainer extends Component {
 
 	handleActChange(e){
 		const selectedAct = e.target.value;
+		const { selectedPlay } = this.state;
 		this.setState({ selectedAct });
+		this.props.loadScene(selectedPlay, selectedAct, 1);
 	}
 
 	handleSceneChange(e){
