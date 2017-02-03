@@ -14,7 +14,7 @@ const splitPlayIntoActsAndScenes = play => {
 
 	play.forEach((line, idx, arr) => {
 		// increment lastAct num at beginning of new act
-		if (line.text_entry.toLowerCase().includes("act")) {
+		if (line.text_entry.toLowerCase().includes("act") && !line.line_number) {
 			lastAct++;
 			lastScene = 1;
 		}

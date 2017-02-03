@@ -3,7 +3,7 @@ const currentPlay = (state = [], action) => {
 		case 'LOAD_PLAY':
 			return action.play;
 
-		default: 
+		default:
 			return state;
 	}
 }

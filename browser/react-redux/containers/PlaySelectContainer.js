@@ -24,13 +24,13 @@ class PlaySelectContainer extends Component {
 	}
 
 	render(){
-		return <PlaySelect 
-			handleChange={this.handleChange} 
+		return <PlaySelect
+			handleChange={this.handleChange}
 			handleSubmit={this.handleSubmit}/>
 	}
 }
 
-// ========== REACT-REDUX ==========
+/* ========== REACT-REDUX ========== */
 import { connect } from 'react-redux';
 import { fetchPlay } from '../actions/plays';
 import { fetchCharacters } from '../actions/characters';
