@@ -28883,6 +28883,10 @@
 	
 	var _CharacterSelectContainer2 = _interopRequireDefault(_CharacterSelectContainer);
 	
+	var _SceneContainer = __webpack_require__(304);
+	
+	var _SceneContainer2 = _interopRequireDefault(_SceneContainer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var App = function App(_ref) {
@@ -28893,7 +28897,7 @@
 	
 		return _react2.default.createElement(
 			'div',
-			null,
+			{ className: 'container' },
 			_react2.default.createElement(_PlaySelectContainer2.default, null),
 			_react2.default.createElement(_CharacterSelectContainer2.default, null),
 			_react2.default.createElement(
@@ -28905,17 +28909,7 @@
 					playName
 				)
 			),
-			_react2.default.createElement(
-				'div',
-				null,
-				currentScene.lines.map(function (line, i) {
-					line.index = i;
-					return _react2.default.createElement(_LineContainer2.default, {
-						key: line.line_id,
-						line: line
-					});
-				})
-			)
+			_react2.default.createElement(_SceneContainer2.default, null)
 		);
 	};
 	
@@ -29005,7 +28999,7 @@
 		return _react2.default.createElement(
 			'p',
 			{
-				className: (isStageDirection ? 'italic' : null) + " " + (line.line_id === currentLine.line_id ? 'bg-silver' : null),
+				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0',
 				onClick: function onClick() {
 					return toggleLine(line, play, isSpeaking);
 				},
@@ -30869,6 +30863,88 @@
 	    });
 	  };
 	};
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(179);
+	
+	var _Scene = __webpack_require__(305);
+	
+	var _Scene2 = _interopRequireDefault(_Scene);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var currentScene = _ref.currentScene;
+	  return { currentScene: currentScene };
+	};
+	
+	// const mapDispatchToProps = () => {};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_Scene2.default);
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _LineContainer = __webpack_require__(272);
+	
+	var _LineContainer2 = _interopRequireDefault(_LineContainer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Scene = function Scene(_ref) {
+	  var currentScene = _ref.currentScene;
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    currentScene.lines.map(function (line, i) {
+	      line.index = i;
+	      return _react2.default.createElement(_LineContainer2.default, {
+	        key: line.line_id,
+	        line: line
+	      });
+	    }),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'center' },
+	      _react2.default.createElement(
+	        'button',
+	        { className: 'btn btn-primary black bg-silver mr2' },
+	        'Prev Scene'
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { className: 'btn btn-primary black bg-silver ml2' },
+	        'Next Scene'
+	      )
+	    )
+	  );
+	};
+	
+	exports.default = Scene;
 
 /***/ }
 /******/ ]);

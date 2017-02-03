@@ -14,7 +14,7 @@ const Line = props => {
 
 	return (
 		<p
-			className={(isStageDirection ? 'italic' : null) + " " + (line.line_id === currentLine.line_id ? 'bg-silver' : null)}
+			className={(isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0'}
       onClick={() => toggleLine(line, play, isSpeaking)}
 			id={line.text_entry && line.text_entry.includes("ACT") ? line.text_entry.slice(4) : null}
 		>
