@@ -29266,6 +29266,7 @@
 				var selectedPlay = e.target.value;
 				this.setState({ selectedPlay: selectedPlay });
 				this.props.loadPlay(selectedPlay);
+				this.props.loadScene(selectedPlay, 1, 1);
 			}
 		}, {
 			key: 'handleActChange',
