@@ -12,7 +12,7 @@ const Scene = ({ currentScene }) => (
           />
         )})
       }
-      <div className="center">
+      <div className="center mt2 mb3">
         <button className="btn btn-primary black bg-silver mr2">Prev Scene</ button>
         <button className="btn btn-primary black bg-silver ml2">Next Scene</ button>
       </div>

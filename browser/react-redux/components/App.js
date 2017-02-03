@@ -12,9 +12,6 @@ const App = ({ currentPlay, currentScene }) => {
 		<div className="container">
 			<PlaySelectContainer />
 			<CharacterSelectContainer />
-			<div>
-			<h1>{playName}</h1>
-			</div>
 			<SceneContainer />
 		</div>
 	)

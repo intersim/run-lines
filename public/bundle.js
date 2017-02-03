@@ -28900,15 +28900,6 @@
 			{ className: 'container' },
 			_react2.default.createElement(_PlaySelectContainer2.default, null),
 			_react2.default.createElement(_CharacterSelectContainer2.default, null),
-			_react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h1',
-					null,
-					playName
-				)
-			),
 			_react2.default.createElement(_SceneContainer2.default, null)
 		);
 	};
@@ -29305,7 +29296,7 @@
 	
 				return _react2.default.createElement(
 					'form',
-					{ className: 'mt1 inline-block' },
+					{ className: 'mt2 mb2 inline-block' },
 					_react2.default.createElement(_PlaySelect2.default, {
 						handleChange: this.handlePlayChange }),
 					_react2.default.createElement(_ActSelect2.default, {
@@ -30929,7 +30920,7 @@
 	    }),
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'center' },
+	      { className: 'center mt2 mb3' },
 	      _react2.default.createElement(
 	        'button',
 	        { className: 'btn btn-primary black bg-silver mr2' },

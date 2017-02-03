@@ -41,7 +41,7 @@ class PlaySelectContainer extends Component {
 		const scenes = this.props.currentPlay.acts && this.props.currentPlay.acts[this.state.selectedAct];
 
 		return (
-		        <form className="mt1 inline-block">
+		        <form className="mt2 mb2 inline-block">
 		        	<PlaySelect
 								handleChange={this.handlePlayChange} />
 							<ActSelect
