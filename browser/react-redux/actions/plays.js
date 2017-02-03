@@ -10,7 +10,7 @@ export const loadPlay = play => ({
 /* ========== ASYNC ========== */
 export const fetchPlay = playName => {
 	return dispatch => {
-		fetch(`/api/plays/${playName}`)
+		fetch(`/api/plays/${playName}/overview`)
 		.then (res => res.json())
 		.then(play => {
 			dispatch(loadPlay(play));

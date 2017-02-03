@@ -60,17 +60,17 @@
 	
 	var _reactRedux = __webpack_require__(179);
 	
-	var _reducers = __webpack_require__(288);
+	var _reducers = __webpack_require__(290);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
 	var _redux = __webpack_require__(186);
 	
-	var _reduxLogger = __webpack_require__(292);
+	var _reduxLogger = __webpack_require__(296);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(298);
+	var _reduxThunk = __webpack_require__(302);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -21517,7 +21517,7 @@
 	
 	var _characters = __webpack_require__(282);
 	
-	var _twelfthNightS = __webpack_require__(287);
+	var _twelfthNightS = __webpack_require__(289);
 	
 	var _twelfthNightS2 = _interopRequireDefault(_twelfthNightS);
 	
@@ -28890,7 +28890,7 @@
 	
 	var _ActSelectContainer2 = _interopRequireDefault(_ActSelectContainer);
 	
-	var _CharacterSelectContainer = __webpack_require__(285);
+	var _CharacterSelectContainer = __webpack_require__(287);
 	
 	var _CharacterSelectContainer2 = _interopRequireDefault(_CharacterSelectContainer);
 	
@@ -28928,7 +28928,7 @@
 			)
 		);
 	};
-	
+	// import SceneSelectContainer from '../containers/SceneSelectContainer';
 	exports.default = App;
 
 /***/ },
@@ -29298,7 +29298,7 @@
 		return PlaySelectContainer;
 	}(_react.Component);
 	
-	// ========== REACT-REDUX ==========
+	/* ========== REACT-REDUX ========== */
 	
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -29428,7 +29428,7 @@
 	/* ========== ASYNC ========== */
 	var fetchPlay = exports.fetchPlay = function fetchPlay(playName) {
 		return function (dispatch) {
-			fetch('/api/plays/' + playName).then(function (res) {
+			fetch('/api/plays/' + playName + '/overview').then(function (res) {
 				return res.json();
 			}).then(function (play) {
 				dispatch(loadPlay(play));
@@ -29563,7 +29563,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(1);
@@ -29572,28 +29572,30 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var acts = ['I', 'II', 'III', 'IV', 'V'];
-	
 	var ActSelect = function ActSelect(props) {
-		return _react2.default.createElement(
-			'select',
-			{ className: 'ml2 inline-block', onChange: props.handleChange },
-			acts.map(function (num, i) {
-				return _react2.default.createElement(
-					'option',
-					{ key: i, value: num },
-					'Act ',
-					num
-				);
-			}),
-			';'
-		);
+	  var acts = ['I', 'II', 'III', 'IV', 'V'];
+	
+	  return _react2.default.createElement(
+	    'select',
+	    { className: 'ml2 inline-block', onChange: props.handleChange },
+	    acts.map(function (num, i) {
+	      return _react2.default.createElement(
+	        'option',
+	        { key: i, value: num },
+	        'Act ',
+	        num
+	      );
+	    }),
+	    ';'
+	  );
 	};
 	
 	exports.default = ActSelect;
 
 /***/ },
-/* 285 */
+/* 285 */,
+/* 286 */,
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29608,7 +29610,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _CharacterSelect = __webpack_require__(286);
+	var _CharacterSelect = __webpack_require__(288);
 	
 	var _CharacterSelect2 = _interopRequireDefault(_CharacterSelect);
 	
@@ -29680,7 +29682,7 @@
 	exports.default = CharacterSelectContainer;
 
 /***/ },
-/* 286 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29720,7 +29722,7 @@
 	exports.default = CharacterSelect;
 
 /***/ },
-/* 287 */
+/* 289 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30067,44 +30069,61 @@
 	}];
 
 /***/ },
-/* 288 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _redux = __webpack_require__(186);
 	
-	var _play = __webpack_require__(289);
+	var _play = __webpack_require__(291);
 	
 	var _play2 = _interopRequireDefault(_play);
 	
-	var _line = __webpack_require__(290);
+	var _line = __webpack_require__(292);
 	
-	var _characters = __webpack_require__(291);
+	var _characters = __webpack_require__(293);
+	
+	var _scenes = __webpack_require__(294);
+	
+	var _acts = __webpack_require__(295);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// currentAct: string?
-	// currentScene: string?
-	// sceneLines: array of objects
+	/**
+	 * @param {Object} currentPlay
+	 * @param {string} currentPlay.play_name
+	 * @param {Object} currentPlay.acts
+	 * @param {number} currentAct
+	 * @param {Object} currentScene
+	 * @param {number} currentScene.num
+	 * @param {Object[]} currentScene.lines
+	 * @param {string[]} characters
+	 * @param {string} currentCharacter
+	 * @param {Object} currentLine
+	 * @param {boolean} isListening
+	 * @param {boolean} isSpeaking
+	 */
 	
 	var rootReducer = (0, _redux.combineReducers)({
-		currentCharacter: _characters.currentCharacter,
-		currentPlay: _play2.default,
-		currentLine: _line.currentLine,
-		characters: _characters.currentPlayCharacters,
-		isListening: _line.isListening,
-		isSpeaking: _line.isSpeaking
+	  currentPlay: _play2.default,
+	  currentAct: _acts.currentAct,
+	  currentScene: _scenes.currentScene,
+	  characters: _characters.currentPlayCharacters,
+	  currentCharacter: _characters.currentCharacter,
+	  currentLine: _line.currentLine,
+	  isListening: _line.isListening,
+	  isSpeaking: _line.isSpeaking
 	});
 	
 	exports.default = rootReducer;
 
 /***/ },
-/* 289 */
+/* 291 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30113,7 +30132,7 @@
 		value: true
 	});
 	var currentPlay = function currentPlay() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 		var action = arguments[1];
 	
 		switch (action.type) {
@@ -30128,7 +30147,7 @@
 	exports.default = currentPlay;
 
 /***/ },
-/* 290 */
+/* 292 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30182,7 +30201,7 @@
 	};
 
 /***/ },
-/* 291 */
+/* 293 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30217,7 +30236,64 @@
 	};
 
 /***/ },
-/* 292 */
+/* 294 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var currentScene = function currentScene() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { lines: [], num: 1 };
+	  var action = arguments[1];
+	
+	  var newState = Object.assign({}, state);
+	
+	  switch (action.type) {
+	    case 'SET_CURRENT_SCENE':
+	      newState.num = action.sceneNum;
+	      break;
+	
+	    case 'LOAD_SCENE':
+	      newState.lines = action.lines;
+	      break;
+	
+	    default:
+	      return state;
+	  }
+	
+	  return newState;
+	};
+	
+	exports.default = currentScene;
+
+/***/ },
+/* 295 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var currentAct = function currentAct() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case 'SET_CURRENT_ACT':
+	      return action.actNum;
+	
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = currentAct;
+
+/***/ },
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30228,11 +30304,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(293);
+	var _core = __webpack_require__(297);
 	
-	var _helpers = __webpack_require__(294);
+	var _helpers = __webpack_require__(298);
 	
-	var _defaults = __webpack_require__(297);
+	var _defaults = __webpack_require__(301);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -30335,7 +30411,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 293 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30345,9 +30421,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(294);
+	var _helpers = __webpack_require__(298);
 	
-	var _diff = __webpack_require__(295);
+	var _diff = __webpack_require__(299);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -30476,7 +30552,7 @@
 	}
 
 /***/ },
-/* 294 */
+/* 298 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30500,7 +30576,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 295 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30510,7 +30586,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(296);
+	var _deepDiff = __webpack_require__(300);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -30596,7 +30672,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 296 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -31025,7 +31101,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 297 */
+/* 301 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31076,7 +31152,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 298 */
+/* 302 */
 /***/ function(module, exports) {
 
 	'use strict';

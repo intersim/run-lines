@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import LineContainer from '../containers/LineContainer';
 import PlaySelectContainer from '../containers/PlaySelectContainer';
 import ActSelectContainer from '../containers/ActSelectContainer';
-import SceneSelectContainer from '../containers/SceneSelectContainer';
+// import SceneSelectContainer from '../containers/SceneSelectContainer';
 import CharacterSelectContainer from '../containers/CharacterSelectContainer';
 
 const App = props => {
@@ -14,7 +14,7 @@ const App = props => {
 		<div>
 			<PlaySelectContainer />
 			<ActSelectContainer />
-			<SceneSelectContainer />
+			{/* <SceneSelectContainer /> */}
 			<CharacterSelectContainer />
 			<div>
 			<h1>{playName}</h1>

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const rootPath = '../../data'
-const playPath = rootpath + '/plays'
+const playPath = rootPath + '/plays'
 
 router.get(`/plays/:play`, (req, res, next) => {
 	res.json(require(`${playPath}/${req.params.play}/${req.params.play}.json`));
@@ -11,7 +11,7 @@ router.get(`/plays/:play/overview`, (req, res, next) => {
 });
 
 router.get(`/plays/:play/characters`, (req, res, next) => {
-	res.json(require(`${rootpath}/characters/${req.params.play}-characters.json`));
+	res.json(require(`${rootPath}/characters/${req.params.play}-characters.json`));
 });
 
 router.get(`/plays/:play/acts/:actNum/scenes/:sceneNum`, (req, res, next) => {
