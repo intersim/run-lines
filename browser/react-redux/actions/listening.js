@@ -17,7 +17,7 @@ export const stopListening = () => ({
 })
 
 /* ========== ASYNC ========== */
-export const listenToLine = (line, play, isListening) => {
+export const listenToLine = (line, scene, isListening) => {
 
 	return dispatch => {
 		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
@@ -35,8 +35,8 @@ export const listenToLine = (line, play, isListening) => {
 	  		console.log("you're done, time for the computer to speak")
 	  		dispatch(stopListening());
 	  		recognition.stop()
-	  		const nextLine = getNextSpeakerLine(line, play)
-	  		dispatch(sayLine(nextLine, play))
+	  		const nextLine = getNextSpeakerLine(line, scene)
+	  		dispatch(sayLine(nextLine, scene))
 	  	}
   	}
 

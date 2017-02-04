@@ -28739,14 +28739,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(_ref, _ref2) {
-		var currentPlay = _ref.currentPlay;
+		var currentScene = _ref.currentScene;
 		var currentLine = _ref.currentLine;
 		var isListening = _ref.isListening;
 		var isSpeaking = _ref.isSpeaking;
 		var line = _ref2.line;
 	
 		return {
-			currentPlay: currentPlay,
+			currentScene: currentScene,
 			currentLine: currentLine,
 			line: line,
 			isListening: isListening,
@@ -28756,8 +28756,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			toggleLine: function toggleLine(line, play, isSpeaking) {
-				if (!isSpeaking) dispatch((0, _speaking.sayLine)(line, play));else dispatch((0, _speaking.stopSpeakingLine)());
+			toggleLine: function toggleLine(line, scene, isSpeaking) {
+				if (!isSpeaking) dispatch((0, _speaking.sayLine)(line, scene));else dispatch((0, _speaking.stopSpeakingLine)());
 			},
 			listenToLine: function listenToLine(line, isListening) {
 				dispatch((0, _listening.listenToLine)(line, isListening));
@@ -28783,15 +28783,14 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Line = function Line(props) {
-		var line = props.line;
-		var currentLine = props.currentLine;
-		var play = props.currentPlay;
-		var isListening = props.isListening;
-		var isSpeaking = props.isSpeaking;
-	
-		var toggleLine = props.toggleLine;
-		var listenToLine = props.listenToLine;
+	var Line = function Line(_ref) {
+		var line = _ref.line;
+		var currentLine = _ref.currentLine;
+		var currentScene = _ref.currentScene;
+		var isListening = _ref.isListening;
+		var isSpeaking = _ref.isSpeaking;
+		var toggleLine = _ref.toggleLine;
+		var listenToLine = _ref.listenToLine;
 	
 		var isStageDirection = line.line_number.split('.')[2] === '0';
 	
@@ -28800,7 +28799,7 @@
 			{
 				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0',
 				onClick: function onClick() {
-					return toggleLine(line, play, isSpeaking);
+					return toggleLine(line, currentScene.lines, isSpeaking);
 				},
 				id: line.text_entry && line.text_entry.includes("ACT") ? line.text_entry.slice(4) : null
 			},
@@ -28898,9 +28897,9 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var getNextLine = exports.getNextLine = function getNextLine(line, play) {
+	var getNextLine = exports.getNextLine = function getNextLine(line, scene) {
 		var nextLineIdx = Number(line.index) + 1;
-		var nextLine = play[nextLineIdx];
+		var nextLine = scene[nextLineIdx];
 	
 		if (!nextLine) return;else {
 			nextLine.index = nextLineIdx;
@@ -28908,12 +28907,12 @@
 		}
 	};
 	
-	var getNextSpeakerLine = exports.getNextSpeakerLine = function getNextSpeakerLine(line, play) {
+	var getNextSpeakerLine = exports.getNextSpeakerLine = function getNextSpeakerLine(line, scene) {
 		var currentLine = line;
-		while (currentLine.speaker == getNextLine(currentLine, play).speaker) {
-			currentLine = getNextLine(currentLine, play);
+		while (currentLine.speaker == getNextLine(currentLine, scene).speaker) {
+			currentLine = getNextLine(currentLine, scene);
 		}
-		return getNextLine(currentLine, play);
+		return getNextLine(currentLine, scene);
 	};
 
 /***/ },
@@ -28972,7 +28971,7 @@
 	};
 	
 	/* ========== ASYNC ========== */
-	var listenToLine = exports.listenToLine = function listenToLine(line, play, isListening) {
+	var listenToLine = exports.listenToLine = function listenToLine(line, scene, isListening) {
 	
 		return function (dispatch) {
 			if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
@@ -28992,8 +28991,8 @@
 					console.log("you're done, time for the computer to speak");
 					dispatch(stopListening());
 					recognition.stop();
-					var nextLine = (0, _utils.getNextSpeakerLine)(line, play);
-					dispatch((0, _speaking.sayLine)(nextLine, play));
+					var nextLine = (0, _utils.getNextSpeakerLine)(line, scene);
+					dispatch((0, _speaking.sayLine)(nextLine, scene));
 				}
 			};
 	

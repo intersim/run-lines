@@ -1,6 +1,6 @@
-export const getNextLine = (line, play) => {
+export const getNextLine = (line, scene) => {
 	const nextLineIdx = Number(line.index) + 1
-	const nextLine = play[nextLineIdx]
+	const nextLine = scene[nextLineIdx]
 
 	if (!nextLine) return;
 	else {
@@ -9,10 +9,10 @@ export const getNextLine = (line, play) => {
 	}
 }
 
-export const getNextSpeakerLine = (line, play) => {
+export const getNextSpeakerLine = (line, scene) => {
 	let currentLine = line
-	while (currentLine.speaker == getNextLine(currentLine, play).speaker) {
-		currentLine = getNextLine(currentLine, play)
+	while (currentLine.speaker == getNextLine(currentLine, scene).speaker) {
+		currentLine = getNextLine(currentLine, scene)
 	}
-	return getNextLine(currentLine, play)
+	return getNextLine(currentLine, scene)
 }

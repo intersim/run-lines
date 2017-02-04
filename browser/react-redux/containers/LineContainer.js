@@ -4,9 +4,9 @@ import { sayLine, stopSpeakingLine } from '../actions/speaking';
 import { listenToLine } from '../actions/listening';
 import { getNextLine } from '../actions/utils';
 
-const mapStateToProps = ({ currentPlay, currentLine, isListening, isSpeaking }, { line }) => {
+const mapStateToProps = ({ currentScene, currentLine, isListening, isSpeaking }, { line }) => {
 	return {
-		currentPlay,
+		currentScene,
 		currentLine,
 		line,
 		isListening,
@@ -15,8 +15,8 @@ const mapStateToProps = ({ currentPlay, currentLine, isListening, isSpeaking }, 
 };
 
 const mapDispatchToProps = dispatch => ({
-	toggleLine(line, play, isSpeaking) {
-		if (!isSpeaking) dispatch(sayLine(line, play));
+	toggleLine(line, scene, isSpeaking) {
+		if (!isSpeaking) dispatch(sayLine(line, scene));
 		else dispatch(stopSpeakingLine());
 	},
 
