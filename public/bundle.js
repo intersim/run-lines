@@ -29584,8 +29584,6 @@
 	  return { currentScene: currentScene };
 	};
 	
-	// const mapDispatchToProps = () => {};
-	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_Scene2.default);
 
 /***/ },
@@ -29619,21 +29617,7 @@
 	        key: line.line_id,
 	        line: line
 	      });
-	    }),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'center mt2 mb3' },
-	      _react2.default.createElement(
-	        'button',
-	        { className: 'btn btn-primary black bg-silver mr2' },
-	        'Prev Scene'
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { className: 'btn btn-primary black bg-silver ml2' },
-	        'Next Scene'
-	      )
-	    )
+	    })
 	  );
 	};
 	
