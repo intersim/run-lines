@@ -28870,7 +28870,6 @@
 				if (!nextLine) return;
 	
 				if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
-					console.log("now it's your turn to speak!");
 					dispatch((0, _listening.listenToLine)(nextLine, scene));
 				} else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
 					dispatch(sayLine(nextLine, scene));
@@ -28948,6 +28947,8 @@
 	
 	var _speaking = __webpack_require__(262);
 	
+	var _lines = __webpack_require__(264);
+	
 	var _utils = __webpack_require__(263);
 	
 	/* ========== CONSTANTS ========== */
@@ -28974,6 +28975,8 @@
 	var listenToLine = exports.listenToLine = function listenToLine(line, scene, isListening) {
 	
 		return function (dispatch) {
+			dispatch((0, _lines.setCurrentLine)(line));
+	
 			if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 	
 			var recognition = new webkitSpeechRecognition();
@@ -28986,9 +28989,8 @@
 	
 			recognition.onresult = function (e) {
 				if (e.results[0].isFinal) {
-					// // To get transcript of what user said:
-					// console.log(e.results[0][0].transcript);
-					console.log("you're done, time for the computer to speak");
+					// To get transcript of what user said:
+					// console.log("You said: ", e.results[0][0].transcript);
 					dispatch(stopListening());
 					recognition.stop();
 					var nextLine = (0, _utils.getNextSpeakerLine)(line, scene);
