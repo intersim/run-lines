@@ -20,7 +20,7 @@ class PlaySelectContainer extends Component {
 
 	handlePlayChange(e){
 		const selectedPlay = e.target.value;
-		this.setState({ selectedPlay });
+		this.setState({ selectedPlay, selectedAct: 1, selectedScene: 1 });
 		this.props.loadPlay(selectedPlay);
 		this.props.loadScene(selectedPlay, 1, 1);
 	}
@@ -46,11 +46,14 @@ class PlaySelectContainer extends Component {
 		return (
 		        <form className="mt2 mb2 inline-block">
 		        	<PlaySelect
+		        		selectedPlay={this.state.selectedPlay}
 								handleChange={this.handlePlayChange} />
 							<ActSelect
+								selectedAct={this.state.selectedAct}
 								acts={acts}
 								handleChange={this.handleActChange} />
 							<SceneSelect
+								selectedScene={this.state.selectedScene}
 								scenes={scenes}
 								handleChange={this.handleSceneChange} />
 						</form>
