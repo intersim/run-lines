@@ -19,8 +19,8 @@ class ActSelectContainer extends Component {
 	}
 
 	render(){
-		return <ActSelect 
-			handleChange={this.handleChange} 
+		return <ActSelect
+			handleChange={this.handleChange}
 			/>
 	}
 }

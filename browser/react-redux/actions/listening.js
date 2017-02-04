@@ -1,4 +1,5 @@
 import { sayLine } from './speaking';
+import { setCurrentLine } from './lines';
 
 /* ========== CONSTANTS ========== */
 const START_LISTENING = 'START_LISTENING';
@@ -17,9 +18,11 @@ export const stopListening = () => ({
 })
 
 /* ========== ASYNC ========== */
-export const listenToLine = (line, play, isListening) => {
+export const listenToLine = (line, scene, isListening) => {
 
 	return dispatch => {
+		dispatch(setCurrentLine(line));
+
 		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 
 		var recognition = new webkitSpeechRecognition();
@@ -30,13 +33,12 @@ export const listenToLine = (line, play, isListening) => {
 
 	  recognition.onresult = e => {
 	  	if (e.results[0].isFinal) {
-	  		// // To get transcript of what user said:
-	  		// console.log(e.results[0][0].transcript);
-	  		console.log("you're done, time for the computer to speak")
+	  		// To get transcript of what user said:
+	  		// console.log("You said: ", e.results[0][0].transcript);
 	  		dispatch(stopListening());
 	  		recognition.stop()
-	  		const nextLine = getNextSpeakerLine(line, play)
-	  		dispatch(sayLine(nextLine, play))
+	  		const nextLine = getNextSpeakerLine(line, scene)
+	  		dispatch(sayLine(nextLine, scene))
 	  	}
   	}
 

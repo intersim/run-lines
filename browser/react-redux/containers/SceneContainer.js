@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scene from '../components/Scene';
 
-const mapStateToProps = () => {};
+const mapStateToProps = ({ currentScene }) => ({ currentScene });
 
-const mapDispatchToProps = () => {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Scene);
+export default connect(mapStateToProps, null)(Scene);

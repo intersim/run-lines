@@ -2,35 +2,15 @@ import React, { Component } from 'react';
 
 import LineContainer from '../containers/LineContainer';
 import PlaySelectContainer from '../containers/PlaySelectContainer';
-import ActSelectContainer from '../containers/ActSelectContainer';
 import CharacterSelectContainer from '../containers/CharacterSelectContainer';
+import SceneContainer from '../containers/SceneContainer';
 
-const App = props => {
-	const currentPlay = props.currentPlay;
-	const playName = currentPlay.length ? currentPlay[0].play_name : null;
-
-	return (
-		<div>
+const App = () => (
+		<div className="container">
 			<PlaySelectContainer />
-			<ActSelectContainer />
 			<CharacterSelectContainer />
-			<div>
-			<h1>{playName}</h1>
-			</div>
-			<div>
-		    {currentPlay.map((line, i) => {
-		      line.index = i;
-		      return (
-		        <LineContainer
-		          key={line.line_id}
-		          line={line}
-		        />
-		      )})
-		    }
-		  </div>
+			<SceneContainer />
 		</div>
 	)
-}
-
 
 export default App;

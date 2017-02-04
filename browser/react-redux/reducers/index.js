@@ -2,16 +2,31 @@ import { combineReducers } from 'redux';
 import currentPlay from './play';
 import { currentLine, isListening, isSpeaking } from './line';
 import { currentPlayCharacters as characters, currentCharacter } from './characters';
+import currentScene from './scenes';
+import currentAct from './acts';
 
-// currentAct: string?
-// currentScene: string?
-// sceneLines: array of objects
+/**
+ * @param {Object} currentPlay
+ * @param {string} currentPlay.play_name
+ * @param {Object} currentPlay.acts
+ * @param {number} currentAct
+ * @param {Object} currentScene
+ * @param {number} currentScene.num
+ * @param {Object[]} currentScene.lines
+ * @param {string[]} characters
+ * @param {string} currentCharacter
+ * @param {Object} currentLine
+ * @param {boolean} isListening
+ * @param {boolean} isSpeaking
+ */
 
 const rootReducer = combineReducers({
-	currentCharacter,
-	currentPlay,
-	currentLine,
+  currentPlay,
+  currentAct,
+  currentScene,
 	characters,
+  currentCharacter,
+  currentLine,
 	isListening,
 	isSpeaking
 });

@@ -1,30 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
-import AppContainer from './containers/AppContainer'
+import AppContainer from './containers/AppContainer';
 
 const Routes = ({ fetchInitialData }) => (
 	<Router history={browserHistory}>
-		<Route path="/" component={AppContainer} onEnter={fetchInitialData}>
-		</ Route>
-
+		<Route path="/" component={AppContainer} onEnter={fetchInitialData} />
 	</Router>
 )
 
 import { fetchPlay, loadPlay } from './actions/plays';
 import { fetchCharacters, setCurrentCharacter } from './actions/characters';
-import testScene from '../../data/twelfth-night-s1.js';
+import { fetchScene } from './actions/scenes';
 
 const mapDispatchToProps = dispatch => ({
-	// fetchInitialData() {
-	// 	dispatch(fetchPlay('Henry-IV'));
-	// 	dispatch(fetchCharacters('Henry-IV'));
-	// 	dispatch(setCurrentCharacter('Archbishop-Of-York'));
-	// }
-	// only fetching one scene now for debugging purposes
 	fetchInitialData() {
-		dispatch(loadPlay(testScene));
-		dispatch(fetchCharacters('Twelfth-Night'));
+		dispatch(fetchPlay('Henry-IV'));
+    dispatch(fetchScene('Henry-IV', 1, 1));
+		dispatch(fetchCharacters('Henry-IV'));
+		dispatch(setCurrentCharacter('Archbishop-Of-York'));
 	}
 })
 
