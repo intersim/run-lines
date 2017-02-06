@@ -19,7 +19,7 @@ export const stopListening = () => ({
 
 /* ========== ASYNC ========== */
 export const listenToLine = (line, scene, isListening) => {
-
+	console.log(line, scene, isListening);
 	return dispatch => {
 		dispatch(setCurrentLine(line));
 
@@ -34,7 +34,7 @@ export const listenToLine = (line, scene, isListening) => {
 	  recognition.onresult = e => {
 	  	if (e.results[0].isFinal) {
 	  		// To get transcript of what user said:
-	  		// console.log("You said: ", e.results[0][0].transcript);
+	  		console.log("You said: ", e.results[0][0].transcript);
 	  		dispatch(stopListening());
 	  		recognition.stop()
 	  		const nextLine = getNextSpeakerLine(line, scene)

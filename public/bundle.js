@@ -28855,17 +28855,20 @@
 	var sayLine = exports.sayLine = function sayLine(line, scene) {
 		return function (dispatch, getState) {
 			dispatch((0, _lines.setCurrentLine)(line));
-			dispatch(startSpeaking());
 	
 			var _getState = getState();
 	
 			var currentCharacter = _getState.currentCharacter;
 	
 			var utterThis = new SpeechSynthesisUtterance(line.text_entry);
+			// Storing in global variable to avoid a Chrome issue (https://bugs.chromium.org/p/chromium/issues/detail?id=509488#c11)
+			window.utterances = [];
+	
 			var nextLine = (0, _utils.getNextLine)(line, scene);
 	
 			// If the next line should be said by the app user, then listen; otherwise, keep saying the next lines
 			utterThis.onend = function (e) {
+				window.utterances.pop();
 				if (!getState().isSpeaking) return;
 				if (!nextLine) return;
 	
@@ -28876,6 +28879,12 @@
 				}
 			};
 	
+			utterThis.onerror = function (e) {
+				return console.error('There was a SpeechSynthesis error: ' + e);
+			};
+	
+			dispatch(startSpeaking());
+			window.utterances.push(utterThis);
 			window.speechSynthesis.speak(utterThis);
 		};
 	};
@@ -28973,7 +28982,7 @@
 	
 	/* ========== ASYNC ========== */
 	var listenToLine = exports.listenToLine = function listenToLine(line, scene, isListening) {
-	
+		console.log(line, scene, isListening);
 		return function (dispatch) {
 			dispatch((0, _lines.setCurrentLine)(line));
 	
@@ -28990,7 +28999,7 @@
 			recognition.onresult = function (e) {
 				if (e.results[0].isFinal) {
 					// To get transcript of what user said:
-					// console.log("You said: ", e.results[0][0].transcript);
+					console.log("You said: ", e.results[0][0].transcript);
 					dispatch(stopListening());
 					recognition.stop();
 					var nextLine = (0, _utils.getNextSpeakerLine)(line, scene);

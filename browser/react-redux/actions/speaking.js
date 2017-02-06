@@ -23,14 +23,17 @@ import { listenToLine } from './listening';
 export const sayLine = (line, scene) => {
 	return (dispatch, getState) => {
 		dispatch(setCurrentLine(line));
-		dispatch(startSpeaking());
 
 		const { currentCharacter } = getState();
 		const utterThis = new SpeechSynthesisUtterance(line.text_entry);
+		// Storing in global variable to avoid a Chrome issue (https://bugs.chromium.org/p/chromium/issues/detail?id=509488#c11)
+		window.utterances = [];
+
 		const nextLine = getNextLine(line, scene);
 
 		// If the next line should be said by the app user, then listen; otherwise, keep saying the next lines
 		utterThis.onend = e => {
+			window.utterances.pop();
 			if (!getState().isSpeaking) return;
 			if (!nextLine) return;
 
@@ -41,7 +44,11 @@ export const sayLine = (line, scene) => {
 				dispatch(sayLine(nextLine, scene))
 			}
 		}
+
+		utterThis.onerror = e => console.error(`There was a SpeechSynthesis error: ${e}`)
 		
+		dispatch(startSpeaking());
+		window.utterances.push(utterThis);
 		window.speechSynthesis.speak(utterThis);
 	}
 }
