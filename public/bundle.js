@@ -28873,7 +28873,7 @@
 				if (!nextLine) return;
 	
 				if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
-					dispatch((0, _listening.listenToLine)(nextLine, scene));
+					dispatch((0, _listening.listenToLine)(nextLine, scene, getState().isListening));
 				} else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
 					dispatch(sayLine(nextLine, scene));
 				}
@@ -28982,13 +28982,15 @@
 	
 	/* ========== ASYNC ========== */
 	var listenToLine = exports.listenToLine = function listenToLine(line, scene, isListening) {
-		console.log(line, scene, isListening);
 		return function (dispatch) {
 			dispatch((0, _lines.setCurrentLine)(line));
 	
 			if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 	
 			var recognition = new webkitSpeechRecognition();
+			window.recognitions = [];
+			window.recognitions.push(recognition);
+	
 			recognition.continuous = true;
 			recognition.interimResults = true;
 	
@@ -28997,11 +28999,13 @@
 			};
 	
 			recognition.onresult = function (e) {
+				console.log(e);
 				if (e.results[0].isFinal) {
 					// To get transcript of what user said:
 					console.log("You said: ", e.results[0][0].transcript);
 					dispatch(stopListening());
 					recognition.stop();
+					window.recognitions.pop();
 					var nextLine = (0, _utils.getNextSpeakerLine)(line, scene);
 					dispatch((0, _speaking.sayLine)(nextLine, scene));
 				}

@@ -19,24 +19,29 @@ export const stopListening = () => ({
 
 /* ========== ASYNC ========== */
 export const listenToLine = (line, scene, isListening) => {
-	console.log(line, scene, isListening);
 	return dispatch => {
 		dispatch(setCurrentLine(line));
 
 		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 
 		var recognition = new webkitSpeechRecognition();
+		window.recognitions = [];
+		window.recognitions.push(recognition);
+
 	  recognition.continuous = true;
 	  recognition.interimResults = true;
+
 
 	  recognition.onerror = e => console.error("Error: ", e.error)
 
 	  recognition.onresult = e => {
+	  	console.log(e);
 	  	if (e.results[0].isFinal) {
 	  		// To get transcript of what user said:
 	  		console.log("You said: ", e.results[0][0].transcript);
 	  		dispatch(stopListening());
 	  		recognition.stop()
+	  		window.recognitions.pop();
 	  		const nextLine = getNextSpeakerLine(line, scene)
 	  		dispatch(sayLine(nextLine, scene))
 	  	}

@@ -38,7 +38,7 @@ export const sayLine = (line, scene) => {
 			if (!nextLine) return;
 
 			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
-				dispatch(listenToLine(nextLine, scene))	
+				dispatch(listenToLine(nextLine, scene, getState().isListening))	
 			}
 			else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
 				dispatch(sayLine(nextLine, scene))
