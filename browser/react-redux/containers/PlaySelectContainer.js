@@ -8,9 +8,9 @@ class PlaySelectContainer extends Component {
 		super();
 
 		this.state = {
-			selectedPlay: 'Henry-IV',
+			selectedPlay: 'Twelfth-Night',
 			selectedAct: 1,
-			selectedScene: 1
+			selectedScene: 2
 		}
 
 		this.handlePlayChange = this.handlePlayChange.bind(this);

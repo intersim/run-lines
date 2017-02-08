@@ -3,7 +3,7 @@ export const currentLine = (state = {}, action) => {
 		case 'SET_CURRENT_LINE':
 			return action.line;
 
-		default: 
+		default:
 			return state;
 	}
 }
@@ -23,11 +23,21 @@ export const isListening = (state = false, action) => {
 
 export const isSpeaking = (state = false, action) => {
 	switch (action.type) {
-		case 'START_SPEAKING': 
+		case 'START_SPEAKING':
 			return true;
 
 		case 'STOP_SPEAKING':
 			return false;
+
+		default:
+			return state;
+	}
+}
+
+export const voices = (state = [], action) => {
+	switch (action.type) {
+		case 'SET_VOICES':
+			return action.voices;
 
 		default:
 			return state;
