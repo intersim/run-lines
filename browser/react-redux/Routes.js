@@ -10,7 +10,7 @@ const Routes = ({ fetchInitialData }) => (
 )
 
 import { fetchPlay, loadPlay } from './actions/plays';
-import { fetchCharacters, setCurrentCharacter } from './actions/characters';
+import { fetchCharacters } from './actions/characters';
 import { fetchScene } from './actions/scenes';
 import { getVoices } from './actions/speaking';
 
@@ -20,7 +20,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchScene('Twelfth-Night', 1, 2));
     dispatch(fetchCharacters('Twelfth-Night'));
     speechSynthesis.onvoiceschanged = () => dispatch(getVoices());
-		// dispatch(setCurrentCharacter(''));
 	}
 })
 

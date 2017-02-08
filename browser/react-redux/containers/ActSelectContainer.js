@@ -14,7 +14,6 @@ class ActSelectContainer extends Component {
 
 	handleChange(e){
 		const selectedAct = e.target.value;
-		console.log(selectedAct);
 		this.setState({ selectedAct });
 	}
 
@@ -24,17 +23,5 @@ class ActSelectContainer extends Component {
 			/>
 	}
 }
-
-// ========== REACT-REDUX ==========
-// import { connect } from 'react-redux';
-// import { fetchPlay } from '../actions';
-
-// const mapDispatchToProps = dispatch => ({
-// 	loadPlay (playName) {
-// 		dispatch(fetchPlay(playName))
-// 	}
-// });
-
-// ActSelectContainer = connect(null, mapDispatchToProps)(ActSelectContainer);
 
 export default ActSelectContainer;
