@@ -28982,13 +28982,19 @@
 	
 	/* ========== ASYNC ========== */
 	var listenToLine = exports.listenToLine = function listenToLine(line, scene, isListening) {
-		return function (dispatch) {
+		return function (dispatch, getState) {
 			dispatch((0, _lines.setCurrentLine)(line));
 	
 			if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
 	
+			if (window.recognitions && window.recognitions.length) {
+				recognitions[0].stop();
+				recognitions.pop();
+			} else {
+				window.recognitions = [];
+			}
+	
 			var recognition = new webkitSpeechRecognition();
-			window.recognitions = [];
 			window.recognitions.push(recognition);
 	
 			recognition.continuous = true;
@@ -28998,26 +29004,52 @@
 				return console.error("Error: ", e.error);
 			};
 	
+			var lineLength = line.text_entry.length;
+	
 			recognition.onresult = function (e) {
-				console.log(e);
-				if (e.results[0].isFinal) {
-					// To get transcript of what user said:
-					console.log("You said: ", e.results[0][0].transcript);
-					dispatch(stopListening());
-					recognition.stop();
-					window.recognitions.pop();
-					var nextLine = (0, _utils.getNextSpeakerLine)(line, scene);
-					dispatch((0, _speaking.sayLine)(nextLine, scene));
+				var transcriptLength = e.results[0][0].transcript.length;
+				var nextLine = (0, _utils.getNextLine)(line, scene);
+	
+				var _getState = getState();
+	
+				var currentCharacter = _getState.currentCharacter;
+	
+	
+				if (!e.results[0].isFinal && transcriptLength >= lineLength - 15 && transcriptLength <= lineLength + 15) {
+	
+					if (nextLine.speaker.toLowerCase() !== currentCharacter.toLowerCase()) {
+						dispatch(stopListening());
+						recognition.stop();
+						window.recognitions.pop();
+						var _nextLine = (0, _utils.getNextSpeakerLine)(line, scene);
+						dispatch((0, _speaking.sayLine)(_nextLine, scene));
+					} else {
+						// console.log("You said: ", e.results[0][0].transcript);
+						dispatch(stopListening());
+						recognition.stop();
+						dispatch(listenToLine(nextLine, scene, false));
+					}
 				}
+	
+				// if (e.results[0].isFinal) {
+				// 	// To get transcript of what user said:
+				// 	dispatch(stopListening());
+				// 	recognition.stop()
+				// 	window.recognitions.pop();
+				// 	const nextLine = getNextSpeakerLine(line, scene)
+				// 	dispatch(sayLine(nextLine, scene))
+				// }
 			};
 	
-			if (isListening) {
-				dispatch(stopListening());
-				recognition.stop();
-			} else {
-				dispatch(startListening());
-				recognition.start();
-			}
+			// if (isListening) {
+			// 	dispatch(stopListening());
+			// 	recognition.stop();
+			// }
+	
+			// else {
+			dispatch(startListening());
+			recognition.start();
+			// }
 		};
 	};
 
