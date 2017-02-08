@@ -1,12 +1,11 @@
 # To Do:
 * highlighting the right line while user is speaking
-* REFACTOR
-* pagination on the front end
+* buttons in footer to go to prev/next scene
 * improve design/UI
-* different voices (at least for men and women)
-* some tweaks needed for toggling between speaking and listening (see beginning of Romeo and Juliet, passage between Sampson and Gregory)?
-* refactor pausing/isSpeaking functionality; use speechSynthesisUtterance.pause?
 * update README
+* fix bad data
+* add "report a bug" feature
+* REFACTOR
 
 ## Bad Data:
 ### When parsing plays:
