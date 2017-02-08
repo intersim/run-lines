@@ -42,44 +42,23 @@ export const listenToLine = (line, scene, isListening) => {
   	let lineLength = line.text_entry.length;
 
 	  recognition.onresult = e => {
-	  	const transcriptLength = e.results[0][0].transcript.length;
-	  	let	nextLine = getNextLine(line, scene); 
-  		const { currentCharacter } = getState();
-
-	  	if (!e.results[0].isFinal && transcriptLength >= lineLength - 15 && transcriptLength <= lineLength + 15) {
-
-	  		if (nextLine.speaker.toLowerCase() !== currentCharacter.toLowerCase()) {
-	  			dispatch(stopListening());
-					recognition.stop();
-					window.recognitions.pop();
-		  		const nextLine = getNextSpeakerLine(line, scene)
-		  		dispatch(sayLine(nextLine, scene))
-	  		} else {
-		  		// console.log("You said: ", e.results[0][0].transcript);
-		  		dispatch(stopListening());
-		  		recognition.stop();
-		  		dispatch(listenToLine(nextLine, scene, false));
-	  		}
+	  	if (e.results[0].isFinal) {
+	  		dispatch(stopListening());
+	  		recognition.stop()
+	  		window.recognitions.pop();
+	  		const nextLine = getNextSpeakerLine(line, scene)
+	  		dispatch(sayLine(nextLine, scene))
 	  	}
-
-	  	// if (e.results[0].isFinal) {
-	  	// 	// To get transcript of what user said:
-	  	// 	dispatch(stopListening());
-	  	// 	recognition.stop()
-	  	// 	window.recognitions.pop();
-	  	// 	const nextLine = getNextSpeakerLine(line, scene)
-	  	// 	dispatch(sayLine(nextLine, scene))
-	  	// }
   	}
 
-		// if (isListening) {
-		// 	dispatch(stopListening());
-		// 	recognition.stop();
-		// }
+		if (isListening) {
+			dispatch(stopListening());
+			recognition.stop();
+		}
 
-		// else {
-		dispatch(startListening());
-		recognition.start();
-		// }
+		else {
+			dispatch(startListening());
+			recognition.start();
+		}
 	}
 }
