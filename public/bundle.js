@@ -28991,7 +28991,7 @@
 		return _react2.default.createElement(
 			'p',
 			{
-				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0',
+				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0 clickable',
 				onClick: function onClick() {
 					return toggleLine(line, currentScene.lines, isSpeaking);
 				},
