@@ -12,13 +12,15 @@ const Routes = ({ fetchInitialData }) => (
 import { fetchPlay, loadPlay } from './actions/plays';
 import { fetchCharacters, setCurrentCharacter } from './actions/characters';
 import { fetchScene } from './actions/scenes';
+import { getVoices } from './actions/speaking';
 
 const mapDispatchToProps = dispatch => ({
 	fetchInitialData() {
-		dispatch(fetchPlay('Henry-IV'));
-    dispatch(fetchScene('Henry-IV', 1, 1));
-		dispatch(fetchCharacters('Henry-IV'));
-		dispatch(setCurrentCharacter('Archbishop-Of-York'));
+    dispatch(fetchPlay('Twelfth-Night'));
+    dispatch(fetchScene('Twelfth-Night', 1, 2));
+    dispatch(fetchCharacters('Twelfth-Night'));
+    speechSynthesis.onvoiceschanged = () => dispatch(getVoices());
+		// dispatch(setCurrentCharacter(''));
 	}
 })
 
