@@ -5,7 +5,7 @@ const Line = ({ line, currentLine, currentScene, isListening, isSpeaking, toggle
 
 	return (
 		<p
-			className={(isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0'}
+			className={(isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0 clickable'}
       onClick={() => toggleLine(line, currentScene.lines, isSpeaking)}
 			id={line.text_entry && line.text_entry.includes("ACT") ? line.text_entry.slice(4) : null}
 		>
