@@ -10,14 +10,14 @@
 ## Bad Data:
 ### When parsing plays:
 * ~Coriolanus~
-* Taming of the Shrew
-* A Winters Tale
-* A Comedy of Errors
+* ~Taming of the Shrew~
+* ~A Winters Tale~
+* A Comedy of Errors (which Antipholus not always specified?)
 
 ### When changing acts:
-* Henry IV, Act 5
-* Anthony and Cleopatra Act 5 (or maybe 1?)
-* Hamlet, Act 4
+* ~Henry IV, Act 5~
+* ~Anthony and Cleopatra Act 5 (or maybe 1?)~
+* ~Hamlet, Act 4 Scene 1~
 * Henry V, Act 1
 * King John, Act 1
 * Loves Labors Lost, Act 1, 2, 3, 4, 5

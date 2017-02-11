@@ -29288,6 +29288,10 @@
 						selectedAct = 1;
 						selectedScene = 0;
 						break;
+					case 'Henry-V':
+						selectedAct = 1;
+						selectedScene = 0;
+						break;
 					default:
 						selectedAct = 1;
 						selectedScene = 1;
