@@ -9,7 +9,7 @@
 
 ## Bad Data:
 ### When parsing plays:
-* Coriolanus
+* ~Coriolanus~
 * Taming of the Shrew
 * A Winters Tale
 * A Comedy of Errors
@@ -25,4 +25,4 @@
 * Pericles, Act 3
 * Richard III, Act 1, 2
 * Timon of Athens, Act 1, 5
-* Romeo and Juliet :( :( :(
+* ~Romeo and Juliet :( :( :(~
