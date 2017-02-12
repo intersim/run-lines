@@ -29284,11 +29284,15 @@
 						selectedAct = 0;
 						selectedScene = 1;
 						break;
-					case 'Romeo-and-Juliet':
+					case 'Henry-V':
 						selectedAct = 1;
 						selectedScene = 0;
 						break;
-					case 'Henry-V':
+					case 'Pericles':
+						selectedAct = 1;
+						selectedScene = 0;
+						break;
+					case 'Romeo-and-Juliet':
 						selectedAct = 1;
 						selectedScene = 0;
 						break;
