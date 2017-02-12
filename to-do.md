@@ -7,7 +7,7 @@
 * add "report a bug" feature
 * REFACTOR
 * use sessionStorage (or maybe local storage) to save user's spot
-* use Web Audio API instead of Speech Recognition API for listening functionality?
+* use Web Audio API instead of Speech Recognition API for listening functionality?	
 * capitalize Macbeth
 * dynos on Heroku?
 * remove redux logger on production version
