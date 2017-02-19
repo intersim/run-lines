@@ -21,7 +21,7 @@
 
 ### When changing acts:
 * Pericles: all wrong; esp, fix line numbers in Act 2 Scene 4
-* Richard III: Acts 4 & 5 (earlier acts already fixed)
+* ~~Richard III: Acts 4 & 5 (earlier acts already fixed)~~
 * ~~Timon of Athens~~
 * ~~Much ado about nothing, Act 1, 5~~
 * ~~Loves Labors Lost, Act 1, 2, 3, 4, 5~~
