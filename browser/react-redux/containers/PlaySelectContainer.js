@@ -20,16 +20,47 @@ class PlaySelectContainer extends Component {
 
 	handlePlayChange(e){
 		const selectedPlay = e.target.value;
-		this.setState({ selectedPlay, selectedAct: 1, selectedScene: 1 });
 		this.props.loadPlay(selectedPlay);
-		this.props.loadScene(selectedPlay, 1, 1);
+
+		let selectedAct, selectedScene;
+
+		switch (selectedPlay) {
+			case 'Taming-of-the-Shrew':
+				selectedAct = 0;
+				selectedScene = 1;
+				break;
+			case 'Henry-V':
+				selectedAct = 1;
+				selectedScene = 0;
+				break;
+			case 'Pericles':
+				selectedAct = 1;
+				selectedScene = 0;
+				break;
+			case 'Romeo-and-Juliet':
+				selectedAct = 1;
+				selectedScene = 0;
+				break;
+			default:
+				selectedAct = 1;
+				selectedScene = 1;
+				break;
+		}
+
+		this.setState({ selectedPlay, selectedAct, selectedScene });
+		this.props.loadScene(selectedPlay, selectedAct, selectedScene);
 	}
 
 	handleActChange(e){
 		const selectedAct = e.target.value;
 		const { selectedPlay } = this.state;
-		this.setState({ selectedAct });
-		this.props.loadScene(selectedPlay, selectedAct, 1);
+
+		let selectedScene;
+		// check if there is a 'scene 0' in this act
+		this.props.currentPlay.acts[selectedAct]['0'] === 0 ? selectedScene = 0 : selectedScene = 1;
+
+		this.setState({ selectedAct, selectedScene });
+		this.props.loadScene(selectedPlay, selectedAct, selectedScene);
 	}
 
 	handleSceneChange(e){
@@ -40,7 +71,7 @@ class PlaySelectContainer extends Component {
 	}
 
 	render(){
-		const acts = this.props.currentPlay.acts;
+		const acts = this.props.currentPlay.acts ? Object.keys(this.props.currentPlay.acts) : [];
 		const scenes = this.props.currentPlay.acts && this.props.currentPlay.acts[this.state.selectedAct];
 
 		return (
