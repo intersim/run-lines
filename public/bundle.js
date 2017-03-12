@@ -28709,9 +28709,13 @@
 	var App = function App() {
 		return _react2.default.createElement(
 			'div',
-			{ className: 'container' },
-			_react2.default.createElement(_PlaySelectContainer2.default, null),
-			_react2.default.createElement(_CharacterSelectContainer2.default, null),
+			null,
+			_react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(_PlaySelectContainer2.default, null),
+				_react2.default.createElement(_CharacterSelectContainer2.default, null)
+			),
 			_react2.default.createElement(_SceneContainer2.default, null)
 		);
 	};
@@ -28801,7 +28805,7 @@
 		return _react2.default.createElement(
 			'p',
 			{
-				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id ? 'bg-silver' : null) + ' p1 mb0 clickable',
+				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id && isSpeaking ? 'bg-silver' : null) + ' ' + (line.line_id === currentLine.line_id && isListening ? 'yellow-highlight' : null) + ' p1 mb0 clickable',
 				onClick: function onClick() {
 					return toggleLine(line, currentScene.lines, isSpeaking);
 				},

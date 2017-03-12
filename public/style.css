@@ -1,3 +1,19 @@
+* {
+	font-family: 'Lora', 'serif';
+}
+
 .clickable:hover {
   cursor: pointer;
+}
+
+.flex-justify-center {
+	justify-content: center;
+}
+
+.yellow-highlight {
+	background-color: #ffffaa;
+}
+
+select {
+	background-color: #fff;
 }

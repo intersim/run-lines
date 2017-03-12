@@ -6,9 +6,11 @@ import CharacterSelectContainer from '../containers/CharacterSelectContainer';
 import SceneContainer from '../containers/SceneContainer';
 
 const App = () => (
-		<div className="container">
-			<PlaySelectContainer />
-			<CharacterSelectContainer />
+		<div>
+			<div>
+				<PlaySelectContainer />
+				<CharacterSelectContainer />
+				</div>
 			<SceneContainer />
 		</div>
 	)
