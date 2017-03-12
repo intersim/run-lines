@@ -39,8 +39,6 @@ export const listenToLine = (line, scene, isListening) => {
 
 	  recognition.onerror = e => console.error("Error: ", e.error)
 
-  	let lineLength = line.text_entry.length;
-
 	  recognition.onresult = e => {
 	  	if (e.results[0].isFinal) {
 	  		dispatch(stopListening());
