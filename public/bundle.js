@@ -76,7 +76,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
+	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -28805,7 +28805,7 @@
 		return _react2.default.createElement(
 			'p',
 			{
-				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id && isSpeaking ? 'bg-silver' : null) + ' ' + (line.line_id === currentLine.line_id && isListening ? 'yellow-highlight' : null) + ' p1 mb0 clickable',
+				className: (isStageDirection ? 'italic' : null) + ' ' + (line.line_id === currentLine.line_id && isSpeaking ? 'bg-darken-1' : null) + ' ' + (line.speech_number === currentLine.speech_number && isListening ? 'yellow-highlight' : null) + ' p1 mb0 clickable',
 				onClick: function onClick() {
 					return toggleLine(line, currentScene.lines, isSpeaking);
 				},
@@ -29042,8 +29042,6 @@
 			recognition.onerror = function (e) {
 				return console.error("Error: ", e.error);
 			};
-	
-			var lineLength = line.text_entry.length;
 	
 			recognition.onresult = function (e) {
 				if (e.results[0].isFinal) {

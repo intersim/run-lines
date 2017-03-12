@@ -12,7 +12,7 @@ const store = createStore(
 	reducer, 
 	applyMiddleware(
     thunkMiddleware,
-    createLogger({collapsed: true})
+    // createLogger({collapsed: true})
   )
 );
 
