@@ -4,7 +4,8 @@ class BugReportForm extends Component {
 	constructor() {
 		super();
 		this.state = {
-			formText: ''
+			title: '',
+			body: ''
 		}
 	}
 

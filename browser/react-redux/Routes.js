@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import AppContainer from './containers/AppContainer';
+import BugReportForm from './components/BugReportForm';
 
 const Routes = ({ fetchInitialData }) => (
 	<Router history={browserHistory}>
 		<Route path="/" component={AppContainer} onEnter={fetchInitialData} />
+		<Route path="/bug-report" component={BugReportForm} />
 	</Router>
 )
 
