@@ -30163,7 +30163,12 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'sm-col-8' },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Run Lines: Report A Bug'
+	        ),
 	        _react2.default.createElement(_BugReportForm2.default, {
 	          handleSubmit: this.handleSubmit,
 	          handleChange: this.handleChange,
@@ -30204,17 +30209,17 @@
 	      handleSubmit = _ref.handleSubmit;
 	  return _react2.default.createElement(
 	    'form',
-	    { className: 'mt2', onChange: handleChange, onSubmit: handleSubmit },
+	    { className: 'mt2 sm-col-12', onChange: handleChange, onSubmit: handleSubmit },
 	    ['title', 'description', 'email'].map(function (type) {
 	      return _react2.default.createElement(
 	        'span',
 	        { key: type },
 	        _react2.default.createElement(
 	          'label',
-	          { className: 'block', htmlFor: type },
+	          { className: 'block sm-col-12', htmlFor: type },
 	          type.slice(0, 1).toUpperCase() + type.slice(1)
 	        ),
-	        _react2.default.createElement('input', { className: 'block mb2 field', type: 'text', name: type })
+	        _react2.default.createElement('input', { className: 'block mb2 field sm-col-12', type: 'text', name: type })
 	      );
 	    }),
 	    _react2.default.createElement(
