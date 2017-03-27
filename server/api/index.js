@@ -24,7 +24,7 @@ router.get(`/plays/:play/acts/:actNum/scenes/:sceneNum`, (req, res, next) => {
 router.post(`/issues`, (req, res, next) => {
 	axios.post('https://api.github.com/repos/intersim/run-lines/issues', {
 		title: req.body.title,
-		body: req.body.body + `\n\nCreated by: ${req.body.email}`
+		body: req.body.description + `\n\nCreated by: ${req.body.email}`
 	},
 	{
 		headers: {

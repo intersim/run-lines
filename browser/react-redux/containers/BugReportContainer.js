@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import BugReportForm from '../components/BugReportForm';
+import axios from 'axios';
 
 const createGithubIssue = ({ title, description, email }) =>
-  fetch('/api/issues', {
-    method: 'POST',
-    body: { title, description, email }
-  })
+  axios.post('/api/issues', { title, description, email })
   .then(() => browserHistory.push('/'))
   .catch(console.error)
 
