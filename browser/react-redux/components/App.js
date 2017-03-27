@@ -8,13 +8,15 @@ import BugReportContainer from '../containers/BugReportContainer';
 
 import { Link } from 'react-router';
 
-const App = () => (
+const App = ({ currentPlay, currentAct, currentScene }) => (
 		<div className="mt2">
 			<div>
 				<PlaySelectContainer />
 				<CharacterSelectContainer />
         <Link to="/bug-report" className="ml2">Give Feedback</Link>
-				</div>
+			</div>
+      <h1>{ currentPlay.play_name }</h1>
+      <h2>Act { currentAct }</h2>
 			<SceneContainer />
 		</div>
 	)

@@ -28858,9 +28858,11 @@
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 	  var currentPlay = _ref.currentPlay,
+	      currentAct = _ref.currentAct,
 	      currentScene = _ref.currentScene;
 	  return {
 	    currentPlay: currentPlay,
+	    currentAct: currentAct,
 	    currentScene: currentScene
 	  };
 	};
@@ -28907,7 +28909,10 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var App = function App() {
+	var App = function App(_ref) {
+		var currentPlay = _ref.currentPlay,
+		    currentAct = _ref.currentAct,
+		    currentScene = _ref.currentScene;
 		return _react2.default.createElement(
 			'div',
 			{ className: 'mt2' },
@@ -28921,6 +28926,17 @@
 					{ to: '/bug-report', className: 'ml2' },
 					'Give Feedback'
 				)
+			),
+			_react2.default.createElement(
+				'h1',
+				null,
+				currentPlay.play_name
+			),
+			_react2.default.createElement(
+				'h2',
+				null,
+				'Act ',
+				currentAct
 			),
 			_react2.default.createElement(_SceneContainer2.default, null)
 		);
@@ -31559,6 +31575,8 @@
 	    'div',
 	    null,
 	    currentScene.lines.map(function (line, i) {
+	      console.log(line);
+	      if (line.text_entry.includes("ACT")) return;
 	      line.index = i;
 	      return _react2.default.createElement(_LineContainer2.default, {
 	        key: line.line_id,
