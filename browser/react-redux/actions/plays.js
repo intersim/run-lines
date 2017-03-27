@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /* ========== CONSTANTS ========== */
 const LOAD_PLAY = 'LOAD_PLAY';
 
@@ -10,8 +12,8 @@ export const loadPlay = play => ({
 /* ========== ASYNC ========== */
 export const fetchPlay = playName => {
 	return dispatch => {
-		fetch(`/api/plays/${playName}/overview`)
-		.then (res => res.json())
+		axios.get(`/api/plays/${playName}/overview`)
+		.then (res => res.data)
 		.then(play => {
 			dispatch(loadPlay(play));
 		})

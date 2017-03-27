@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /* ========== CONSTANTS ========== */
 const LOAD_SCENE = 'LOAD_SCENE';
 const SET_CURRENT_SCENE = 'SET_CURRENT_SCENE';
@@ -16,8 +18,8 @@ export const setCurrentScene = sceneNum => ({
 /* ========== ASYNC ========== */
 export const fetchScene = (playName, actNum, sceneNum) => {
   return dispatch => {
-    fetch(`/api/plays/${playName}/acts/${actNum}/scenes/${sceneNum}`)
-    .then(res => res.json())
+    axios.get(`/api/plays/${playName}/acts/${actNum}/scenes/${sceneNum}`)
+    .then(res => res.data)
     .then(scene => {
       dispatch(loadScene(scene))
     })

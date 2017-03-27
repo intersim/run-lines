@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /* ========== CONSTANTS ========== */
 const LOAD_CHARACTERS = 'LOAD_CHARACTERS';
 const SET_CURRENT_CHARACTER = 'SET_CURRENT_CHARACTER';
@@ -16,8 +18,8 @@ export const setCurrentCharacter = character => ({
 /* ========== ASYNC ========== */
 export const fetchCharacters = playName => {
 	return dispatch => {
-		fetch(`/api/plays/${playName}/characters`)
-		.then(res => res.json())
+		axios.get(`/api/plays/${playName}/characters`)
+		.then(res => res.data)
 		.then(characters => {
 			dispatch(loadCharacters(characters))
 		})
