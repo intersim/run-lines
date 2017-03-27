@@ -13,7 +13,7 @@ const App = () => (
 			<div>
 				<PlaySelectContainer />
 				<CharacterSelectContainer />
-        <Link to="/bug-report" className="ml2">Report a Bug</Link>
+        <Link to="/bug-report" className="ml2">Give Feedback</Link>
 				</div>
 			<SceneContainer />
 		</div>
