@@ -30171,10 +30171,7 @@
 	        ),
 	        _react2.default.createElement(_BugReportForm2.default, {
 	          handleSubmit: this.handleSubmit,
-	          handleChange: this.handleChange,
-	          title: this.state.title,
-	          description: this.state.description,
-	          email: this.state.email
+	          handleChange: this.handleChange
 	        })
 	      );
 	    }
@@ -30202,10 +30199,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var BugReportForm = function BugReportForm(_ref) {
-	  var title = _ref.title,
-	      description = _ref.description,
-	      email = _ref.email,
-	      handleChange = _ref.handleChange,
+	  var handleChange = _ref.handleChange,
 	      handleSubmit = _ref.handleSubmit;
 	  return _react2.default.createElement(
 	    'form',

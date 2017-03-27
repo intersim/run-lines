@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const BugReportForm = ({ title, description, email, handleChange, handleSubmit }) => (
+const BugReportForm = ({ handleChange, handleSubmit }) => (
   <form className="mt2 sm-col-12" onChange={handleChange} onSubmit={handleSubmit}>
   {['title', 'description', 'email'].map(
     type => <span key={type}>

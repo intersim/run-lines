@@ -40,9 +40,6 @@ class BugReportContainer extends Component {
         <BugReportForm
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
-          title={this.state.title}
-          description={this.state.description}
-          email={this.state.email}
         />
       </div>
     )
