@@ -7,7 +7,7 @@
 ## Dependencies/Built With
 * Web Speech API
 * Front end: React, Redux, Webpack
-* Back end: Node.js, Express.js,
+* Back end: Node.js, Express.js
 
 ## Installation
 To get started installing the app, clone this repo to your machine.
