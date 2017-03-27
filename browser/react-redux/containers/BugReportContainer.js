@@ -30,7 +30,8 @@ class BugReportContainer extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    createGithubIssue(this.state)
+    console.log(this.state);
+    // createGithubIssue(this.state)
   }
 
   render() {
