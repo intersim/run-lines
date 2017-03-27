@@ -28929,12 +28929,12 @@
 			),
 			_react2.default.createElement(
 				'h1',
-				null,
+				{ className: 'm0 p1' },
 				currentPlay.play_name
 			),
 			_react2.default.createElement(
 				'h2',
-				null,
+				{ className: 'm0 p1' },
 				'Act ',
 				currentAct
 			),
@@ -31575,7 +31575,6 @@
 	    'div',
 	    null,
 	    currentScene.lines.map(function (line, i) {
-	      console.log(line);
 	      if (line.text_entry.includes("ACT")) return;
 	      line.index = i;
 	      return _react2.default.createElement(_LineContainer2.default, {

@@ -15,8 +15,8 @@ const App = ({ currentPlay, currentAct, currentScene }) => (
 				<CharacterSelectContainer />
         <Link to="/bug-report" className="ml2">Give Feedback</Link>
 			</div>
-      <h1>{ currentPlay.play_name }</h1>
-      <h2>Act { currentAct }</h2>
+      <h1 className="m0 p1">{ currentPlay.play_name }</h1>
+      <h2 className="m0 p1">Act { currentAct }</h2>
 			<SceneContainer />
 		</div>
 	)
