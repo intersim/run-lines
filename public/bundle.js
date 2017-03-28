@@ -31478,8 +31478,7 @@
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
-	      console.log(this.state);
-	      // createGithubIssue(this.state)
+	      createGithubIssue(this.state);
 	    }
 	  }, {
 	    key: 'render',
