@@ -36,7 +36,7 @@ class BugReportContainer extends Component {
   render() {
     return (
       <div className="sm-col-8">
-        <h1>Run Lines: Report A Bug</h1>
+        <h1>Run Lines: Give Feedback</h1>
         <BugReportForm
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}

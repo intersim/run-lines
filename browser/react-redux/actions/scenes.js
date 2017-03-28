@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setCurrentAct } from './acts';
 
 /* ========== CONSTANTS ========== */
 const LOAD_SCENE = 'LOAD_SCENE';
@@ -21,6 +22,8 @@ export const fetchScene = (playName, actNum, sceneNum) => {
     axios.get(`/api/plays/${playName}/acts/${actNum}/scenes/${sceneNum}`)
     .then(res => res.data)
     .then(scene => {
+      dispatch(setCurrentAct(actNum))
+      dispatch(setCurrentScene(sceneNum))
       dispatch(loadScene(scene))
     })
     .catch(err => console.error(err.stack));
