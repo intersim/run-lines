@@ -28740,7 +28740,7 @@
 			_react2.default.createElement(
 				'h1',
 				{ className: 'm0 p1' },
-				currentPlay.play_name.split("-").join(" ")
+				currentPlay.play_name && currentPlay.play_name.split("-").join(" ")
 			),
 			_react2.default.createElement(
 				'h2',
