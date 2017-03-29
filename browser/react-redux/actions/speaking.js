@@ -46,10 +46,13 @@ export const sayLine = (line, scene) => {
 		// Storing in global variable to avoid a Chrome issue (https://bugs.chromium.org/p/chromium/issues/detail?id=509488#c11)
 		window.utterances = [];
 
+		const isFemaleCharacter = femaleCharacters.includes(line.speaker.toUpperCase());
+		const isStageDirection = line.line_number.split('.')[2];
+
 		// set voice
 		const { voices } = getState();
-		if (femaleCharacters.includes(line.speaker.toUpperCase())) utterThis.voice = voices[1];
-		else if (!line.speaker || !line.line_number.split('.')[2]) utterThis.voice = voices[0];
+		if (isFemaleCharacter && !isStageDirection) utterThis.voice = voices[1];
+		else if (!line.speaker || !isStageDirection) utterThis.voice = voices[0];
 		else { utterThis.voice = voices[2]; }
 
 		const nextLine = getNextLine(line, scene);
@@ -60,10 +63,12 @@ export const sayLine = (line, scene) => {
 			if (!getState().isSpeaking) return;
 			if (!nextLine) return;
 
-			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase()) {
+			const isStageDirection = nextLine.line_number.split('.')[2] === '0';
+
+			if (nextLine.speaker.toLowerCase() == currentCharacter.toLowerCase() && !isStageDirection) {
 				dispatch(listenToLine(nextLine, scene, getState().isListening))
 			}
-			else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase()) {
+			else if (!line.line_number || !nextLine.line_number || line.speaker.toLowerCase() !== nextLine.speaker.toLowerCase() || line.speaker.toLowerCase() === nextLine.speaker.toLowerCase() || isStageDirection) {
 				dispatch(sayLine(nextLine, scene))
 			}
 		}
