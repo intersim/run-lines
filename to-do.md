@@ -1,11 +1,11 @@
 # To Do:
 * fix bad data
 * buttons in footer to go to prev/next scene
-* update README
 * use sessionStorage (or maybe local storage) to save user's spot
 * use Web Audio API instead of Speech Recognition API for listening functionality?
 * capitalize Macbeth
-* refactor?
+* refactor:
+  * listening & speaking actions
 
 ## Bad Data:
 * A Comedy of Errors (which Antipholus not always specified?)
