@@ -29116,7 +29116,7 @@
 			window.utterances = [];
 	
 			var isFemaleCharacter = femaleCharacters.includes(line.speaker.toUpperCase());
-			var isStageDirection = line.line_number.split('.')[2];
+			var isStageDirection = line.line_number.split('.')[2] === '0';
 	
 			// set voice
 	

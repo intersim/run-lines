@@ -47,7 +47,7 @@ export const sayLine = (line, scene) => {
 		window.utterances = [];
 
 		const isFemaleCharacter = femaleCharacters.includes(line.speaker.toUpperCase());
-		const isStageDirection = line.line_number.split('.')[2];
+		const isStageDirection = line.line_number.split('.')[2] === '0';
 
 		// set voice
 		const { voices } = getState();
