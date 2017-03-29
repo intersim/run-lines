@@ -1,5 +1,7 @@
 # Run Lines
 
+The app is currently deployed at http://run-lines.herokuapp.com.
+
 ## Features
 * Speech synthesis
 * Speech recognition
