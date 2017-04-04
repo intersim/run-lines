@@ -4,13 +4,13 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './browser/app.js',
+  entry: ['babel-polyfill', './browser/app.js'],
   output: {
     path: __dirname,
     filename: './public/bundle.js'
   },
   context: __dirname,
-  devtool: 'source-map',  
+  devtool: 'source-map',
   module: {
     loaders: [
       {

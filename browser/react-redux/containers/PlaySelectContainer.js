@@ -94,7 +94,7 @@ class PlaySelectContainer extends Component {
 
 /* ========== REACT-REDUX ========== */
 import { connect } from 'react-redux';
-import { fetchPlay } from '../actions/plays';
+import { fetchPlay } from '../sagas';
 import { fetchCharacters } from '../actions/characters';
 import { fetchScene } from '../actions/scenes';
 

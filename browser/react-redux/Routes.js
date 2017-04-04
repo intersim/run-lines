@@ -11,7 +11,7 @@ const Routes = ({ fetchInitialData }) => (
 	</Router>
 )
 
-import { fetchPlay, loadPlay } from './actions/plays';
+import { fetchPlay } from './sagas';
 import { fetchCharacters } from './actions/characters';
 import { fetchScene } from './actions/scenes';
 import { getVoices } from './actions/speaking';

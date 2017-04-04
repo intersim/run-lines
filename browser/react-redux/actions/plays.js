@@ -10,13 +10,13 @@ export const loadPlay = play => ({
 });
 
 /* ========== ASYNC ========== */
-export const fetchPlay = playName => {
-	return dispatch => {
-		axios.get(`/api/plays/${playName}/overview`)
-		.then (res => res.data)
-		.then(play => {
-			dispatch(loadPlay(play));
-		})
-		.catch(err => console.error(err.stack));
-	}
-};
+// export const fetchPlay = playName => {
+// 	return dispatch => {
+// 		axios.get(`/api/plays/${playName}/overview`)
+// 		.then (res => res.data)
+// 		.then(play => {
+// 			dispatch(loadPlay(play));
+// 		})
+// 		.catch(err => console.error(err.stack));
+// 	}
+// };
