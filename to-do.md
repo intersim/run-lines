@@ -6,6 +6,7 @@
 * capitalize Macbeth
 * refactor:
   * listening & speaking actions
+  * create separate package with shakespeare play data
 
 ## Bad Data:
 * A Comedy of Errors (which Antipholus not always specified?)
