@@ -22,7 +22,10 @@ export const listenToLine = (line, scene, isListening) => {
 	return (dispatch, getState) => {
 		dispatch(setCurrentLine(line));
 
-		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
+		if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+			dispatch(startListening());
+			return console.error('No Web Speech API support');
+		}
 
 		if (window.recognitions && window.recognitions.length) {
 			recognitions[0].stop();
@@ -51,6 +54,7 @@ export const listenToLine = (line, scene, isListening) => {
 
 		if (isListening) {
 			dispatch(stopListening());
+			dispatch(setCurrentLine({}));
 			recognition.stop();
 		}
 

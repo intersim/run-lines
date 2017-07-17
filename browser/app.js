@@ -9,8 +9,9 @@ import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 
 const store = createStore(
-	reducer, 
+	reducer,
 	applyMiddleware(
+    // createLogger(),
     thunkMiddleware
   )
 );
