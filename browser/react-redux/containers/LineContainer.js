@@ -24,10 +24,6 @@ const mapDispatchToProps = dispatch => ({
 			dispatch(listenToLine(line, scene, true));
 			dispatch(sayLine(getNextSpeakerLine(line, scene), scene))
 		}
-		else if (isListening && !isCurrentCharactersLine) {
-			dispatch(listenToLine(line, scene, true));
-			dispatch(sayLine(line, scene));
-		}
 		else if (!isListening && isCurrentCharactersLine) dispatch(listenToLine(line, scene, false));
 		else if (!isSpeaking) dispatch(sayLine(line, scene));
 		else dispatch(stopSpeakingLine());

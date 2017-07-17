@@ -28997,9 +28997,6 @@
 				if (isListening && isCurrentCharactersLine) {
 					dispatch((0, _listening.listenToLine)(line, scene, true));
 					dispatch((0, _speaking.sayLine)((0, _utils.getNextSpeakerLine)(line, scene), scene));
-				} else if (isListening && !isCurrentCharactersLine) {
-					dispatch((0, _listening.listenToLine)(line, scene, true));
-					dispatch((0, _speaking.sayLine)(line, scene));
 				} else if (!isListening && isCurrentCharactersLine) dispatch((0, _listening.listenToLine)(line, scene, false));else if (!isSpeaking) dispatch((0, _speaking.sayLine)(line, scene));else dispatch((0, _speaking.stopSpeakingLine)());
 			},
 			listenToLine: function listenToLine(line, isListening) {
@@ -29303,10 +29300,17 @@
 		return function (dispatch, getState) {
 			dispatch((0, _lines.setCurrentLine)(line));
 	
-			if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-				dispatch(startListening());
-				return console.error('No Web Speech API support');
+			var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+	
+			if (!SpeechRecognition) {
+				if (isListening) {
+					dispatch(stopListening());
+					dispatch((0, _lines.setCurrentLine)({}));
+				} else dispatch(startListening());
+				return console.error("No Speech Recognition support");
 			}
+	
+			var recognition = new SpeechRecognition();
 	
 			if (window.recognitions && window.recognitions.length) {
 				recognitions[0].stop();
@@ -29314,9 +29318,6 @@
 			} else {
 				window.recognitions = [];
 			}
-	
-			var recognition = new webkitSpeechRecognition();
-			window.recognitions.push(recognition);
 	
 			recognition.continuous = true;
 			recognition.interimResults = true;
@@ -29334,6 +29335,8 @@
 					dispatch((0, _speaking.sayLine)(nextLine, scene));
 				}
 			};
+	
+			window.recognitions.push(recognition);
 	
 			if (isListening) {
 				dispatch(stopListening());
