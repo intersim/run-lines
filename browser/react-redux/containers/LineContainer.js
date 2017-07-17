@@ -20,9 +20,6 @@ const mapDispatchToProps = dispatch => ({
 		const isCurrentCharactersLine = line.speaker.toLowerCase() === currentCharacter.toLowerCase();
 		const isCurrentLine = line.line_id === currentLine.line_id;
 
-		console.log("clicked on:", line.text_entry);
-		console.log("current line:", currentLine.text_entry);
-
 		if (isListening && isCurrentCharactersLine) {
 			dispatch(listenToLine(line, scene, true));
 			dispatch(sayLine(getNextSpeakerLine(line, scene), scene))
@@ -32,11 +29,6 @@ const mapDispatchToProps = dispatch => ({
 			dispatch(sayLine(line, scene));
 		}
 		else if (!isListening && isCurrentCharactersLine) dispatch(listenToLine(line, scene, false));
-		else if (isSpeaking && isCurrentLine) dispatch(stopSpeakingLine());
-		else if (isSpeaking && !isCurrentLine) {
-			dispatch(stopSpeakingLine());
-			dispatch(sayLine(line, scene));
-		}
 		else if (!isSpeaking) dispatch(sayLine(line, scene));
 		else dispatch(stopSpeakingLine());
 	},

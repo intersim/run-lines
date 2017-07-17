@@ -28994,19 +28994,13 @@
 				var isCurrentCharactersLine = line.speaker.toLowerCase() === currentCharacter.toLowerCase();
 				var isCurrentLine = line.line_id === currentLine.line_id;
 	
-				console.log("clicked on:", line.text_entry);
-				console.log("current line:", currentLine.text_entry);
-	
 				if (isListening && isCurrentCharactersLine) {
 					dispatch((0, _listening.listenToLine)(line, scene, true));
 					dispatch((0, _speaking.sayLine)((0, _utils.getNextSpeakerLine)(line, scene), scene));
 				} else if (isListening && !isCurrentCharactersLine) {
 					dispatch((0, _listening.listenToLine)(line, scene, true));
 					dispatch((0, _speaking.sayLine)(line, scene));
-				} else if (!isListening && isCurrentCharactersLine) dispatch((0, _listening.listenToLine)(line, scene, false));else if (isSpeaking && isCurrentLine) dispatch((0, _speaking.stopSpeakingLine)());else if (isSpeaking && !isCurrentLine) {
-					dispatch((0, _speaking.stopSpeakingLine)());
-					dispatch((0, _speaking.sayLine)(line, scene));
-				} else if (!isSpeaking) dispatch((0, _speaking.sayLine)(line, scene));else dispatch((0, _speaking.stopSpeakingLine)());
+				} else if (!isListening && isCurrentCharactersLine) dispatch((0, _listening.listenToLine)(line, scene, false));else if (!isSpeaking) dispatch((0, _speaking.sayLine)(line, scene));else dispatch((0, _speaking.stopSpeakingLine)());
 			},
 			listenToLine: function listenToLine(line, isListening) {
 				dispatch((0, _listening.listenToLine)(line, isListening));
