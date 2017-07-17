@@ -29007,37 +29007,76 @@
 		value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Line = function Line(_ref) {
-		var line = _ref.line,
-		    currentLine = _ref.currentLine,
-		    currentScene = _ref.currentScene,
-		    isListening = _ref.isListening,
-		    isSpeaking = _ref.isSpeaking,
-		    toggleLine = _ref.toggleLine,
-		    listenToLine = _ref.listenToLine;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-		var isStageDirection = line.line_number.split('.')[2] === '0';
-		var isCurrentLine = line.line_id === currentLine.line_id;
-		var isCurrentSpeech = line.speech_number === currentLine.speech_number;
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-		return _react2.default.createElement(
-			'p',
-			{
-				className: (isStageDirection ? 'italic' : null) + ' ' + (isCurrentLine && isSpeaking ? 'bg-darken-1' : null) + ' ' + (isCurrentSpeech && isListening ? 'yellow-highlight' : null) + ' p1 mb0 clickable',
-				onClick: function onClick() {
-					return toggleLine(line, currentScene.lines, isSpeaking);
-				}
-			},
-			isStageDirection ? null : line.speaker + ': ',
-			line.text_entry
-		);
-	};
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Line = function (_Component) {
+		_inherits(Line, _Component);
+	
+		function Line() {
+			_classCallCheck(this, Line);
+	
+			var _this = _possibleConstructorReturn(this, (Line.__proto__ || Object.getPrototypeOf(Line)).call(this));
+	
+			_this.state = {
+				isHovering: false
+			};
+			return _this;
+		}
+	
+		_createClass(Line, [{
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				var _props = this.props,
+				    line = _props.line,
+				    currentLine = _props.currentLine,
+				    currentScene = _props.currentScene,
+				    isListening = _props.isListening,
+				    isSpeaking = _props.isSpeaking,
+				    toggleLine = _props.toggleLine,
+				    listenToLine = _props.listenToLine;
+				var isHovering = this.state.isHovering;
+	
+	
+				var isStageDirection = line.line_number.split('.')[2] === '0';
+				var isCurrentLine = line.line_id === currentLine.line_id;
+				var isCurrentSpeech = line.speech_number === currentLine.speech_number;
+	
+				return _react2.default.createElement(
+					'p',
+					{
+						className: (isStageDirection ? 'italic' : null) + ' ' + (isCurrentLine && isSpeaking || isHovering ? 'bg-darken-1' : null) + ' ' + (isCurrentSpeech && isListening ? 'yellow-highlight' : null) + ' p1 mb0 clickable',
+						onClick: function onClick() {
+							return toggleLine(line, currentScene.lines, isSpeaking);
+						},
+						onMouseEnter: function onMouseEnter(e) {
+							return _this2.setState({ isHovering: true });
+						},
+						onMouseLeave: function onMouseLeave(e) {
+							return _this2.setState({ isHovering: false });
+						}
+					},
+					isStageDirection ? null : line.speaker + ': ',
+					line.text_entry
+				);
+			}
+		}]);
+	
+		return Line;
+	}(_react.Component);
 	
 	exports.default = Line;
 
@@ -31533,6 +31572,11 @@
 			_react2.default.createElement(
 				"select",
 				{ onChange: props.handleChange },
+				_react2.default.createElement(
+					"option",
+					{ value: "" },
+					"Choose a character\u2026"
+				),
 				!props.characters.length ? _react2.default.createElement(
 					"option",
 					null,
