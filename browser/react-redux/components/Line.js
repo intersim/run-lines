@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
+import MobileDetect from 'mobile-detect';
 
 class Line extends Component {
 	constructor() {
 		super();
 		this.state = {
-			isHovering: false
+			isHovering: false,
+			isMobile: false
 		};
+
+		this.setIsHovering = this.setIsHovering.bind(this);
+	}
+
+	componentDidMount() {
+		const md = new MobileDetect(window.navigator.userAgent);
+		if (md.mobile()) this.setState({ isMobile: true });
+	}
+
+	setIsHovering(bool) {
+		const { isMobile } = this.state;
+		if (!isMobile) this.setState({ isHovering: bool });
 	}
 
 	render() {
@@ -25,8 +39,8 @@ class Line extends Component {
 				(isCurrentSpeech && isListening ? 'yellow-highlight' : null) +
 				' p1 mb0 clickable'}
       onClick={() => toggleLine(line, currentScene.lines, isSpeaking, isListening, currentLine, currentCharacter)}
-      onMouseEnter={e => this.setState({ isHovering: true })}
-      onMouseLeave={e => this.setState({ isHovering: false })}
+      onMouseEnter={e => this.setIsHovering(true)}
+      onMouseLeave={e => this.setIsHovering(false)}
 		>
 			{ isStageDirection ? null : `${line.speaker}: `}{line.text_entry}
 		</p>)
