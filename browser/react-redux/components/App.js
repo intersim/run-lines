@@ -10,7 +10,7 @@ import { Link } from 'react-router';
 
 const App = ({ currentPlay, currentAct, currentScene }) => (
 		<div className="mt2">
-			<div>
+			<div className="p1">
 				<PlaySelectContainer />
 				<CharacterSelectContainer />
         <Link to="/bug-report" className="ml2">Give Feedback</Link>
