@@ -76,9 +76,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(
-	// createLogger(),
-	_reduxThunk2.default));
+	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -29300,7 +29298,7 @@
 		return function (dispatch, getState) {
 			dispatch((0, _lines.setCurrentLine)(line));
 	
-			var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+			var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 	
 			if (!SpeechRecognition) {
 				if (isListening) {

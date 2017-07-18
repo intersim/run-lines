@@ -22,7 +22,7 @@ export const listenToLine = (line, scene, isListening) => {
 	return (dispatch, getState) => {
 		dispatch(setCurrentLine(line));
 
-		const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
 		if (!SpeechRecognition) {
 			if (isListening) {
