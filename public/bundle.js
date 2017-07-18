@@ -29721,7 +29721,7 @@
 		"Henry-VI-Part-2",
 		"Henry-VI-Part-3",
 		"All's-Well-That-Ends-Well",
-		"As-you-like-it",
+		"As-You-Like-It",
 		"Antony-and-Cleopatra",
 		"A-Comedy-of-Errors",
 		"Coriolanus",
@@ -29751,7 +29751,7 @@
 		"Troilus-and-Cressida",
 		"Twelfth-Night",
 		"Two-Gentlemen-of-Verona",
-		"A-Winters-Tale"
+		"A-Winter's-Tale"
 	];
 
 /***/ },
