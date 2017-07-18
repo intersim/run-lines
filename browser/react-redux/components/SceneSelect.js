@@ -6,7 +6,7 @@ import React, { Component } from 'react';
  * change.
  */
 const SceneSelect = ({ scenes, handleChange, selectedScene }) => (
-  <select className="ml2 inline-block" onChange={handleChange} value={selectedScene}>
+  <select id="scene-select" onChange={handleChange} value={selectedScene}>
     { scenes && scenes.map((num, i) => <option key={i} value={num}>Scene {num}</option>) };
   </select>
 );

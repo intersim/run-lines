@@ -28920,12 +28920,7 @@
 				'div',
 				{ className: 'p1' },
 				_react2.default.createElement(_PlaySelectContainer2.default, null),
-				_react2.default.createElement(_CharacterSelectContainer2.default, null),
-				_react2.default.createElement(
-					_reactRouter.Link,
-					{ to: '/bug-report', className: 'ml2' },
-					'Give Feedback'
-				)
+				_react2.default.createElement(_CharacterSelectContainer2.default, null)
 			),
 			_react2.default.createElement(
 				'h1',
@@ -28938,7 +28933,16 @@
 				'Act ',
 				currentAct
 			),
-			_react2.default.createElement(_SceneContainer2.default, null)
+			_react2.default.createElement(_SceneContainer2.default, null),
+			_react2.default.createElement(
+				'div',
+				{ className: 'flex flex-justify-center' },
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/bug-report', id: 'feedback-btn', className: 'p1 mt1' },
+					'Give Feedback'
+				)
+			)
 		);
 	};
 	
@@ -29624,7 +29628,7 @@
 	
 				return _react2.default.createElement(
 					'form',
-					{ className: 'mb2 inline-block' },
+					{ id: 'play-act-scene-select' },
 					_react2.default.createElement(_PlaySelect2.default, {
 						selectedPlay: this.state.selectedPlay,
 						handleChange: this.handlePlayChange }),
@@ -29693,7 +29697,7 @@
 		    selectedPlay = _ref.selectedPlay;
 		return _react2.default.createElement(
 			'select',
-			{ value: selectedPlay, onChange: handleChange },
+			{ id: 'play-select', value: selectedPlay, onChange: handleChange },
 			_toc2.default.map(function (play, i) {
 				return _react2.default.createElement(
 					'option',
@@ -29772,7 +29776,7 @@
 		    selectedAct = _ref.selectedAct;
 		return _react2.default.createElement(
 			"select",
-			{ className: "ml2 inline-block", onChange: handleChange, value: selectedAct },
+			{ id: "act-select", onChange: handleChange, value: selectedAct },
 			acts.map(function (num, i) {
 				return _react2.default.createElement(
 					"option",
@@ -29814,7 +29818,7 @@
 	      selectedScene = _ref.selectedScene;
 	  return _react2.default.createElement(
 	    "select",
-	    { className: "ml2 inline-block", onChange: handleChange, value: selectedScene },
+	    { id: "scene-select", onChange: handleChange, value: selectedScene },
 	    scenes && scenes.map(function (num, i) {
 	      return _react2.default.createElement(
 	        "option",
@@ -31586,28 +31590,24 @@
 	
 	var CharacterSelect = function CharacterSelect(props) {
 		return _react2.default.createElement(
-			"form",
-			{ className: "ml2 inline-block" },
+			"select",
+			{ id: "character-select", onChange: props.handleChange },
 			_react2.default.createElement(
-				"select",
-				{ onChange: props.handleChange },
-				_react2.default.createElement(
+				"option",
+				{ value: "" },
+				"Choose a character\u2026"
+			),
+			!props.characters.length ? _react2.default.createElement(
+				"option",
+				null,
+				"Loading..."
+			) : props.characters.map(function (c, i) {
+				return _react2.default.createElement(
 					"option",
-					{ value: "" },
-					"Choose a character\u2026"
-				),
-				!props.characters.length ? _react2.default.createElement(
-					"option",
-					null,
-					"Loading..."
-				) : props.characters.map(function (c, i) {
-					return _react2.default.createElement(
-						"option",
-						{ key: i, value: c },
-						c
-					);
-				})
-			)
+					{ key: i, value: c },
+					c
+				);
+			})
 		);
 	};
 	
