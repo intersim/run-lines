@@ -75,7 +75,7 @@ class PlaySelectContainer extends Component {
 		const scenes = this.props.currentPlay.acts && this.props.currentPlay.acts[this.state.selectedAct];
 
 		return (
-		        <form className="mb2 inline-block">
+		        <form id="play-act-scene-select">
 		        	<PlaySelect
 		        		selectedPlay={this.state.selectedPlay}
 								handleChange={this.handlePlayChange} />

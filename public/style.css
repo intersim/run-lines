@@ -17,3 +17,44 @@
 select {
 	background-color: #fff;
 }
+
+@media only screen and (min-width: 575px) {
+  #play-act-scene-select {
+    display: inline-block;
+  }
+
+  #act-select, #scene-select, #character-select {
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  #play-act-scene-select {
+    display: block;
+  }
+
+  #play-select {
+    display: block;
+    margin: 0 auto 1rem auto;
+    width: 100%;
+  }
+
+  #act-select {
+    display: inline-block;
+    margin-bottom: 1rem;
+    width: 49%;
+  }
+
+  #scene-select {
+    display: inline-block;
+    margin-bottom: 1rem;
+    margin-left: 2%;
+    width: 49%;
+  }
+
+  #character-select {
+    display: block;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}

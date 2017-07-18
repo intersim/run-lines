@@ -13,11 +13,13 @@ const App = ({ currentPlay, currentAct, currentScene }) => (
 			<div className="p1">
 				<PlaySelectContainer />
 				<CharacterSelectContainer />
-        <Link to="/bug-report" className="ml2">Give Feedback</Link>
 			</div>
       <h1 className="m0 p1">{ currentPlay.play_name && currentPlay.play_name.split("-").join(" ") }</h1>
       <h2 className="m0 p1">Act { currentAct }</h2>
 			<SceneContainer />
+      <div className="flex flex-justify-center">
+      <Link to="/bug-report" id="feedback-btn" className="p1 mt1">Give Feedback</Link>
+      </div>
 		</div>
 	)
 
