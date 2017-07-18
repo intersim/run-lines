@@ -22,7 +22,18 @@ export const listenToLine = (line, scene, isListening) => {
 	return (dispatch, getState) => {
 		dispatch(setCurrentLine(line));
 
-		if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
+		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+
+		if (!SpeechRecognition) {
+			if (isListening) {
+				dispatch(stopListening());
+				dispatch(setCurrentLine({}));
+			}
+			else dispatch(startListening());
+			return console.error("No Speech Recognition support");
+		}
+
+		const recognition = new SpeechRecognition();
 
 		if (window.recognitions && window.recognitions.length) {
 			recognitions[0].stop();
@@ -30,9 +41,6 @@ export const listenToLine = (line, scene, isListening) => {
 		} else {
 			window.recognitions = [];
 		}
-
-		const recognition = new webkitSpeechRecognition();
-		window.recognitions.push(recognition);
 
 	  recognition.continuous = true;
 	  recognition.interimResults = true;
@@ -49,8 +57,11 @@ export const listenToLine = (line, scene, isListening) => {
 	  	}
   	}
 
+		window.recognitions.push(recognition);
+
 		if (isListening) {
 			dispatch(stopListening());
+			dispatch(setCurrentLine({}));
 			recognition.stop();
 		}
 

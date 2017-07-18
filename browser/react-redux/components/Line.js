@@ -9,7 +9,7 @@ class Line extends Component {
 	}
 
 	render() {
-	const { line, currentLine, currentScene, isListening, isSpeaking, toggleLine, listenToLine } = this.props;
+	const { line, currentLine, currentScene, isListening, isSpeaking, toggleLine, listenToLine, currentCharacter } = this.props;
 
 	const { isHovering } = this.state;
 
@@ -24,7 +24,7 @@ class Line extends Component {
 				((isCurrentLine && isSpeaking) || isHovering ? 'bg-darken-1' : null) + ' ' +
 				(isCurrentSpeech && isListening ? 'yellow-highlight' : null) +
 				' p1 mb0 clickable'}
-      onClick={() => toggleLine(line, currentScene.lines, isSpeaking)}
+      onClick={() => toggleLine(line, currentScene.lines, isSpeaking, isListening, currentLine, currentCharacter)}
       onMouseEnter={e => this.setState({ isHovering: true })}
       onMouseLeave={e => this.setState({ isHovering: false })}
 		>

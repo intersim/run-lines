@@ -76,7 +76,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -28972,7 +28972,8 @@
 		var currentScene = _ref.currentScene,
 		    currentLine = _ref.currentLine,
 		    isListening = _ref.isListening,
-		    isSpeaking = _ref.isSpeaking;
+		    isSpeaking = _ref.isSpeaking,
+		    currentCharacter = _ref.currentCharacter;
 		var line = _ref2.line;
 	
 		return {
@@ -28980,14 +28981,21 @@
 			currentLine: currentLine,
 			line: line,
 			isListening: isListening,
-			isSpeaking: isSpeaking
+			isSpeaking: isSpeaking,
+			currentCharacter: currentCharacter
 		};
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			toggleLine: function toggleLine(line, scene, isSpeaking) {
-				if (!isSpeaking) dispatch((0, _speaking.sayLine)(line, scene));else dispatch((0, _speaking.stopSpeakingLine)());
+			toggleLine: function toggleLine(line, scene, isSpeaking, isListening, currentLine, currentCharacter) {
+				var isCurrentCharactersLine = line.speaker.toLowerCase() === currentCharacter.toLowerCase();
+				var isCurrentLine = line.line_id === currentLine.line_id;
+	
+				if (isListening && isCurrentCharactersLine) {
+					dispatch((0, _listening.listenToLine)(line, scene, true));
+					dispatch((0, _speaking.sayLine)((0, _utils.getNextSpeakerLine)(line, scene), scene));
+				} else if (!isListening && isCurrentCharactersLine) dispatch((0, _listening.listenToLine)(line, scene, false));else if (!isSpeaking) dispatch((0, _speaking.sayLine)(line, scene));else dispatch((0, _speaking.stopSpeakingLine)());
 			},
 			listenToLine: function listenToLine(line, isListening) {
 				dispatch((0, _listening.listenToLine)(line, isListening));
@@ -29047,7 +29055,8 @@
 				    isListening = _props.isListening,
 				    isSpeaking = _props.isSpeaking,
 				    toggleLine = _props.toggleLine,
-				    listenToLine = _props.listenToLine;
+				    listenToLine = _props.listenToLine,
+				    currentCharacter = _props.currentCharacter;
 				var isHovering = this.state.isHovering;
 	
 	
@@ -29060,7 +29069,7 @@
 					{
 						className: (isStageDirection ? 'italic' : null) + ' ' + (isCurrentLine && isSpeaking || isHovering ? 'bg-darken-1' : null) + ' ' + (isCurrentSpeech && isListening ? 'yellow-highlight' : null) + ' p1 mb0 clickable',
 						onClick: function onClick() {
-							return toggleLine(line, currentScene.lines, isSpeaking);
+							return toggleLine(line, currentScene.lines, isSpeaking, isListening, currentLine, currentCharacter);
 						},
 						onMouseEnter: function onMouseEnter(e) {
 							return _this2.setState({ isHovering: true });
@@ -29289,7 +29298,17 @@
 		return function (dispatch, getState) {
 			dispatch((0, _lines.setCurrentLine)(line));
 	
-			if (!webkitSpeechRecognition) return console.error('No Web Speech API support');
+			var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+	
+			if (!SpeechRecognition) {
+				if (isListening) {
+					dispatch(stopListening());
+					dispatch((0, _lines.setCurrentLine)({}));
+				} else dispatch(startListening());
+				return console.error("No Speech Recognition support");
+			}
+	
+			var recognition = new SpeechRecognition();
 	
 			if (window.recognitions && window.recognitions.length) {
 				recognitions[0].stop();
@@ -29297,9 +29316,6 @@
 			} else {
 				window.recognitions = [];
 			}
-	
-			var recognition = new webkitSpeechRecognition();
-			window.recognitions.push(recognition);
 	
 			recognition.continuous = true;
 			recognition.interimResults = true;
@@ -29318,8 +29334,11 @@
 				}
 			};
 	
+			window.recognitions.push(recognition);
+	
 			if (isListening) {
 				dispatch(stopListening());
+				dispatch((0, _lines.setCurrentLine)({}));
 				recognition.stop();
 			} else {
 				dispatch(startListening());
