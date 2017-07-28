@@ -5,7 +5,7 @@ export const getNextLine = (line, scene) => {
 	if (!nextLine) return;
 	else {
 		nextLine.index = nextLineIdx
-		return nextLine	
+		return nextLine
 	}
 }
 
