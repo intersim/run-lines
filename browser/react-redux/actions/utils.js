@@ -1,4 +1,9 @@
 export const getNextLine = (line, scene) => {
+
+	// Line index properties are currently added in the Scene component, when the array of a scene's lines is mapped over.
+
+	if (line.index === undefined) throw new Error('Lines should have an index property.');
+
 	const nextLineIdx = Number(line.index) + 1
 	const nextLine = scene[nextLineIdx]
 
