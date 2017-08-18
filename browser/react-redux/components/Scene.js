@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LineContainer from '../containers/LineContainer';
+import SceneFooterContainer from '../containers/SceneFooterContainer';
 
 const Scene = ({ currentScene }) => (
   <div>
@@ -13,10 +14,7 @@ const Scene = ({ currentScene }) => (
         />
       )})
     }
-    {/* <div className="center mt2 mb3">
-      <button className="btn btn-primary black bg-silver mr2">Prev Scene</ button>
-      <button className="btn btn-primary black bg-silver ml2">Next Scene</ button>
-    </div> */}
+    <SceneFooterContainer />
   </div>
 )
 
