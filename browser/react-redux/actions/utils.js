@@ -21,3 +21,8 @@ export const getNextSpeakerLine = (line, scene) => {
 	}
 	return getNextLine(currentLine, scene)
 }
+
+// Speech Recognition support detection
+export const detectSpeechRecognitionSupport = () => {
+	return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+}

@@ -80,4 +80,9 @@ describe('Frontend Helper functions', () => {
       expect(nextSpeakerLine.speaker).to.equal("Captain");
     });
   });
+
+  // describe('onRecognitionResult', () => {
+    // doesn't dispatch any actions if !e.results[0].isFinal
+    // if e.results[0] isFinal
+  // });
 });
