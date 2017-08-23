@@ -7,9 +7,16 @@ const mapStateToProps = ({ currentPlay, currentScene }) => ({
   currentScene
 })
 
-const mapDispatchToProps = (dispatch, { currentPlay, currentScene }) => ({
+const mapDispatchToProps = (dispatch, { currentPlay, currentAct, currentScene }) => ({
   getNextScene() {
-    dispatch(fetchScene(playName, actNum, sceneNum));
+    let nextSceneNum = currentScene.num + 1;
+    let actNum = currentAct;
+
+    if (nextSceneNum > currentPlay.acts[currentAct].length) {
+
+    }
+
+    dispatch(fetchScene(currentPlay.play_name, actNum, nextSceneNum));
   },
 });
 
