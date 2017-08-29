@@ -2,20 +2,29 @@ const fs = require('fs');
 const path = require('path');
 const toc = require('../data/plays/toc.json');
 
+// callback function must expect to take an array of line objects, and return an array of line objects
 function forEachPlay(callbackFn) {
-  toc.forEach(play => {
-    // get number of act directories in play file
-    // get number of scene files in each directory
-    let lines = fs.readFileSync(`../data/plays/${playName}/`, 'utf8');
+  toc.forEach(playName => {
+    let overview = fs.readFileSync(`../data/plays/${playName}/${playName}_overview.json`, 'utf8');
 
-    lines = JSON.parse(lines);
+    overview = JSON.parse(overview);
+    const { acts } = overview;
 
-    lines = callbackFn(lines);
+    [1, 2, 3, 4, 5].forEach(actNum => {
+       acts[actNum].forEach(sceneNum => {
+        let lines = fs.readFileSync(`../data/plays/${playName}/act_${actNum}/scene_${sceneNum}.json`, 'utf8');
 
-    const err = fs.writeFileSync(`../data/plays/${playName}.json`, JSON.stringify(lines));
+        lines = JSON.parse(lines);
 
-    if (err) console.error(err);
-    else console.log("All done!");
+        lines = callbackFn(lines);
+
+        const err = fs.writeFileSync(`../data/plays/${playName}/act_${actNum}/scene_${sceneNum}.json`, JSON.stringify(lines));
+
+        if (err) console.error(err);
+       });
+    });
+
+    console.log("All done!!");
   });
 }
 
