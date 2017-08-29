@@ -7,7 +7,9 @@ import React, { Component } from 'react';
  */
 const SceneSelect = ({ scenes, handleChange, selectedScene }) => (
   <select id="scene-select" onChange={handleChange} value={selectedScene}>
-    { scenes && scenes.map((num, i) => <option key={i} value={num}>Scene {num}</option>) };
+    { scenes && scenes.map((num, i) => <option key={i} value={num}>
+        { !num ? `Prologue` : `Scene ${num}` }
+      </option>) };
   </select>
 );
 

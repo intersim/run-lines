@@ -28930,8 +28930,7 @@
 			_react2.default.createElement(
 				'h2',
 				{ className: 'm0 p1 center' },
-				'Act ',
-				currentAct
+				!+currentAct ? 'Induction' : 'Act ' + currentAct
 			),
 			_react2.default.createElement(_SceneContainer2.default, null),
 			_react2.default.createElement(
@@ -30793,10 +30792,10 @@
 /* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(1);
@@ -30806,22 +30805,21 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ActSelect = function ActSelect(_ref) {
-		var acts = _ref.acts,
-		    handleChange = _ref.handleChange,
-		    selectedAct = _ref.selectedAct;
-		return _react2.default.createElement(
-			"select",
-			{ id: "act-select", onChange: handleChange, value: selectedAct },
-			acts.map(function (num, i) {
-				return _react2.default.createElement(
-					"option",
-					{ key: i, value: num },
-					"Act ",
-					num
-				);
-			}),
-			";"
-		);
+	  var acts = _ref.acts,
+	      handleChange = _ref.handleChange,
+	      selectedAct = _ref.selectedAct;
+	  return _react2.default.createElement(
+	    'select',
+	    { id: 'act-select', onChange: handleChange, value: selectedAct },
+	    acts.map(function (num, i) {
+	      return _react2.default.createElement(
+	        'option',
+	        { key: i, value: num },
+	        !+num ? 'Induction' : 'Act ' + num
+	      );
+	    }),
+	    ';'
+	  );
 	};
 	
 	exports.default = ActSelect;
@@ -30858,8 +30856,7 @@
 	      return _react2.default.createElement(
 	        "option",
 	        { key: i, value: num },
-	        "Scene ",
-	        num
+	        !num ? "Prologue" : "Scene " + num
 	      );
 	    }),
 	    ";"
