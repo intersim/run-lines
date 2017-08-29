@@ -6,6 +6,12 @@
   cursor: pointer;
 }
 
+.container {
+  max-width: 36em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .flex-justify-center {
 	justify-content: center;
 }
@@ -34,27 +40,33 @@ select {
   }
 
   #play-select {
-    display: block;
-    margin: 0 auto 1rem auto;
-    width: 100%;
+    display: inline-block;
+    margin-bottom: 1rem;
+    margin-right: 2%;/*margin: 0 auto 1rem auto;*/
+    width: 48%;
   }
 
   #act-select {
     display: inline-block;
     margin-bottom: 1rem;
-    width: 49%;
+    margin-right: 2%;
+    width: 24%;
   }
 
   #scene-select {
     display: inline-block;
     margin-bottom: 1rem;
-    margin-left: 2%;
-    width: 49%;
+    width: 24%;
   }
 
   #character-select {
     display: block;
-    margin-bottom: 1rem;
     width: 100%;
   }
+
+  .container {
+    max-width: 90%;
+  }
+
+
 }

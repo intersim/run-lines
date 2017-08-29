@@ -28936,7 +28936,7 @@
 			_react2.default.createElement(_SceneContainer2.default, null),
 			_react2.default.createElement(
 				'div',
-				{ className: 'flex flex-justify-center' },
+				{ className: 'flex flex-justify-center mt2' },
 				_react2.default.createElement(
 					_reactRouter.Link,
 					{ to: '/bug-report', id: 'feedback-btn', className: 'p1 mt1' },
