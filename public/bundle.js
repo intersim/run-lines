@@ -28918,7 +28918,7 @@
 			{ className: 'mt2' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'p1' },
+				{ className: 'p1 mb2' },
 				_react2.default.createElement(_PlaySelectContainer2.default, null),
 				_react2.default.createElement(_CharacterSelectContainer2.default, null)
 			),
