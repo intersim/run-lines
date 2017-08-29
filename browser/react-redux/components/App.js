@@ -14,8 +14,8 @@ const App = ({ currentPlay, currentAct, currentScene }) => (
 				<PlaySelectContainer />
 				<CharacterSelectContainer />
 			</div>
-      <h1 className="m0 p1">{ currentPlay.play_name && currentPlay.play_name.split("-").join(" ") }</h1>
-      <h2 className="m0 p1">Act { currentAct }</h2>
+      <h1 className="m0 p1 center">{ currentPlay.play_name && currentPlay.play_name.split("-").join(" ") }</h1>
+      <h2 className="m0 p1 center">Act { currentAct }</h2>
 			<SceneContainer />
       <div className="flex flex-justify-center">
       <Link to="/bug-report" id="feedback-btn" className="p1 mt1">Give Feedback</Link>

@@ -14,8 +14,13 @@
 	background-color: #ffffaa;
 }
 
+
 select {
 	background-color: #fff;
+}
+
+.name-col {
+  max-width: 50px;
 }
 
 @media only screen and (min-width: 575px) {
