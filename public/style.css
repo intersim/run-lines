@@ -18,6 +18,14 @@ select {
 	background-color: #fff;
 }
 
+.fa-chevron-left {
+  margin-right: 1em;
+}
+
+.fa-chevron-right {
+  margin-left: 1em;
+}
+
 @media only screen and (min-width: 575px) {
   #play-act-scene-select {
     display: inline-block;
