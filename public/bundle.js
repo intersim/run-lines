@@ -28918,7 +28918,7 @@
 			{ className: 'mt2 container' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'p1 mb1' },
+				{ id: 'main-select', className: 'p1 mb1' },
 				_react2.default.createElement(_PlaySelectContainer2.default, null),
 				_react2.default.createElement(_CharacterSelectContainer2.default, null)
 			),
@@ -28936,6 +28936,7 @@
 			_react2.default.createElement(
 				'div',
 				{ className: 'flex flex-justify-center mt2' },
+				_react2.default.createElement('i', { className: 'fa fa-ellipse-h' }),
 				_react2.default.createElement(
 					_reactRouter.Link,
 					{ to: '/bug-report', id: 'feedback-btn', className: 'p1 mt1' },

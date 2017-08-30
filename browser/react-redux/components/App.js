@@ -10,7 +10,7 @@ import { Link } from 'react-router';
 
 const App = ({ currentPlay, currentAct, currentScene }) => (
 		<div className="mt2 container">
-			<div className="p1 mb1">
+			<div id="main-select" className="p1 mb1">
 				<PlaySelectContainer />
 				<CharacterSelectContainer />
 			</div>
@@ -18,6 +18,7 @@ const App = ({ currentPlay, currentAct, currentScene }) => (
       <h2 className="m0 p1 center">{ !+currentAct ? 'Induction' : `Act ${currentAct}` }</h2>
 			<SceneContainer />
       <div className="flex flex-justify-center mt2">
+      <i className="fa fa-ellipse-h"></i>
       <Link to="/bug-report" id="feedback-btn" className="p1 mt1">Give Feedback</Link>
       </div>
 		</div>
