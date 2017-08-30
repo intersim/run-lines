@@ -1,13 +1,9 @@
-*,h1,h2 {
-	font-family: 'Lora', 'serif';
-}
-
 .clickable:hover {
   cursor: pointer;
 }
 
 .container {
-  max-width: 38em;
+  max-width: 40em;
   margin-left: auto;
   margin-right: auto;
 }
@@ -22,6 +18,10 @@
 
 select {
 	background-color: #fff;
+}
+
+body {
+  line-height: 1.25;
 }
 
 @media only screen and (min-width: 575px) {
@@ -65,7 +65,7 @@ select {
   }
 
   .container {
-    max-width: 90%;
+    max-width: 95%;
   }
 
 
