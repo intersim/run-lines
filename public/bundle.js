@@ -29087,9 +29087,7 @@
 				var isCurrentLine = line.line_id === currentLine.line_id;
 				var isCurrentSpeech = line.speech_number === currentLine.speech_number;
 				var prevLine = currentScene.lines[line.index - 1];
-				var isSameSpeaker = void 0;
-	
-				if (prevLine) isSameSpeaker = line.speaker === prevLine.speaker;
+				var isSameSpeaker = prevLine ? line.speaker === prevLine.speaker : false;
 	
 				return _react2.default.createElement(
 					'div',

@@ -31,9 +31,7 @@ class Line extends Component {
 	const isCurrentLine = line.line_id === currentLine.line_id;
 	const isCurrentSpeech = line.speech_number === currentLine.speech_number;
 	const prevLine = currentScene.lines[line.index - 1];
-	let isSameSpeaker;
-
-	if (prevLine) isSameSpeaker = line.speaker === prevLine.speaker;
+	const isSameSpeaker = prevLine ? line.speaker === prevLine.speaker : false;
 
 	return (
 	        <div>
