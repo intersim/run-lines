@@ -9,15 +9,15 @@ import BugReportContainer from '../containers/BugReportContainer';
 import { Link } from 'react-router';
 
 const App = ({ currentPlay, currentAct, currentScene }) => (
-		<div className="mt2">
-			<div className="p1">
+		<div className="mt2 container">
+			<div className="p1 mb2">
 				<PlaySelectContainer />
 				<CharacterSelectContainer />
 			</div>
-      <h1 className="m0 p1">{ currentPlay.play_name && currentPlay.play_name.split("-").join(" ") }</h1>
-      <h2 className="m0 p1">Act { currentAct }</h2>
+      <h1 className="m0 p1 center">{ currentPlay.play_name && currentPlay.play_name.split("-").join(" ") }</h1>
+      <h2 className="m0 p1 center">{ !+currentAct ? 'Induction' : `Act ${currentAct}` }</h2>
 			<SceneContainer />
-      <div className="flex flex-justify-center">
+      <div className="flex flex-justify-center mt2">
       <Link to="/bug-report" id="feedback-btn" className="p1 mt1">Give Feedback</Link>
       </div>
 		</div>
