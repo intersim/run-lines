@@ -60,17 +60,17 @@
 	
 	var _reactRedux = __webpack_require__(179);
 	
-	var _reducers = __webpack_require__(321);
+	var _reducers = __webpack_require__(323);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
 	var _redux = __webpack_require__(186);
 	
-	var _reduxLogger = __webpack_require__(327);
+	var _reduxLogger = __webpack_require__(329);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(333);
+	var _reduxThunk = __webpack_require__(335);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -21513,7 +21513,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _BugReportContainer = __webpack_require__(319);
+	var _BugReportContainer = __webpack_require__(321);
 	
 	var _BugReportContainer2 = _interopRequireDefault(_BugReportContainer);
 	
@@ -28901,7 +28901,7 @@
 	
 	var _SceneContainer2 = _interopRequireDefault(_SceneContainer);
 	
-	var _BugReportContainer = __webpack_require__(319);
+	var _BugReportContainer = __webpack_require__(321);
 	
 	var _BugReportContainer2 = _interopRequireDefault(_BugReportContainer);
 	
@@ -32683,7 +32683,7 @@
 	
 	var _LineContainer2 = _interopRequireDefault(_LineContainer);
 	
-	var _SceneFooterContainer = __webpack_require__(334);
+	var _SceneFooterContainer = __webpack_require__(319);
 	
 	var _SceneFooterContainer2 = _interopRequireDefault(_SceneFooterContainer);
 	
@@ -32718,6 +32718,96 @@
 	  value: true
 	});
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(179);
+	
+	var _SceneFooter = __webpack_require__(320);
+	
+	var _SceneFooter2 = _interopRequireDefault(_SceneFooter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var currentPlay = _ref.currentPlay,
+	      currentScene = _ref.currentScene;
+	  return {
+	    currentPlay: currentPlay,
+	    currentScene: currentScene
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
+	  var currentPlay = _ref2.currentPlay,
+	      currentAct = _ref2.currentAct,
+	      currentScene = _ref2.currentScene;
+	  return {
+	    getNextScene: function getNextScene() {
+	      var nextSceneNum = currentScene.num + 1;
+	      var actNum = currentAct;
+	
+	      if (nextSceneNum > currentPlay.acts[currentAct].length) {}
+	
+	      dispatch(fetchScene(currentPlay.play_name, actNum, nextSceneNum));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)()(_SceneFooter2.default);
+
+/***/ },
+/* 320 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var SceneFooter = function SceneFooter(props) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "flex flex-justify" },
+	    _react2.default.createElement(
+	      "button",
+	      { onClick: function onClick() {
+	          return console.log("prev");
+	        }, className: "btn button-narrow" },
+	      _react2.default.createElement("i", { className: "fa fa-chevron-left" }),
+	      "Prev Scene"
+	    ),
+	    _react2.default.createElement(
+	      "button",
+	      { onClick: function onClick() {
+	          return console.log("next");
+	        }, className: "btn button-narrow" },
+	      "Next Scene",
+	      _react2.default.createElement("i", { className: "fa fa-chevron-right" })
+	    )
+	  );
+	};
+	
+	exports.default = SceneFooter;
+
+/***/ },
+/* 321 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -32728,7 +32818,7 @@
 	
 	var _reactRouter = __webpack_require__(209);
 	
-	var _BugReportForm = __webpack_require__(320);
+	var _BugReportForm = __webpack_require__(322);
 	
 	var _BugReportForm2 = _interopRequireDefault(_BugReportForm);
 	
@@ -32810,7 +32900,7 @@
 	exports.default = BugReportContainer;
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32875,7 +32965,7 @@
 	exports.default = BugReportForm;
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32886,19 +32976,19 @@
 	
 	var _redux = __webpack_require__(186);
 	
-	var _play = __webpack_require__(322);
+	var _play = __webpack_require__(324);
 	
 	var _play2 = _interopRequireDefault(_play);
 	
-	var _line = __webpack_require__(323);
+	var _line = __webpack_require__(325);
 	
-	var _characters = __webpack_require__(324);
+	var _characters = __webpack_require__(326);
 	
-	var _scenes = __webpack_require__(325);
+	var _scenes = __webpack_require__(327);
 	
 	var _scenes2 = _interopRequireDefault(_scenes);
 	
-	var _acts = __webpack_require__(326);
+	var _acts = __webpack_require__(328);
 	
 	var _acts2 = _interopRequireDefault(_acts);
 	
@@ -32934,7 +33024,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 322 */
+/* 324 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32958,7 +33048,7 @@
 	exports.default = currentPlay;
 
 /***/ },
-/* 323 */
+/* 325 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33025,7 +33115,7 @@
 	};
 
 /***/ },
-/* 324 */
+/* 326 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33060,7 +33150,7 @@
 	};
 
 /***/ },
-/* 325 */
+/* 327 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33093,7 +33183,7 @@
 	exports.default = currentScene;
 
 /***/ },
-/* 326 */
+/* 328 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33117,7 +33207,7 @@
 	exports.default = currentAct;
 
 /***/ },
-/* 327 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33128,11 +33218,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(328);
+	var _core = __webpack_require__(330);
 	
-	var _helpers = __webpack_require__(329);
+	var _helpers = __webpack_require__(331);
 	
-	var _defaults = __webpack_require__(332);
+	var _defaults = __webpack_require__(334);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -33235,7 +33325,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 328 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33245,9 +33335,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(329);
+	var _helpers = __webpack_require__(331);
 	
-	var _diff = __webpack_require__(330);
+	var _diff = __webpack_require__(332);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -33376,7 +33466,7 @@
 	}
 
 /***/ },
-/* 329 */
+/* 331 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33400,7 +33490,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 330 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33410,7 +33500,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(331);
+	var _deepDiff = __webpack_require__(333);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -33496,7 +33586,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 331 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -33925,7 +34015,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 332 */
+/* 334 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33976,7 +34066,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 333 */
+/* 335 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -34002,88 +34092,6 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
-
-/***/ },
-/* 334 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(179);
-	
-	var _SceneFooter = __webpack_require__(335);
-	
-	var _SceneFooter2 = _interopRequireDefault(_SceneFooter);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(_ref) {
-	  var currentPlay = _ref.currentPlay,
-	      currentScene = _ref.currentScene;
-	  return {
-	    currentPlay: currentPlay,
-	    currentScene: currentScene
-	  };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
-	  var currentPlay = _ref2.currentPlay,
-	      currentScene = _ref2.currentScene;
-	  return {
-	    getNextScene: function getNextScene() {
-	      dispatch(fetchScene(playName, actNum, sceneNum));
-	    }
-	  };
-	};
-	
-	exports.default = (0, _reactRedux.connect)()(_SceneFooter2.default);
-
-/***/ },
-/* 335 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var SceneFooter = function SceneFooter(props) {
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "center mt2 mb3" },
-	    _react2.default.createElement(
-	      "button",
-	      { onClick: function onClick() {
-	          return console.log("prev");
-	        }, className: "btn btn-primary black bg-silver mr2" },
-	      "Prev Scene"
-	    ),
-	    _react2.default.createElement(
-	      "button",
-	      { onClick: function onClick() {
-	          return console.log("next");
-	        }, className: "btn btn-primary black bg-silver ml2" },
-	      "Next Scene"
-	    )
-	  );
-	};
-	
-	exports.default = SceneFooter;
 
 /***/ }
 /******/ ]);

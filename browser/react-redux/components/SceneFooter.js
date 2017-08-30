@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 
 const SceneFooter = props => (
-  <div className="center mt2 mb3">
-    <button onClick={() => console.log("prev")} className="btn btn-primary black bg-silver mr2">Prev Scene</ button>
-    <button onClick={() => console.log("next")} className="btn btn-primary black bg-silver ml2">Next Scene</ button>
+  <div className="flex flex-justify">
+    <button onClick={() => console.log("prev")} className="btn button-narrow">
+      <i className="fa fa-chevron-left"></i>
+      Prev Scene
+    </ button>
+    <button onClick={() => console.log("next")} className="btn button-narrow">
+      Next Scene
+      <i className="fa fa-chevron-right"></i>
+    </ button>
   </div>
 )
 

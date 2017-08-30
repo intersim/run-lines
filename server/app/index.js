@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const indexPath = path.join(__dirname, '..', '..', 'browser', 'index.html');
+const indexPath = path.join(__dirname, '..', '..', 'browser/index.html');
 
 app.use(morgan('dev'));
 
@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(express.static('public'));
+
+app.use('/font-awesome', express.static(path.join(__dirname, '..', '..', 'node_modules/font-awesome/css')));
 
 app.use('/api', require('../api'));
 
