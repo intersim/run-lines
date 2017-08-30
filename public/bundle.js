@@ -60,17 +60,17 @@
 	
 	var _reactRedux = __webpack_require__(179);
 	
-	var _reducers = __webpack_require__(323);
+	var _reducers = __webpack_require__(321);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
 	var _redux = __webpack_require__(186);
 	
-	var _reduxLogger = __webpack_require__(329);
+	var _reduxLogger = __webpack_require__(327);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(335);
+	var _reduxThunk = __webpack_require__(333);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -21513,7 +21513,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _BugReportContainer = __webpack_require__(321);
+	var _BugReportContainer = __webpack_require__(319);
 	
 	var _BugReportContainer2 = _interopRequireDefault(_BugReportContainer);
 	
@@ -28901,7 +28901,7 @@
 	
 	var _SceneContainer2 = _interopRequireDefault(_SceneContainer);
 	
-	var _BugReportContainer = __webpack_require__(321);
+	var _BugReportContainer = __webpack_require__(319);
 	
 	var _BugReportContainer2 = _interopRequireDefault(_BugReportContainer);
 	
@@ -28918,7 +28918,7 @@
 			{ className: 'mt2 container' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'p1 mb2' },
+				{ className: 'p1 mb1' },
 				_react2.default.createElement(_PlaySelectContainer2.default, null),
 				_react2.default.createElement(_CharacterSelectContainer2.default, null)
 			),
@@ -32711,9 +32711,7 @@
 	exports.default = Scene;
 
 /***/ },
-/* 319 */,
-/* 320 */,
-/* 321 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32732,7 +32730,7 @@
 	
 	var _reactRouter = __webpack_require__(209);
 	
-	var _BugReportForm = __webpack_require__(322);
+	var _BugReportForm = __webpack_require__(320);
 	
 	var _BugReportForm2 = _interopRequireDefault(_BugReportForm);
 	
@@ -32814,7 +32812,7 @@
 	exports.default = BugReportContainer;
 
 /***/ },
-/* 322 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32879,7 +32877,7 @@
 	exports.default = BugReportForm;
 
 /***/ },
-/* 323 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32890,19 +32888,19 @@
 	
 	var _redux = __webpack_require__(186);
 	
-	var _play = __webpack_require__(324);
+	var _play = __webpack_require__(322);
 	
 	var _play2 = _interopRequireDefault(_play);
 	
-	var _line = __webpack_require__(325);
+	var _line = __webpack_require__(323);
 	
-	var _characters = __webpack_require__(326);
+	var _characters = __webpack_require__(324);
 	
-	var _scenes = __webpack_require__(327);
+	var _scenes = __webpack_require__(325);
 	
 	var _scenes2 = _interopRequireDefault(_scenes);
 	
-	var _acts = __webpack_require__(328);
+	var _acts = __webpack_require__(326);
 	
 	var _acts2 = _interopRequireDefault(_acts);
 	
@@ -32938,7 +32936,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 324 */
+/* 322 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32962,7 +32960,7 @@
 	exports.default = currentPlay;
 
 /***/ },
-/* 325 */
+/* 323 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33029,7 +33027,7 @@
 	};
 
 /***/ },
-/* 326 */
+/* 324 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33064,7 +33062,7 @@
 	};
 
 /***/ },
-/* 327 */
+/* 325 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33097,7 +33095,7 @@
 	exports.default = currentScene;
 
 /***/ },
-/* 328 */
+/* 326 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33121,7 +33119,7 @@
 	exports.default = currentAct;
 
 /***/ },
-/* 329 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33132,11 +33130,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(330);
+	var _core = __webpack_require__(328);
 	
-	var _helpers = __webpack_require__(331);
+	var _helpers = __webpack_require__(329);
 	
-	var _defaults = __webpack_require__(334);
+	var _defaults = __webpack_require__(332);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -33239,7 +33237,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 330 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33249,9 +33247,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(331);
+	var _helpers = __webpack_require__(329);
 	
-	var _diff = __webpack_require__(332);
+	var _diff = __webpack_require__(330);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -33380,7 +33378,7 @@
 	}
 
 /***/ },
-/* 331 */
+/* 329 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33404,7 +33402,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 332 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33414,7 +33412,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(333);
+	var _deepDiff = __webpack_require__(331);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -33500,7 +33498,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 333 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -33929,7 +33927,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 334 */
+/* 332 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33980,7 +33978,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 335 */
+/* 333 */
 /***/ function(module, exports) {
 
 	'use strict';
