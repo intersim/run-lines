@@ -8,7 +8,7 @@ export const currentPlayCharacters = (state = [], action) => {
 	}
 }
 
-export const currentCharacter = (state = '', action) => {
+export const currentCharacter = (state = 'NONE', action) => {
 	switch (action.type) {
 		case 'SET_CURRENT_CHARACTER':
 			return action.character;
