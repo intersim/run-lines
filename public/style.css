@@ -18,6 +18,12 @@
 
 select {
 	background-color: #fff;
+  border-color: #fff;
+  text-align-last: center;
+}
+
+select:hover {
+  background-color: #ffffaa;
 }
 
 body {

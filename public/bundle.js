@@ -33050,7 +33050,7 @@
 	};
 	
 	var currentCharacter = exports.currentCharacter = function currentCharacter() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'NONE';
 		var action = arguments[1];
 	
 		switch (action.type) {
