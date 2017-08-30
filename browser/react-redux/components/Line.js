@@ -45,8 +45,8 @@ class Line extends Component {
 	        <p
 						className={
 							(isStageDirection ? 'italic center ' : 'ml2 ') +
-							((isCurrentLine && isSpeaking) || isHovering ? 'bg-darken-1 ' : '') +
-							(isCurrentSpeech && isListening ? 'yellow-highlight ' : '') +
+							((isCurrentLine && isSpeaking) || isHovering ? 'line-hover ' : '') +
+							(isCurrentSpeech && isListening ? 'line-highlight ' : '') +
 							'p1 mb0 clickable'}
 			      onClick={() => toggleLine(line, currentScene.lines, isSpeaking, isListening, currentLine, currentCharacter)}
 			      onMouseEnter={e => this.setIsHovering(true)}
