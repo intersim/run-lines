@@ -30,20 +30,32 @@ class Line extends Component {
 	const isStageDirection = line.line_number.split('.')[2] === '0';
 	const isCurrentLine = line.line_id === currentLine.line_id;
 	const isCurrentSpeech = line.speech_number === currentLine.speech_number;
+	const prevLine = currentScene.lines[line.index - 1];
+	const isSameSpeaker = prevLine ? line.speaker === prevLine.speaker : false;
 
 	return (
-		<p
-			className={
-				(isStageDirection ? 'italic' : null) + ' ' +
-				((isCurrentLine && isSpeaking) || isHovering ? 'bg-darken-1' : null) + ' ' +
-				(isCurrentSpeech && isListening ? 'yellow-highlight' : null) +
-				' p1 mb0 clickable'}
-      onClick={() => toggleLine(line, currentScene.lines, isSpeaking, isListening, currentLine, currentCharacter)}
-      onMouseEnter={e => this.setIsHovering(true)}
-      onMouseLeave={e => this.setIsHovering(false)}
-		>
-			{ isStageDirection ? null : `${line.speaker}: `}{line.text_entry}
-		</p>)
+	        <div>
+	        {
+	        	isStageDirection || isSameSpeaker ?
+	        	null :
+	        	<p className="p1 mt1 mb0 bold">
+			        {line.speaker}
+		        </p>
+		       }
+	        <p
+						className={
+							(isStageDirection ? 'italic center ' : 'ml2 ') +
+							((isCurrentLine && isSpeaking) || isHovering ? 'line-hover ' : '') +
+							(isCurrentSpeech && isListening ? 'line-highlight ' : '') +
+							'p1 mb0 clickable'}
+			      onClick={() => toggleLine(line, currentScene.lines, isSpeaking, isListening, currentLine, currentCharacter)}
+			      onMouseEnter={e => this.setIsHovering(true)}
+			      onMouseLeave={e => this.setIsHovering(false)}
+					>
+						{line.text_entry}
+					</p>
+	        </div>
+		)
 	}
 }
 

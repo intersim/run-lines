@@ -1,26 +1,22 @@
 import React, { Component } from 'react';
 
-import LineContainer from '../containers/LineContainer';
-import PlaySelectContainer from '../containers/PlaySelectContainer';
-import CharacterSelectContainer from '../containers/CharacterSelectContainer';
+import Navbar from './Navbar';
 import SceneContainer from '../containers/SceneContainer';
-import BugReportContainer from '../containers/BugReportContainer';
 
 import { Link } from 'react-router';
 
 const App = ({ currentPlay, currentAct, currentScene }) => (
-		<div className="mt2">
-			<div className="p1">
-				<PlaySelectContainer />
-				<CharacterSelectContainer />
-			</div>
-      <h1 className="m0 p1">{ currentPlay.play_name && currentPlay.play_name.split("-").join(" ") }</h1>
-      <h2 className="m0 p1">Act { currentAct }</h2>
-			<SceneContainer />
-      <div className="flex flex-justify-center">
-      <Link to="/bug-report" id="feedback-btn" className="p1 mt1">Give Feedback</Link>
+	<div>
+    <Navbar />
+    <div className="container">
+      <h1 className="m0 p1 center">{ currentPlay.play_name && currentPlay.play_name.split("-").join(" ") }</h1>
+      <h2 className="m0 p1 center">{ !+currentAct ? 'Induction' : `Act ${currentAct}` }</h2>
+  		<SceneContainer />
+      <div className="flex flex-justify-center mt2">
+        <Link to="/bug-report" id="feedback-btn" className="p1 bold crimson">Report A Bug</Link>
       </div>
-		</div>
-	)
+    </div>
+	</div>
+);
 
 export default App;
