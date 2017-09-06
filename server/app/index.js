@@ -11,7 +11,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.use(express.static('public'));
+app.use(express.static('public', {
+  maxAge: 86400000 // one day in milliseconds
+}));
 
 app.use('/api', require('../api'));
 
