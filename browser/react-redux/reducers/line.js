@@ -3,6 +3,9 @@ export const currentLine = (state = {}, action) => {
 		case 'SET_CURRENT_LINE':
 			return action.line;
 
+		case 'CLEAR_CURRENT_LINE':
+			return {};
+
 		default:
 			return state;
 	}

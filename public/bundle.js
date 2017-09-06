@@ -32454,12 +32454,17 @@
 /* 316 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	var getNextLine = exports.getNextLine = function getNextLine(line, scene) {
+	
+		// Line index properties are currently added in the Scene component, when the array of a scene's lines is mapped over.
+	
+		if (line.index === undefined) throw new Error('Lines should have an index property.');
+	
 		var nextLineIdx = Number(line.index) + 1;
 		var nextLine = scene[nextLineIdx];
 	
@@ -32476,6 +32481,11 @@
 		}
 		return getNextLine(currentLine, scene);
 	};
+	
+	// Speech Recognition support detection
+	var detectSpeechRecognitionSupport = exports.detectSpeechRecognitionSupport = function detectSpeechRecognitionSupport() {
+		return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+	};
 
 /***/ },
 /* 317 */
@@ -32489,11 +32499,19 @@
 	/* ========== CONSTANTS ========== */
 	var SET_CURRENT_LINE = 'SET_CURRENT_LINE';
 	
+	var CLEAR_CURRENT_LINE = 'CLEAR_CURRENT_LINE';
+	
 	/* ========== ACTION CREATORS ========== */
 	var setCurrentLine = exports.setCurrentLine = function setCurrentLine(line) {
 		return {
 			type: SET_CURRENT_LINE,
 			line: line
+		};
+	};
+	
+	var clearCurrentLine = exports.clearCurrentLine = function clearCurrentLine() {
+		return {
+			type: CLEAR_CURRENT_LINE
 		};
 	};
 
@@ -32539,18 +32557,21 @@
 		return function (dispatch, getState) {
 			dispatch((0, _lines.setCurrentLine)(line));
 	
+			// detect browser speech recognition support
 			var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 	
+			// if there's no speech recognition support, short-circuit and clear out state
 			if (!SpeechRecognition) {
 				if (isListening) {
 					dispatch(stopListening());
-					dispatch((0, _lines.setCurrentLine)({}));
+					dispatch((0, _lines.clearCurrentLine)());
 				} else dispatch(startListening());
 				return console.error("No Speech Recognition support");
 			}
 	
 			var recognition = new SpeechRecognition();
 	
+			// if there's a recognition already in our global storage array, stop that recognition and remove it from the array
 			if (window.recognitions && window.recognitions.length) {
 				recognitions[0].stop();
 				recognitions.pop();
@@ -32575,16 +32596,21 @@
 				}
 			};
 	
+			// store new recognitions in a global recognitions array; hack to work around a Chrome bug that was garbage-collecting recognitions early
 			window.recognitions.push(recognition);
 	
+			// if the browser is already listening to a line, stop it
 			if (isListening) {
 				dispatch(stopListening());
 				dispatch((0, _lines.setCurrentLine)({}));
 				recognition.stop();
-			} else {
-				dispatch(startListening());
-				recognition.start();
 			}
+	
+			// otherwise, it's time to start listening to our user
+			else {
+					dispatch(startListening());
+					recognition.start();
+				}
 		};
 	};
 
@@ -32998,6 +33024,9 @@
 		switch (action.type) {
 			case 'SET_CURRENT_LINE':
 				return action.line;
+	
+			case 'CLEAR_CURRENT_LINE':
+				return {};
 	
 			default:
 				return state;
