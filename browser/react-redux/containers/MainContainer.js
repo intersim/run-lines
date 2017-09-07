@@ -1,4 +1,4 @@
-import App from '../components/App';
+import Main from '../components/Main';
 import { connect } from 'react-redux';
 
 const mapStateToProps = ({ currentPlay, currentAct, currentScene }) => ({
@@ -7,6 +7,6 @@ const mapStateToProps = ({ currentPlay, currentAct, currentScene }) => ({
   currentScene
 });
 
-const AppContainer = connect(mapStateToProps)(App);
+const MainContainer = connect(mapStateToProps)(Main);
 
-export default AppContainer;
+export default MainContainer;

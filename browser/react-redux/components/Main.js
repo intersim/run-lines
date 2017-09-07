@@ -5,7 +5,7 @@ import SceneContainer from '../containers/SceneContainer';
 
 import { Link } from 'react-router';
 
-const App = ({ currentPlay, currentAct, currentScene }) => (
+const Main = ({ currentPlay, currentAct, currentScene }) => (
 	<div>
     <Navbar />
     <div className="container">
@@ -19,4 +19,4 @@ const App = ({ currentPlay, currentAct, currentScene }) => (
 	</div>
 );
 
-export default App;
+export default Main;

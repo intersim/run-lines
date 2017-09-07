@@ -7,7 +7,7 @@
     "build": "webpack",
     "build-watch": "webpack -w",
     "start-watch": "nodemon --watch server -e js,json,html server/start.js",
-    "dev": "webpack -w & nodemon --watch server -e js,json,html server/start.js",
+    "dev": "webpack && nodemon --watch server -e js,json,html server/start.js",
     "start": "node server/start.js",
     "test": "mocha ./**/*.spec.js --compilers js:babel-register"
   },
