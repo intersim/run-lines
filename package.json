@@ -4,10 +4,10 @@
   "description": "",
   "main": "server/start.js",
   "scripts": {
-    "deploy-build": "webpack -p",
-    "build-watch": "webpack -w",
+    "build": "webpack --config webpack.prod.js",
+    "build-watch": "webpack --config webpack.dev.js -w",
     "start-watch": "nodemon --watch server -e js,json,html server/start.js",
-    "dev": "webpack -w & nodemon --watch server -e js,json,html server/start.js",
+    "dev": "npm run build-watch & npm run start-watch",
     "start": "node server/start.js",
     "test": "mocha ./**/*.spec.js --compilers js:babel-register"
   },
@@ -22,6 +22,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-register": "^6.24.1",
     "body-parser": "^1.17.1",
+    "compression": "^1.7.0",
     "express": "^4.13.3",
     "json-loader": "^0.5.4",
     "lodash": "^4.16.4",
@@ -34,7 +35,9 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
-    "webpack": "^1.13.2"
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^1.13.2",
+    "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.0",

@@ -1,7 +1,6 @@
-
 'use strict';
 
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './browser/app.js',
@@ -10,7 +9,6 @@ module.exports = {
     filename: './public/bundle.js'
   },
   context: __dirname,
-  devtool: 'source-map',  
   module: {
     loaders: [
       {

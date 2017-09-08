@@ -1,3 +1,3 @@
 echo "now running .profile"
-npm run deploy-build
+npm run build
 echo "done running .profile"
