@@ -1,4 +1,4 @@
 echo "now running .profile"
 npm install
-npm run build
+npm run deploy-build
 echo "done running .profile"
