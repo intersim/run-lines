@@ -25,7 +25,7 @@ To install the rest of the dependencies, run `npm install`.
 In production, use `npm run build` to transpile front-end code. In development, use `npm run build-watch`; Webpack will watch for changes in frontend files and re-transpile accordingly.
 
 ### Start the App
-In production, use `npm start` to start the server. In development, use `npm run start-dev`; `nodemon` will watch for changes in server files and restart the server accordingly.
+In production, use `npm start` to start the server. In development, use `npm run dev`; `nodemon` will watch for changes in server files and restart the server accordingly.
 
 ## Support
 Found a bug? Please create a github issue.
