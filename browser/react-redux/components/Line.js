@@ -5,11 +5,8 @@ class Line extends Component {
 	constructor() {
 		super();
 		this.state = {
-			isHovering: false,
 			isMobile: false
 		};
-
-		this.setIsHovering = this.setIsHovering.bind(this);
 	}
 
 	componentDidMount() {
@@ -17,15 +14,8 @@ class Line extends Component {
 		if (md.mobile()) this.setState({ isMobile: true });
 	}
 
-	setIsHovering(bool) {
-		const { isMobile } = this.state;
-		if (!isMobile) this.setState({ isHovering: bool });
-	}
-
 	render() {
 	const { line, currentLine, currentScene, isListening, isSpeaking, toggleLine, listenToLine, currentCharacter } = this.props;
-
-	const { isHovering } = this.state;
 
 	const isStageDirection = line.line_number.split('.')[2] === '0';
 	const isCurrentLine = line.line_id === currentLine.line_id;
@@ -45,12 +35,10 @@ class Line extends Component {
 	        <p
 						className={
 							(isStageDirection ? 'italic center ' : 'ml2 ') +
-							((isCurrentLine && isSpeaking) || isHovering ? 'line-hover ' : '') +
+							((isCurrentLine && isSpeaking) ? 'current-line ' : '') +
 							(isCurrentSpeech && isListening ? 'line-highlight ' : '') +
-							'p1 mb0 clickable'}
+							'p1 mb0 clickable line'}
 			      onClick={() => toggleLine(line, currentScene.lines, isSpeaking, isListening, currentLine, currentCharacter)}
-			      onMouseEnter={e => this.setIsHovering(true)}
-			      onMouseLeave={e => this.setIsHovering(false)}
 					>
 						{line.text_entry}
 					</p>
@@ -58,6 +46,5 @@ class Line extends Component {
 		)
 	}
 }
-
 
 export default Line;
