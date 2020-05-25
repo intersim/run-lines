@@ -28,7 +28,13 @@ import { listenToLine } from './listening';
 // get voices
 export const getVoices = () => {
 	return dispatch => {
-		const voices = speechSynthesis.getVoices().filter(v => v.lang.includes('en-GB'));
+		const voices = {};
+		speechSynthesis.getVoices()
+			.filter(v => v.lang.includes('en-GB'))
+			.forEach(v => {
+				if (v.voiceURI.toLowerCase().includes("female")) voices["female"] = v;
+				if (v.voiceURI.toLowerCase().includes("male")) voices["male"] = v;
+			});
 
 		dispatch(setVoices(voices));
 	}
@@ -51,9 +57,9 @@ export const sayLine = (line, scene) => {
 
 		// set voice
 		const { voices } = getState();
-		if (isFemaleCharacter && !isStageDirection) utterThis.voice = voices[1];
-		else if (!line.speaker || !isStageDirection) utterThis.voice = voices[0];
-		else { utterThis.voice = voices[2]; }
+		if (isFemaleCharacter && !isStageDirection) utterThis.voice = voices["female"];
+		// else if (!line.speaker || !isStageDirection) utterThis.voice = voices["male"];
+		else { utterThis.voice = voices["male"]; }
 
 		const nextLine = getNextLine(line, scene);
 
@@ -61,7 +67,10 @@ export const sayLine = (line, scene) => {
 		utterThis.onend = e => {
 			window.utterances.pop();
 			if (!getState().isSpeaking) return;
-			if (!nextLine) return;
+			if (!nextLine) {
+				dispatch(stopSpeaking());
+				return;
+			}
 
 			const isStageDirection = nextLine.line_number.split('.')[2] === '0';
 
@@ -73,7 +82,7 @@ export const sayLine = (line, scene) => {
 			}
 		}
 
-		utterThis.onerror = e => console.error(`There was a SpeechSynthesis error: ${e}`)
+		utterThis.onerror = e => console.error(`There was a SpeechSynthesis error: ${JSON.stringify(e)}`)
 
 		dispatch(startSpeaking());
 		window.utterances.push(utterThis);
