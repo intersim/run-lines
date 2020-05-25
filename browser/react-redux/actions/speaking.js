@@ -67,7 +67,10 @@ export const sayLine = (line, scene) => {
 		utterThis.onend = e => {
 			window.utterances.pop();
 			if (!getState().isSpeaking) return;
-			if (!nextLine) return;
+			if (!nextLine) {
+				dispatch(stopSpeaking());
+				return;
+			}
 
 			const isStageDirection = nextLine.line_number.split('.')[2] === '0';
 
