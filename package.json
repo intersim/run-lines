@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mocha": "^3.4.2",
     "nodemon": "^1.7.1",
     "redux-logger": "^2.7.4",
